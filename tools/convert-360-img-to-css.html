@@ -1,0 +1,1958 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Конвертер 360 изображения в CSS/JS-пакет</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #111827;
+      --panel: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --ok: #10b981;
+      --warn: #f59e0b;
+      --border: #374151;
+      --accent: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      font: 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      gap: 14px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    h1 { margin: 0 0 10px; font-size: 20px; }
+    h2 { margin: 0 0 10px; font-size: 16px; }
+    label { display: block; margin-bottom: 6px; color: var(--muted); }
+    input[type="text"], select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #0f172a;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 10px;
+      font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    textarea { min-height: 240px; resize: vertical; }
+    .row {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    /* Выбор формата один для одиночной и пакетной вкладок, чтобы одна операция не сохраняла CSS и JS одновременно. */
+    .output-format-control {
+      display: grid;
+      grid-template-columns: minmax(180px, 260px) 1fr;
+      gap: 10px;
+      align-items: end;
+      margin-top: 12px;
+    }
+    /* Вкладки разделяют одиночный и пакетный сценарии, чтобы длинная очередь не мешала ручной работе. */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .tab-button {
+      min-width: 180px;
+      justify-content: center;
+    }
+    .tab-button[aria-selected="true"] {
+      border-color: #1d4ed8;
+      background: var(--accent);
+      color: white;
+    }
+    .tab-panel {
+      display: grid;
+      gap: 14px;
+    }
+    .tab-panel[hidden] {
+      display: none;
+    }
+    .batch-options {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .inline-check {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      margin: 0;
+      color: var(--text);
+    }
+    .inline-check input {
+      width: auto;
+      margin: 0;
+    }
+    .batch-progress {
+      width: 100%;
+      height: 10px;
+      accent-color: var(--accent);
+    }
+    .batch-log {
+      max-height: 170px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #0f172a;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .batch-log-line + .batch-log-line {
+      margin-top: 4px;
+    }
+    /* Два компактных блока normal/mobile в одну линию — меньше вертикального скролла. */
+    .settings-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .settings-subcard {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #0f172a;
+      padding: 8px 10px;
+      display: grid;
+      gap: 6px;
+    }
+    .settings-subcard h3 {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .settings-compact {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px 6px;
+    }
+    .settings-compact .field label {
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+    .settings-compact select {
+      padding: 5px 6px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+    .settings-subcard-actions {
+      margin-top: 6px;
+    }
+    .settings-subcard-actions button {
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 12px;
+    }
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+    /* Колонки «картинка» / «JS-пакет» в одном ряду карточки «Входные данные». */
+    .input-col {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+    }
+    .result-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 12px;
+    }
+    .variant-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #0f172a;
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+    }
+    .variant-card h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+    .variant-preview {
+      width: 100%;
+      aspect-ratio: 2 / 1;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #020617;
+      cursor: zoom-in;
+    }
+    .variant-meta {
+      display: grid;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .variant-meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    button {
+      border: 1px solid var(--border);
+      background: #0f172a;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 9px 12px;
+      cursor: pointer;
+    }
+    button.primary {
+      border-color: #1d4ed8;
+      background: var(--accent);
+      color: white;
+    }
+    .hint { color: var(--muted); font-size: 12px; }
+    .ok { color: var(--ok); }
+    .warn { color: var(--warn); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    @media (max-width: 820px) {
+      .row,
+      .result-grid,
+      .settings-pair,
+      .output-format-control {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Конвертер 360 изображения — CSS/JS-пакет</h1>
+      <div class="hint">
+        Назначение: подготовить безопасный <span class="mono">*-360.css</span> для офлайн-режима и совместимый legacy <span class="mono">*-360.js</span>.
+      </div>
+      <div class="output-format-control">
+        <div class="field">
+          <label for="packOutputFormat">Формат сохраняемых пакетов</label>
+          <select id="packOutputFormat">
+            <option value="css" selected>CSS — безопасный</option>
+            <option value="js">JS — legacy</option>
+          </select>
+        </div>
+        <div id="packOutputFormatHint" class="hint">Все кнопки сохранения и пакетная очередь создают только CSS.</div>
+      </div>
+    </div>
+
+    <div class="tab-bar" role="tablist" aria-label="Режим обработки">
+      <button id="tabSingle" class="tab-button" type="button" role="tab" aria-controls="singlePanel" aria-selected="true">Одиночная обработка</button>
+      <button id="tabBatch" class="tab-button" type="button" role="tab" aria-controls="batchPanel" aria-selected="false">Пакетная обработка</button>
+    </div>
+
+    <section id="singlePanel" class="tab-panel" role="tabpanel" aria-labelledby="tabSingle">
+      <div class="card">
+        <h2>Входные данные</h2>
+        <div class="row">
+          <div class="input-col">
+            <label for="fileInput">Выберите файл jpeg/jpg/webp/png (изображение 2:1)</label>
+            <input id="fileInput" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+          </div>
+          <div class="input-col">
+            <label for="packJsInput">Или загрузите готовый <span class="mono">*-360.js</span> / <span class="mono">*-360-mobile.js</span></label>
+            <input id="packJsInput" type="file" accept=".js,text/javascript,application/javascript" />
+            <div class="hint">Изображение извлекается из массива <span class="mono">dataUrl</span> внутри пакета, сформированного этим конвертером.</div>
+          </div>
+        </div>
+        <div id="imageInfo" class="hint" style="margin-top:8px;">Файл еще не выбран.</div>
+        <div class="hint" style="margin-top:8px;">Normal сохраняется как IMG-360.css или IMG-360.js, Mobile — как IMG-360-mobile.css или IMG-360-mobile.js. За один запуск сохраняется только выбранный формат.</div>
+      </div>
+
+      <div class="card">
+        <h2>Настройки одиночного экспорта</h2>
+        <div class="settings-pair">
+          <div class="settings-subcard">
+            <h3>Normal</h3>
+            <div class="settings-compact">
+              <div class="field">
+                <label for="normalHeight">Высота</label>
+                <select id="normalHeight">
+                  <option value="source" selected>Исходный</option>
+                  <option value="3840">3840 (8K)</option>
+                  <option value="2880">2880 (5.7K)</option>
+                  <option value="1920">1920 (4K)</option>
+                  <option value="1440">1440</option>
+                  <option value="1080">1080</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="normalQuality">Кач-во</label>
+                <select id="normalQuality">
+                  <option value="1.00">100</option>
+                  <option value="0.95">95</option>
+                  <option value="0.85" selected>85</option>
+                  <option value="0.75">75</option>
+                  <option value="0.50">50</option>
+                  <option value="0.25">25</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="normalFormat">Формат</label>
+                <select id="normalFormat">
+                  <option value="image/webp" selected>WebP</option>
+                  <option value="image/jpeg">JPG</option>
+                </select>
+              </div>
+            </div>
+            <div class="settings-subcard-actions">
+              <button id="btnDownloadImageNormal" type="button" disabled>Скачать изображение</button>
+            </div>
+          </div>
+          <div class="settings-subcard">
+            <h3>Mobile</h3>
+            <div class="settings-compact">
+              <div class="field">
+                <label for="mobileHeight">Высота</label>
+                <select id="mobileHeight">
+                  <option value="source">Исходный</option>
+                  <option value="3840">3840 (8K)</option>
+                  <option value="2880">2880 (5.7K)</option>
+                  <option value="1920">1920 (4K)</option>
+                  <option value="1440" selected>1440</option>
+                  <option value="1080">1080</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="mobileQuality">Кач-во</label>
+                <select id="mobileQuality">
+                  <option value="1.00">100</option>
+                  <option value="0.95">95</option>
+                  <option value="0.85">85</option>
+                  <option value="0.75" selected>75</option>
+                  <option value="0.50">50</option>
+                  <option value="0.25">25</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="mobileFormat">Формат</label>
+                <select id="mobileFormat">
+                  <option value="image/webp" selected>WebP</option>
+                  <option value="image/jpeg">JPG</option>
+                </select>
+              </div>
+            </div>
+            <div class="settings-subcard-actions">
+              <button id="btnDownloadImageMobile" type="button" disabled>Скачать изображение</button>
+            </div>
+          </div>
+        </div>
+        <div class="hint" style="margin-top:8px;">Normal — основной <span class="mono">*-360.js</span>/<span class="mono">*-360.css</span>; mobile — варианты <span class="mono">*-360-mobile.*</span> при quality=mobile.</div>
+      </div>
+
+      <div class="card">
+        <h2>Генерация пакетов</h2>
+        <div class="actions">
+          <button id="btnGenerate" class="primary" type="button">Сгенерировать normal + mobile</button>
+          <button id="btnDownload" type="button" disabled>Скачать оба CSS</button>
+        </div>
+        <div id="status" class="hint" style="margin-top:10px;">Ожидание.</div>
+        <div class="hint" style="margin-top:10px;">
+          JS сохраняет совместимость через <span class="mono">window.VN360_PACKS_VARIANTS</span>; CSS хранит те же данные без исполняемого кода.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Варианты экспорта</h2>
+        <div id="resultGrid" class="result-grid">
+          <div class="hint">После генерации здесь появятся размеры, вес и превью normal/mobile.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Предпросмотр пакета</h2>
+        <textarea id="output" spellcheck="false" placeholder="Здесь появится выбранный JS- или CSS-пакет"></textarea>
+      </div>
+    </section>
+
+    <section id="batchPanel" class="tab-panel" role="tabpanel" aria-labelledby="tabBatch" hidden>
+      <div class="card">
+        <h2>Изображения для пакетной обработки</h2>
+        <div class="row">
+          <div class="input-col">
+            <label for="batchFileInput">Выберите несколько изображений jpeg/jpg/webp/png</label>
+            <input id="batchFileInput" type="file" multiple accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+          </div>
+          <div class="input-col">
+            <label>Что сохранять</label>
+            <div class="batch-options">
+              <label class="inline-check"><input id="batchNormalChk" type="checkbox" checked /> normal</label>
+              <label class="inline-check"><input id="batchMobileChk" type="checkbox" checked /> mobile</label>
+            </div>
+            <div class="hint">Файлы скачиваются очередью без ZIP. Настройки синхронизированы с одиночной вкладкой.</div>
+          </div>
+        </div>
+        <div id="batchStatus" class="hint" style="margin-top:8px;">Пакетная обработка не запущена.</div>
+      </div>
+
+      <div class="card">
+        <h2>Настройки пакетного экспорта</h2>
+        <div class="settings-pair">
+          <div class="settings-subcard">
+            <h3>Normal</h3>
+            <div class="settings-compact">
+              <div class="field">
+                <label for="batchNormalHeight">Высота</label>
+                <select id="batchNormalHeight">
+                  <option value="source" selected>Исходный</option>
+                  <option value="3840">3840 (8K)</option>
+                  <option value="2880">2880 (5.7K)</option>
+                  <option value="1920">1920 (4K)</option>
+                  <option value="1440">1440</option>
+                  <option value="1080">1080</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="batchNormalQuality">Кач-во</label>
+                <select id="batchNormalQuality">
+                  <option value="1.00">100</option>
+                  <option value="0.95">95</option>
+                  <option value="0.85" selected>85</option>
+                  <option value="0.75">75</option>
+                  <option value="0.50">50</option>
+                  <option value="0.25">25</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="batchNormalFormat">Формат</label>
+                <select id="batchNormalFormat">
+                  <option value="image/webp" selected>WebP</option>
+                  <option value="image/jpeg">JPG</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="settings-subcard">
+            <h3>Mobile</h3>
+            <div class="settings-compact">
+              <div class="field">
+                <label for="batchMobileHeight">Высота</label>
+                <select id="batchMobileHeight">
+                  <option value="source">Исходный</option>
+                  <option value="3840">3840 (8K)</option>
+                  <option value="2880">2880 (5.7K)</option>
+                  <option value="1920">1920 (4K)</option>
+                  <option value="1440" selected>1440</option>
+                  <option value="1080">1080</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="batchMobileQuality">Кач-во</label>
+                <select id="batchMobileQuality">
+                  <option value="1.00">100</option>
+                  <option value="0.95">95</option>
+                  <option value="0.85">85</option>
+                  <option value="0.75" selected>75</option>
+                  <option value="0.50">50</option>
+                  <option value="0.25">25</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="batchMobileFormat">Формат</label>
+                <select id="batchMobileFormat">
+                  <option value="image/webp" selected>WebP</option>
+                  <option value="image/jpeg">JPG</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hint" style="margin-top:8px;">Параметры фиксируются при запуске очереди, чтобы все изображения в партии сохранялись одинаково; эти же значения можно отладить на одном файле в одиночной вкладке.</div>
+      </div>
+
+      <div class="card">
+        <h2>Пакетная обработка</h2>
+        <div class="actions">
+          <button id="btnBatchStart" class="primary" type="button">Пакетно преобразовать и скачать</button>
+          <button id="btnBatchStop" type="button" disabled>Остановить</button>
+        </div>
+        <progress id="batchProgress" class="batch-progress" value="0" max="1" style="margin-top:10px;"></progress>
+        <div id="batchPreviewGrid" class="result-grid">
+          <div class="hint">Во время пакетной обработки здесь появится текущий обработанный файл.</div>
+        </div>
+        <div id="batchLog" class="batch-log" style="margin-top:8px;">Журнал появится после запуска.</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    "use strict";
+
+    var tabSingle = document.getElementById("tabSingle");
+    var tabBatch = document.getElementById("tabBatch");
+    var singlePanel = document.getElementById("singlePanel");
+    var batchPanel = document.getElementById("batchPanel");
+    var fileInput = document.getElementById("fileInput");
+    var packJsInput = document.getElementById("packJsInput");
+    var imageInfoEl = document.getElementById("imageInfo");
+    var statusEl = document.getElementById("status");
+    var outputEl = document.getElementById("output");
+    var packOutputFormatEl = document.getElementById("packOutputFormat");
+    var packOutputFormatHintEl = document.getElementById("packOutputFormatHint");
+    var btnGenerate = document.getElementById("btnGenerate");
+    var btnDownload = document.getElementById("btnDownload");
+    var normalHeightEl = document.getElementById("normalHeight");
+    var normalQualityEl = document.getElementById("normalQuality");
+    var normalFormatEl = document.getElementById("normalFormat");
+    var mobileHeightEl = document.getElementById("mobileHeight");
+    var mobileQualityEl = document.getElementById("mobileQuality");
+    var mobileFormatEl = document.getElementById("mobileFormat");
+    var btnDownloadImageNormal = document.getElementById("btnDownloadImageNormal");
+    var btnDownloadImageMobile = document.getElementById("btnDownloadImageMobile");
+    var resultGridEl = document.getElementById("resultGrid");
+    var batchFileInput = document.getElementById("batchFileInput");
+    var batchNormalChk = document.getElementById("batchNormalChk");
+    var batchMobileChk = document.getElementById("batchMobileChk");
+    var batchNormalHeightEl = document.getElementById("batchNormalHeight");
+    var batchNormalQualityEl = document.getElementById("batchNormalQuality");
+    var batchNormalFormatEl = document.getElementById("batchNormalFormat");
+    var batchMobileHeightEl = document.getElementById("batchMobileHeight");
+    var batchMobileQualityEl = document.getElementById("batchMobileQuality");
+    var batchMobileFormatEl = document.getElementById("batchMobileFormat");
+    var btnBatchStart = document.getElementById("btnBatchStart");
+    var btnBatchStop = document.getElementById("btnBatchStop");
+    var batchProgressEl = document.getElementById("batchProgress");
+    var batchStatusEl = document.getElementById("batchStatus");
+    var batchPreviewGridEl = document.getElementById("batchPreviewGrid");
+    var batchLogEl = document.getElementById("batchLog");
+    var syncingExportSettings = false;
+
+    var generatedPacks = { normal: null, mobile: null };
+    var suggestedFileNames = { normal: "asset-360.js", mobile: "asset-360-mobile.js" };
+    var loadedFile = null;
+    var loadedDataUrl = "";
+    var loadedMeta = null;
+    var loadedImage = null;
+    var batchState = {
+      running: false,
+      stopRequested: false,
+      processed: 0,
+      total: 0,
+      downloads: 0,
+      outputFormat: "css",
+      errors: []
+    };
+
+    // Возвращает единственный выбранный формат пакета; неизвестное значение безопасно сводится к CSS.
+    function getSelectedPackOutputFormat() {
+      return packOutputFormatEl && packOutputFormatEl.value === "js" ? "js" : "css";
+    }
+
+    // Даёт короткую подпись формата для кнопок, статусов и метаданных результата.
+    function getPackOutputFormatLabel(format) {
+      return format === "js" ? "JS" : "CSS";
+    }
+
+    // Возвращает имя, содержимое и MIME только выбранного представления готового пакета.
+    function getPackOutputFile(pack, format) {
+      if (!pack) return null;
+      if (format === "js") {
+        return {
+          fileName: pack.fileName,
+          text: pack.jsText,
+          mimeType: "application/javascript;charset=utf-8",
+          bytes: pack.jsBytes
+        };
+      }
+      return {
+        fileName: pack.cssFileName,
+        text: pack.cssText,
+        mimeType: "text/css;charset=utf-8",
+        bytes: pack.cssBytes
+      };
+    }
+
+    // Экранирует строку для безопасной вставки в JS-литерал.
+    function jsStringLiteral(raw) {
+      return String(raw || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/\r/g, "\\r")
+        .replace(/\n/g, "\\n");
+    }
+
+    // Экранирует короткие пользовательские строки перед выводом в HTML.
+    function escapeHtml(raw) {
+      return String(raw || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    // Разбивает длинную строку data-url на куски, чтобы итоговый файл легче открывался в редакторе.
+    function chunkString(text, chunkSize) {
+      var chunks = [];
+      var i = 0;
+      var size = Math.max(128, chunkSize || 16384);
+      while (i < text.length) {
+        chunks.push(text.slice(i, i + size));
+        i += size;
+      }
+      return chunks;
+    }
+
+    // Форматирует байты в человекочитаемый вид для сравнения normal и mobile.
+    function formatBytes(value) {
+      var bytes = Math.max(0, Number(value) || 0);
+      if (bytes < 1024) return bytes + " Б";
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " КБ";
+      return (bytes / 1024 / 1024).toFixed(2) + " МБ";
+    }
+
+    // Возвращает MIME-тип из data-url, чтобы показать фактический формат после canvas-экспорта.
+    function getDataUrlMime(dataUrl) {
+      var match = String(dataUrl || "").match(/^data:([^;,]+)[;,]/i);
+      return match ? match[1].toLowerCase() : "";
+    }
+
+    // Считает примерный размер бинарного изображения внутри data-url без учета JS-обертки.
+    function getDataUrlByteSize(dataUrl) {
+      var text = String(dataUrl || "");
+      var comma = text.indexOf(",");
+      if (comma < 0) return text.length;
+      var header = text.slice(0, comma).toLowerCase();
+      var payload = text.slice(comma + 1);
+      if (header.indexOf(";base64") >= 0) {
+        var clean = payload.replace(/\s/g, "");
+        var padding = /==$/.test(clean) ? 2 : /=$/.test(clean) ? 1 : 0;
+        return Math.max(0, Math.floor(clean.length * 3 / 4) - padding);
+      }
+      try {
+        return decodeURIComponent(payload).length;
+      } catch (e) {
+        return payload.length;
+      }
+    }
+
+    // Переводит MIME-тип в короткое название для карточек и meta-полей.
+    function formatMimeLabel(mime) {
+      var type = String(mime || "").toLowerCase();
+      if (type === "image/jpeg") return "JPG";
+      if (type === "image/webp") return "WebP";
+      if (type === "image/png") return "PNG";
+      return type || "unknown";
+    }
+
+    // Форматирует числовое качество в проценты; старые пакеты без качества показываются как отсутствие данных.
+    function formatQualityLabel(value) {
+      if (value === null || value === undefined || value === "") return "не указано";
+      var number = Number(value);
+      return isFinite(number) ? Math.round(number * 100) + "%" : "не указано";
+    }
+
+    // Собирает человекочитаемую сводку о том, как JS-пакет был сохранён; все поля опциональны для совместимости со старыми файлами.
+    function formatPackMetaSummary(packMeta) {
+      if (!packMeta || typeof packMeta !== "object") return "";
+      var settings = packMeta.settings && typeof packMeta.settings === "object" ? packMeta.settings : {};
+      var actualType = packMeta.actualType || packMeta.type || settings.actualFormat || settings.format || "";
+      var requestedType = settings.requestedFormat || packMeta.requestedType || "";
+      var parts = [];
+
+      if (packMeta.mode || settings.mode) parts.push("режим " + (packMeta.mode || settings.mode));
+      if (actualType) parts.push("формат " + formatMimeLabel(actualType));
+      if (requestedType && requestedType !== actualType) parts.push("запрошен " + formatMimeLabel(requestedType));
+      if (packMeta.width && packMeta.height) parts.push("кадр " + packMeta.width + "x" + packMeta.height);
+      if (packMeta.size) parts.push("изображение " + formatBytes(packMeta.size));
+
+      var quality = packMeta.quality !== undefined ? packMeta.quality : settings.quality;
+      if (quality !== undefined && quality !== null && quality !== "") parts.push("качество " + formatQualityLabel(quality));
+
+      var targetHeightLabel = packMeta.targetHeightLabel || settings.targetHeightLabel || "";
+      if (!targetHeightLabel && settings.requestedTargetHeight !== undefined && settings.requestedTargetHeight !== null) {
+        targetHeightLabel = settings.requestedTargetHeight === "source" ? "исходная" : settings.requestedTargetHeight + " px";
+      }
+      if (targetHeightLabel) parts.push("целевая высота " + targetHeightLabel);
+      if (packMeta.generatedAt) parts.push("дата " + packMeta.generatedAt);
+      if (Array.isArray(packMeta.warnings) && packMeta.warnings.length) parts.push("предупреждение: " + packMeta.warnings.join(" "));
+
+      return parts.length ? "JS-пакет сохранён: " + parts.join(", ") + "." : "";
+    }
+
+    // Обновляет небольшой статус по выбранному изображению и проверяет пропорцию 2:1; если источник — JS-пакет, добавляет найденные метаданные сохранения.
+    function updateImageInfo(meta) {
+      if (!meta) {
+        imageInfoEl.textContent = "Файл еще не выбран.";
+        imageInfoEl.className = "hint";
+        btnDownloadImageNormal.disabled = true;
+        btnDownloadImageMobile.disabled = true;
+        return;
+      }
+      var ratio = meta.height > 0 ? meta.width / meta.height : 0;
+      var ratioDiff = Math.abs(ratio - 2);
+      var ratioOk = ratioDiff <= 0.05;
+      imageInfoEl.innerHTML =
+        "Файл: <span class='mono'>" + escapeHtml(meta.name) + "</span>, " +
+        "размер: " + formatBytes(meta.size) + ", " +
+        "кадр: " + meta.width + "x" + meta.height + ", " +
+        "ratio: " + ratio.toFixed(4) + " " +
+        (ratioOk ? "<span class='ok'>(OK ~ 2:1)</span>" : "<span class='warn'>(не похоже на 2:1)</span>");
+      var packSummary = formatPackMetaSummary(meta.packMeta);
+      if (packSummary) {
+        imageInfoEl.innerHTML += "<br>" + escapeHtml(packSummary);
+      } else if (meta.fromPack) {
+        imageInfoEl.innerHTML += "<br>Метаданные сохранения в JS не найдены: это допустимо для старых пакетов.";
+      }
+      imageInfoEl.className = "hint";
+      btnDownloadImageNormal.disabled = false;
+      btnDownloadImageMobile.disabled = false;
+    }
+
+    // Вырезает из текста *-360.js содержимое массива строк и склеивает в один data-url (как в сгенерированном пакете).
+    function extractDataUrlFromPackJs(jsText) {
+      var text = String(jsText || "");
+      var startRe = /var\s+dataUrl\s*=\s*\[/;
+      var startMatch = text.match(startRe);
+      if (!startMatch) {
+        throw new Error("В файле не найден блок var dataUrl = [ ... ] (ожидается пакет этого конвертера).");
+      }
+      var i = startMatch.index + startMatch[0].length;
+      var endRe = /\]\s*\.\s*join\s*\(\s*(['"])\s*\1\s*\)/;
+      var rest = text.slice(i);
+      var endMatch = rest.match(endRe);
+      if (!endMatch) {
+        throw new Error("Не найдено окончание массива dataUrl (].join('')).");
+      }
+      var body = rest.slice(0, endMatch.index);
+      var chunks = [];
+      var p = 0;
+      while (p < body.length) {
+        while (p < body.length && /[\s,\r\n]/.test(body.charAt(p))) p++;
+        if (p >= body.length) break;
+        var q = body.charAt(p);
+        if (q !== "'" && q !== "\"") {
+          throw new Error("Некорректный фрагмент в массиве dataUrl (ожидалась строка в кавычках).");
+        }
+        p++;
+        var frag = "";
+        var quote = q;
+        while (p < body.length) {
+          var c = body.charAt(p);
+          if (c === "\\") {
+            p++;
+            if (p >= body.length) throw new Error("Обрыв escape в строке dataUrl.");
+            var e = body.charAt(p);
+            if (e === "n") frag += "\n";
+            else if (e === "r") frag += "\r";
+            else if (e === quote) frag += quote;
+            else if (e === "\\") frag += "\\";
+            else frag += e;
+            p++;
+          } else if (c === quote) {
+            p++;
+            break;
+          } else {
+            frag += c;
+            p++;
+          }
+        }
+        chunks.push(frag);
+      }
+      var joined = chunks.join("");
+      if (!/^data:/i.test(joined)) {
+        throw new Error("В пакете не получился корректный data-url (нет префикса data:).");
+      }
+      return joined;
+    }
+
+    // Находит JS-объект после указанного объявления, не выполняя код пакета; строки и вложенные скобки учитываются вручную.
+    function extractObjectLiteralAfter(text, startRe) {
+      var source = String(text || "");
+      var match = source.match(startRe);
+      if (!match) return "";
+      var p = match.index + match[0].length;
+      while (p < source.length && /\s/.test(source.charAt(p))) p++;
+      if (source.charAt(p) !== "{") return "";
+
+      var start = p;
+      var depth = 0;
+      var quote = "";
+      var escapeNext = false;
+      for (; p < source.length; p++) {
+        var c = source.charAt(p);
+        if (quote) {
+          if (escapeNext) {
+            escapeNext = false;
+          } else if (c === "\\") {
+            escapeNext = true;
+          } else if (c === quote) {
+            quote = "";
+          }
+          continue;
+        }
+        if (c === "'" || c === "\"") {
+          quote = c;
+          continue;
+        }
+        if (c === "{") depth++;
+        if (c === "}") {
+          depth--;
+          if (depth === 0) return source.slice(start, p + 1);
+        }
+      }
+      return "";
+    }
+
+    // Декодирует простые строковые литералы из старого packMeta без выполнения пользовательского JS.
+    function decodeSimpleJsString(value) {
+      return String(value || "")
+        .replace(/\\r/g, "\r")
+        .replace(/\\n/g, "\n")
+        .replace(/\\'/g, "'")
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, "\\");
+    }
+
+    // Читает одно поле из старого packMeta, где ключи были без кавычек, а mode мог ссылаться на переменную packMode.
+    function readLegacyPackMetaValue(text, fieldName, packMode) {
+      var re = new RegExp(fieldName + "\\s*:\\s*(packMode|null|-?\\d+(?:\\.\\d+)?|'((?:\\\\.|[^'])*)'|\"((?:\\\\.|[^\"])*)\")");
+      var match = String(text || "").match(re);
+      if (!match) return undefined;
+      var raw = match[1];
+      if (raw === "packMode") return packMode || "";
+      if (raw === "null") return null;
+      if (/^-?\d/.test(raw)) return Number(raw);
+      return decodeSimpleJsString(match[2] || match[3] || "");
+    }
+
+    // Достаёт старые плоские метаданные из packMeta; если их нет, возвращает null и не мешает загрузке data-url.
+    function extractLegacyPackMetaFromPackJs(jsText) {
+      var text = String(jsText || "");
+      var packModeMatch = text.match(/var\s+packMode\s*=\s*(['"])((?:\\.|(?!\1).)*)\1/);
+      var packMode = packModeMatch ? decodeSimpleJsString(packModeMatch[2]) : "";
+      var fields = [
+        "generatedAt", "mode", "sourceName", "sourceType", "sourceSize",
+        "type", "size", "width", "height", "quality", "targetHeight", "targetHeightLabel"
+      ];
+      var meta = { schema: "vn360-pack-meta-v1" };
+      var found = false;
+      fields.forEach(function(fieldName) {
+        var value = readLegacyPackMetaValue(text, fieldName, packMode);
+        if (value !== undefined) {
+          meta[fieldName] = value;
+          found = true;
+        }
+      });
+      return found ? meta : null;
+    }
+
+    // Извлекает необязательные метаданные сохранения из JS-пакета; новые пакеты читаются как JSON, старые — по отдельным полям.
+    function extractPackMetaFromPackJs(jsText) {
+      var text = String(jsText || "");
+      var objectText = extractObjectLiteralAfter(text, /var\s+packMeta\s*=/);
+      if (objectText) {
+        try {
+          return JSON.parse(objectText);
+        } catch (e) {
+          // Старый packMeta не был JSON-литералом, поэтому ниже читаем только известные безопасные поля.
+        }
+      }
+      return extractLegacyPackMetaFromPackJs(text);
+    }
+
+    // Читает data-url в Image и возвращает те же поля, что readImageFile, для общей ветки «источник загружен».
+    function decodeImageFromDataUrl(dataUrl, displayName, packMeta) {
+      return new Promise(function(resolve, reject) {
+        var img = new Image();
+        img.onload = function() {
+          resolve({
+            dataUrl: dataUrl,
+            meta: {
+              name: displayName || "из-js-пакета",
+              size: getDataUrlByteSize(dataUrl),
+              type: getDataUrlMime(dataUrl) || "image/jpeg",
+              width: img.naturalWidth || img.width || 0,
+              height: img.naturalHeight || img.height || 0,
+              fromPack: true,
+              packMeta: packMeta || null
+            },
+            image: img
+          });
+        };
+        img.onerror = function() {
+          reject(new Error("Не удалось декодировать изображение из data-url пакета."));
+        };
+        img.src = dataUrl;
+      });
+    }
+
+    // Читает изображение как data-url и достает его размеры через Image.
+    function readImageFile(file) {
+      return new Promise(function(resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function() {
+          var dataUrl = String(reader.result || "");
+          var img = new Image();
+          img.onload = function() {
+            resolve({
+              dataUrl: dataUrl,
+              meta: {
+                name: file.name,
+                size: file.size,
+                type: file.type || "image/jpeg",
+                width: img.naturalWidth || img.width || 0,
+                height: img.naturalHeight || img.height || 0
+              },
+              image: img
+            });
+          };
+          img.onerror = function() {
+            reject(new Error("Не удалось прочитать размеры изображения."));
+          };
+          img.src = dataUrl;
+        };
+        reader.onerror = function() {
+          reject(new Error("Ошибка чтения файла."));
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Возвращает настройки ручного экспорта для normal или mobile из формы.
+    function getVariantSettings(heightEl, qualityEl, formatEl) {
+      var rawHeight = heightEl.value === "source" ? "source" : parseInt(heightEl.value, 10);
+      var quality = parseFloat(qualityEl.value);
+      if (!isFinite(quality)) quality = 0.75;
+      return {
+        targetHeight: rawHeight,
+        quality: Math.max(0.01, Math.min(1, quality)),
+        type: formatEl.value || "image/webp"
+      };
+    }
+
+    // Собирает настройки одиночной вкладки; эти значения служат эталоном для отладки одного файла.
+    function getSingleExportSettings() {
+      return {
+        normal: getVariantSettings(normalHeightEl, normalQualityEl, normalFormatEl),
+        mobile: getVariantSettings(mobileHeightEl, mobileQualityEl, mobileFormatEl)
+      };
+    }
+
+    // Собирает настройки пакетной вкладки; поля синхронизируются с одиночной вкладкой, но читаются отдельно перед запуском очереди.
+    function getBatchExportSettings() {
+      return {
+        normal: getVariantSettings(batchNormalHeightEl, batchNormalQualityEl, batchNormalFormatEl),
+        mobile: getVariantSettings(batchMobileHeightEl, batchMobileQualityEl, batchMobileFormatEl)
+      };
+    }
+
+    // Кодирует canvas в выбранный формат; если WebP недоступен, аккуратно падает обратно на JPG.
+    function encodeCanvasToDataUrl(canvas, requestedType, quality) {
+      var warnings = [];
+      var dataUrl = canvas.toDataURL(requestedType, quality);
+      var actualType = getDataUrlMime(dataUrl);
+      if (actualType !== String(requestedType || "").toLowerCase()) {
+        warnings.push("Браузер не поддержал " + formatMimeLabel(requestedType) + ", использован JPG.");
+        dataUrl = canvas.toDataURL("image/jpeg", quality);
+        actualType = getDataUrlMime(dataUrl);
+      }
+      return {
+        dataUrl: dataUrl,
+        type: actualType || requestedType || "image/jpeg",
+        warnings: warnings
+      };
+    }
+
+    // Создает вариант пакета из переданного источника: пакетная очередь не меняет состояние одиночного предпросмотра.
+    function buildImageVariantFromSource(mode, title, settings, sourceImage, sourceMeta) {
+      if (!sourceImage || !sourceMeta) throw new Error("Изображение еще не загружено.");
+      var fallbackHeight = Number(settings.targetHeight) || 1440;
+      var sourceHeight = Math.max(1, sourceMeta.height || sourceImage.naturalHeight || sourceImage.height || fallbackHeight);
+      var sourceWidth = Math.max(1, sourceMeta.width || sourceImage.naturalWidth || sourceImage.width || sourceHeight * 2);
+      var useSourceSize = settings.targetHeight === "source";
+      var requestedHeight = useSourceSize ? sourceHeight : Math.max(1, Number(settings.targetHeight) || sourceHeight);
+      var targetHeight = Math.min(requestedHeight, sourceHeight);
+      var targetWidth = Math.max(1, Math.round(sourceWidth * targetHeight / sourceHeight));
+      var canvas = document.createElement("canvas");
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+
+      var ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Canvas 2D недоступен, вариант не сформирован.");
+      ctx.imageSmoothingEnabled = true;
+      if ("imageSmoothingQuality" in ctx) ctx.imageSmoothingQuality = "high";
+      // Черная подложка нужна для JPG: прозрачные PNG иначе могут дать неожиданный цвет.
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, targetWidth, targetHeight);
+      ctx.drawImage(sourceImage, 0, 0, targetWidth, targetHeight);
+
+      var encoded = encodeCanvasToDataUrl(canvas, settings.type, settings.quality);
+      return {
+        mode: mode,
+        title: title,
+        dataUrl: encoded.dataUrl,
+        type: encoded.type,
+        requestedType: settings.type,
+        sourceType: sourceMeta.type || "image/jpeg",
+        sourceName: sourceMeta.name,
+        sourceSize: sourceMeta.size,
+        sourceWidth: sourceWidth,
+        sourceHeight: sourceHeight,
+        width: targetWidth,
+        height: targetHeight,
+        quality: settings.quality,
+        requestedQuality: settings.quality,
+        requestedTargetHeight: settings.targetHeight,
+        targetHeight: useSourceSize ? null : requestedHeight,
+        targetHeightLabel: useSourceSize ? "исходная" : requestedHeight + " px",
+        imageBytes: getDataUrlByteSize(encoded.dataUrl),
+        warnings: encoded.warnings
+      };
+    }
+
+    // Создает вариант пакета из текущего загруженного изображения одиночного режима.
+    function buildImageVariant(mode, title, settings) {
+      if (!loadedImage || !loadedMeta) throw new Error("Изображение еще не загружено.");
+      return buildImageVariantFromSource(mode, title, settings, loadedImage, loadedMeta);
+    }
+
+    // Создает normal-вариант по ручным настройкам основного JS-пакета.
+    function buildNormalVariant() {
+      return buildImageVariant("normal", "Normal", getVariantSettings(normalHeightEl, normalQualityEl, normalFormatEl));
+    }
+
+    // Создает mobile-вариант по ручным настройкам облегченного JS-пакета.
+    function buildMobileVariant() {
+      return buildImageVariant("mobile", "Mobile", getVariantSettings(mobileHeightEl, mobileQualityEl, mobileFormatEl));
+    }
+
+    // Возвращает расширение файла по фактическому MIME после canvas.toDataURL.
+    function extensionForImageMime(mime) {
+      var m = String(mime || "").toLowerCase();
+      if (m === "image/jpeg") return "jpg";
+      if (m === "image/webp") return "webp";
+      if (m === "image/png") return "png";
+      return "img";
+    }
+
+    // Базовое имя для скачиваемого растра: убираем суффикс (из JS), расширение и хвосты *-360 из имени источника.
+    function getDownloadImageBaseName() {
+      var name = loadedMeta && loadedMeta.name ? String(loadedMeta.name) : "asset";
+      name = name.replace(/\s*\(из JS\)\s*$/i, "");
+      var dot = name.lastIndexOf(".");
+      if (dot > 0) name = name.slice(0, dot);
+      name = name.replace(/-360-mobile$/i, "").replace(/-360$/i, "");
+      if (!name) name = "asset";
+      return name;
+    }
+
+    // Декодирует data-url с base64-полезной нагрузкой в Uint8Array (формат вывода canvas.toDataURL).
+    function dataUrlToUint8Array(dataUrl) {
+      var text = String(dataUrl || "");
+      var comma = text.indexOf(",");
+      if (comma < 0) throw new Error("Некорректный data-url.");
+      var header = text.slice(0, comma).toLowerCase();
+      var payload = text.slice(comma + 1).replace(/\s/g, "");
+      if (header.indexOf(";base64") < 0) {
+        throw new Error("Ожидался base64 data-url (результат canvas.toDataURL).");
+      }
+      var binary = atob(payload);
+      var bytes = new Uint8Array(binary.length);
+      for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      return bytes;
+    }
+
+    // Скачивает растровый файл по data-url без JS-обёртки.
+    function downloadDataUrlAsFile(dataUrl, fileName) {
+      var bytes = dataUrlToUint8Array(dataUrl);
+      var mime = getDataUrlMime(dataUrl) || "application/octet-stream";
+      var blob = new Blob([bytes], { type: mime });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function() { URL.revokeObjectURL(url); }, 0);
+    }
+
+    // Перекодирует загруженное изображение по настройкам блока normal или mobile и инициирует скачивание файла.
+    function downloadSettingsRaster(mode) {
+      if (!loadedDataUrl || !loadedMeta || !loadedImage) {
+        statusEl.innerHTML = "<span class='warn'>Сначала загрузите изображение или JS-пакет.</span>";
+        return;
+      }
+      try {
+        var variant = mode === "mobile" ? buildMobileVariant() : buildNormalVariant();
+        var base = getDownloadImageBaseName();
+        var ext = extensionForImageMime(variant.type);
+        var tag = mode === "mobile" ? "mobile" : "normal";
+        var fileName = base + "-" + tag + "." + ext;
+        downloadDataUrlAsFile(variant.dataUrl, fileName);
+        var okMsg = "<span class='ok'>Сохранено: " + escapeHtml(fileName) + "</span>";
+        if (variant.warnings && variant.warnings.length) {
+          okMsg += " <span class='warn'>" + escapeHtml(variant.warnings.join(" ")) + "</span>";
+        }
+        statusEl.innerHTML = okMsg;
+      } catch (err) {
+        statusEl.innerHTML = "<span class='warn'>" + escapeHtml(err.message) + "</span>";
+      }
+    }
+
+    // Собирает сериализуемые метаданные JS-пакета: фактический результат canvas и исходные настройки экспорта хранятся отдельно.
+    function buildPackMeta(variant) {
+      var quality = variant.quality === null || variant.quality === undefined
+        ? null
+        : Number(Number(variant.quality).toFixed(2));
+      var requestedTargetHeight = variant.requestedTargetHeight === undefined
+        ? variant.targetHeight
+        : variant.requestedTargetHeight;
+
+      return {
+        schema: "vn360-pack-meta-v2",
+        converter: "tools/convert-360-img-to-css.html",
+        generatedAt: new Date().toISOString(),
+        mode: String(variant.mode || ""),
+        sourceName: String(variant.sourceName || ""),
+        sourceType: String(variant.sourceType || "image/jpeg"),
+        sourceSize: Number(variant.sourceSize || 0),
+        sourceWidth: Number(variant.sourceWidth || 0),
+        sourceHeight: Number(variant.sourceHeight || 0),
+        type: String(variant.type || "image/jpeg"),
+        format: formatMimeLabel(variant.type || "image/jpeg"),
+        size: Number(variant.imageBytes || 0),
+        width: Number(variant.width || 0),
+        height: Number(variant.height || 0),
+        quality: quality,
+        targetHeight: variant.targetHeight === null ? null : Number(variant.targetHeight || 0),
+        targetHeightLabel: String(variant.targetHeightLabel || ""),
+        settings: {
+          mode: String(variant.mode || ""),
+          requestedFormat: String(variant.requestedType || variant.type || "image/jpeg"),
+          actualFormat: String(variant.type || "image/jpeg"),
+          quality: quality,
+          requestedQuality: quality,
+          requestedTargetHeight: requestedTargetHeight === "source" ? "source" : (requestedTargetHeight === null ? null : Number(requestedTargetHeight || 0)),
+          targetHeightLabel: String(variant.targetHeightLabel || ""),
+          imageSmoothing: true,
+          imageSmoothingQuality: "high",
+          jpgBackground: "#000"
+        },
+        warnings: Array.isArray(variant.warnings) ? variant.warnings.slice() : []
+      };
+    }
+
+    // Собирает итоговый текст -360.js: ключ берется из пути самого пакета, без ручного дублирования story.js.
+    function buildPackJs(variant) {
+      var chunks = chunkString(variant.dataUrl, 16384);
+      var chunkLines = chunks.map(function(part) {
+        return "    '" + jsStringLiteral(part) + "'";
+      }).join(",\n");
+      var packMetaLines = JSON.stringify(buildPackMeta(variant), null, 4).split("\n").map(function(line, index) {
+        return (index === 0 ? "  var packMeta = " : "  ") + line;
+      }).join("\n") + ";";
+
+      return [
+        "(function() {",
+        "  'use strict';",
+        "  window.VN360_PACKS_VARIANTS = window.VN360_PACKS_VARIANTS || {};",
+        "  window.VN360_PACKS_META_VARIANTS = window.VN360_PACKS_META_VARIANTS || {};",
+        "",
+        "  // Пакет регистрируется по URL самого JS, поэтому имя исходной картинки после экспорта не важно.",
+        "  function normalizePackUrl(rawUrl) {",
+        "    try {",
+        "      return new URL(rawUrl, window.location.href).href;",
+        "    } catch (e) {",
+        "      return String(rawUrl || '');",
+        "    }",
+        "  }",
+        "  function getPackScriptUrl() {",
+        "    var script = document.currentScript || (function() {",
+        "      var scripts = document.getElementsByTagName('script');",
+        "      return scripts[scripts.length - 1] || null;",
+        "    })();",
+        "    var scriptUrl = script && script.src ? script.src : '';",
+        "    if (!scriptUrl && script && script.getAttribute) scriptUrl = script.getAttribute('src') || '';",
+        "    return normalizePackUrl(scriptUrl);",
+        "  }",
+        "  function getNormalPackUrl(scriptUrl) {",
+        "    return String(scriptUrl || '').replace(/-360(?:-[a-z0-9_-]+)?\\.js(\\?.*)?$/i, '-360.js$1');",
+        "  }",
+        "  function getRelativePackUrl(scriptUrl) {",
+        "    var baseHref = window.location.href;",
+        "    var slashIndex = baseHref.lastIndexOf('/');",
+        "    var baseDirHref = slashIndex >= 0 ? baseHref.slice(0, slashIndex + 1) : baseHref;",
+        "    return scriptUrl.indexOf(baseDirHref) === 0 ? scriptUrl.slice(baseDirHref.length) : '';",
+        "  }",
+        "  function addPackKey(keys, key) {",
+        "    key = String(key || '');",
+        "    if (key && keys.indexOf(key) === -1) keys.push(key);",
+        "  }",
+        "  function registerPackKey(key, dataUrl, meta) {",
+        "    if (!key) return;",
+        "    var mode = meta && meta.mode ? meta.mode : packMode;",
+        "    window.VN360_PACKS_VARIANTS[key] = window.VN360_PACKS_VARIANTS[key] || {};",
+        "    window.VN360_PACKS_META_VARIANTS[key] = window.VN360_PACKS_META_VARIANTS[key] || {};",
+        "    window.VN360_PACKS_VARIANTS[key][mode] = dataUrl;",
+        "    if (meta) window.VN360_PACKS_META_VARIANTS[key][mode] = meta;",
+        "  }",
+        "  var scriptUrl = getPackScriptUrl();",
+        "  var relativeScriptUrl = getRelativePackUrl(scriptUrl);",
+        "  var normalPackUrl = getNormalPackUrl(scriptUrl);",
+        "  var relativeNormalPackUrl = getRelativePackUrl(normalPackUrl);",
+        "  var packMode = '" + jsStringLiteral(variant.mode) + "';",
+        "  var dataUrl = [",
+        chunkLines,
+        "  ].join('');",
+        "",
+        packMetaLines,
+        "",
+        "  var allKeys = [];",
+        "  addPackKey(allKeys, scriptUrl);",
+        "  addPackKey(allKeys, relativeScriptUrl);",
+        "  addPackKey(allKeys, normalPackUrl);",
+        "  addPackKey(allKeys, relativeNormalPackUrl);",
+        "  for (var i = 0; i < allKeys.length; i++) {",
+        "    registerPackKey(allKeys[i], dataUrl, packMeta);",
+        "  }",
+        "})();",
+        ""
+      ].join("\n");
+    }
+
+    // Экранирует значение для двойных кавычек CSS; данные пакета остаются обычной строкой и не становятся URL или правилом.
+    function cssStringLiteral(value) {
+      return String(value === undefined || value === null ? "" : value)
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/\r/g, "\\d ")
+        .replace(/\n/g, "\\a ");
+    }
+
+    // Формирует декларативный *-360.css: изображение разбито на короткие custom properties,
+    // чтобы редактор и движок могли извлечь только проверенные данные без выполнения пользовательского JavaScript.
+    function buildPackCss(variant) {
+      var chunks = chunkString(variant.dataUrl, 32768);
+      var meta = buildPackMeta(variant);
+      var lines = [
+        "/* VN360 CSS pack v1: подключать только через изолированный загрузчик панорам. */",
+        "#vn360-pack {",
+        '  --vn360-schema: "vn360-css-pack-v1";',
+        '  --vn360-mode: "' + cssStringLiteral(variant.mode) + '";',
+        '  --vn360-mime: "' + cssStringLiteral(variant.type) + '";',
+        '  --vn360-width: "' + Number(variant.width || 0) + '";',
+        '  --vn360-height: "' + Number(variant.height || 0) + '";',
+        '  --vn360-size: "' + Number(variant.imageBytes || 0) + '";',
+        '  --vn360-quality: "' + cssStringLiteral(meta.quality) + '";',
+        '  --vn360-chunk-count: "' + chunks.length + '";'
+      ];
+      for (var i = 0; i < chunks.length; i++) {
+        lines.push('  --vn360-data-' + i + ': "' + cssStringLiteral(chunks[i]) + '";');
+      }
+      lines.push("}", "");
+      return lines.join("\n");
+    }
+
+    // Подсказывает имена результирующих файлов на основе имени входа; для уже готовых *-360.js убирает суффикс, чтобы не было *-360-360.js.
+    function suggestPackFileNames(fileName) {
+      var name = String(fileName || "asset");
+      var dot = name.lastIndexOf(".");
+      if (dot > 0) name = name.slice(0, dot);
+      name = name.replace(/-360-mobile$/i, "").replace(/-360$/i, "");
+      if (!name) name = "asset";
+      return {
+        normal: name + "-360.js",
+        mobile: name + "-360-mobile.js"
+      };
+    }
+
+    // Выводит имя безопасного CSS-пакета из совместимого имени JS, сохраняя суффиксы normal/mobile.
+    function suggestCssPackFileName(jsFileName) {
+      return String(jsFileName || "asset-360.js").replace(/\.js$/i, ".css");
+    }
+
+    // Очищает результаты при смене исходника или настроек, чтобы нельзя было скачать устаревший пакет.
+    function resetGeneratedPacks() {
+      generatedPacks = { normal: null, mobile: null };
+      outputEl.value = "";
+      btnDownload.disabled = true;
+      resultGridEl.innerHTML = '<div class="hint">После генерации здесь появятся размеры, вес и превью normal/mobile.</div>';
+    }
+
+    // Показывает в textarea только выбранный CSS или JS указанного варианта для ручной проверки.
+    function showOutputVariant(mode, format) {
+      var pack = generatedPacks[mode] || generatedPacks.normal || generatedPacks.mobile;
+      if (!pack) {
+        outputEl.value = "";
+        return;
+      }
+      var selectedFormat = format || getSelectedPackOutputFormat();
+      outputEl.value = selectedFormat === "js" ? pack.jsText : pack.cssText;
+    }
+
+    // Обновляет все одиночные действия после выбора CSS/JS; готовые изображения пересобирать для этого не нужно.
+    function updatePackOutputFormatUi() {
+      var selectedFormat = getSelectedPackOutputFormat();
+      var formatLabel = getPackOutputFormatLabel(selectedFormat);
+      if (btnDownload) btnDownload.textContent = "Скачать оба " + formatLabel;
+      if (btnBatchStart) btnBatchStart.textContent = "Пакетно преобразовать и скачать " + formatLabel;
+      if (packOutputFormatHintEl) {
+        packOutputFormatHintEl.textContent = "Все кнопки сохранения и пакетная очередь создают только " + formatLabel + ".";
+      }
+      if (generatedPacks.normal || generatedPacks.mobile) {
+        renderResults();
+        showOutputVariant("normal", selectedFormat);
+      }
+      if (!batchState.running) {
+        resetBatchCurrentPreview("Выбран формат " + formatLabel + ". При запуске очереди будет показан текущий обработанный файл.");
+      }
+    }
+
+    // Создает Blob URL для просмотра результата без огромного data-url в адресной строке.
+    function openVariantPreview(variant) {
+      var comma = variant.dataUrl.indexOf(",");
+      var payload = variant.dataUrl.slice(comma + 1);
+      var binary = atob(payload);
+      var bytes = new Uint8Array(binary.length);
+      for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      var mime = getDataUrlMime(variant.dataUrl) || variant.type || "image/jpeg";
+      var blob = new Blob([bytes], { type: mime });
+      var url = URL.createObjectURL(blob);
+      var opened = window.open(url, "_blank");
+      if (!opened) {
+        statusEl.innerHTML = "<span class='warn'>Браузер заблокировал окно предпросмотра.</span>";
+      }
+      setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
+    }
+
+    // Добавляет строку метаданных в карточку результата.
+    function appendMetaLine(parent, label, value) {
+      var line = document.createElement("div");
+      line.innerHTML = "<strong>" + escapeHtml(label) + ":</strong> " + escapeHtml(value);
+      parent.appendChild(line);
+    }
+
+    // Рисует карточки normal/mobile и оставляет в каждой только просмотр и сохранение выбранного формата пакета.
+    function renderResults() {
+      resultGridEl.innerHTML = "";
+      var selectedFormat = getSelectedPackOutputFormat();
+      var formatLabel = getPackOutputFormatLabel(selectedFormat);
+      ["normal", "mobile"].forEach(function(mode) {
+        var pack = generatedPacks[mode];
+        if (!pack) return;
+        var outputFile = getPackOutputFile(pack, selectedFormat);
+
+        var card = document.createElement("div");
+        card.className = "variant-card";
+
+        var title = document.createElement("h3");
+        title.textContent = pack.title + " (" + outputFile.fileName + ")";
+        card.appendChild(title);
+
+        var img = document.createElement("img");
+        img.className = "variant-preview";
+        img.alt = pack.title + " preview";
+        img.src = pack.dataUrl;
+        img.addEventListener("click", function() {
+          openVariantPreview(pack);
+        });
+        card.appendChild(img);
+
+        var meta = document.createElement("div");
+        meta.className = "variant-meta";
+        appendMetaLine(meta, "Кадр", pack.width + "x" + pack.height);
+        appendMetaLine(meta, "Формат", formatMimeLabel(pack.type));
+        appendMetaLine(meta, "Изображение", formatBytes(pack.imageBytes));
+        appendMetaLine(meta, formatLabel + "-пакет", formatBytes(outputFile.bytes));
+        appendMetaLine(meta, "Качество", Math.round(pack.quality * 100));
+        appendMetaLine(meta, "Целевая высота", pack.targetHeightLabel || (pack.targetHeight + " px"));
+        if (pack.warnings && pack.warnings.length) appendMetaLine(meta, "Предупреждение", pack.warnings.join(" "));
+        card.appendChild(meta);
+
+        var actions = document.createElement("div");
+        actions.className = "actions";
+
+        var btnShow = document.createElement("button");
+        btnShow.type = "button";
+        btnShow.textContent = "Показать " + formatLabel;
+        btnShow.addEventListener("click", function() {
+          showOutputVariant(pack.mode, selectedFormat);
+        });
+        actions.appendChild(btnShow);
+
+        var btnPreview = document.createElement("button");
+        btnPreview.type = "button";
+        btnPreview.textContent = "Открыть превью";
+        btnPreview.addEventListener("click", function() {
+          openVariantPreview(pack);
+        });
+        actions.appendChild(btnPreview);
+
+        var btnSave = document.createElement("button");
+        btnSave.type = "button";
+        btnSave.textContent = "Скачать " + formatLabel;
+        btnSave.addEventListener("click", function() {
+          downloadGeneratedPack(pack.mode);
+        });
+        actions.appendChild(btnSave);
+
+        card.appendChild(actions);
+        resultGridEl.appendChild(card);
+      });
+    }
+
+    // Очищает пакетное превью, когда очередь еще не стартовала или настройки изменились до нового запуска.
+    function resetBatchCurrentPreview(message) {
+      if (!batchPreviewGridEl) return;
+      batchPreviewGridEl.innerHTML = '<div class="hint">' + escapeHtml(message || "Во время пакетной обработки здесь появится текущий обработанный файл.") + '</div>';
+    }
+
+    // Показывает последний собранный в очереди файл с именем именно зафиксированного формата партии.
+    function renderBatchCurrentPreview(sourceName, packs, outputFormat) {
+      if (!batchPreviewGridEl) return;
+      batchPreviewGridEl.innerHTML = "";
+      var rendered = false;
+      var selectedFormat = outputFormat || getSelectedPackOutputFormat();
+      var formatLabel = getPackOutputFormatLabel(selectedFormat);
+      ["normal", "mobile"].forEach(function(mode) {
+        var pack = packs && packs[mode];
+        if (!pack) return;
+        rendered = true;
+        var outputFile = getPackOutputFile(pack, selectedFormat);
+
+        var card = document.createElement("div");
+        card.className = "variant-card";
+
+        var title = document.createElement("h3");
+        title.textContent = pack.title + " — " + sourceName;
+        card.appendChild(title);
+
+        var img = document.createElement("img");
+        img.className = "variant-preview";
+        img.alt = pack.title + " batch preview";
+        img.src = pack.dataUrl;
+        img.addEventListener("click", function() {
+          openVariantPreview(pack);
+        });
+        card.appendChild(img);
+
+        var meta = document.createElement("div");
+        meta.className = "variant-meta";
+        appendMetaLine(meta, "Файл " + formatLabel, outputFile.fileName);
+        appendMetaLine(meta, "Кадр", pack.width + "x" + pack.height);
+        appendMetaLine(meta, "Формат", formatMimeLabel(pack.type));
+        appendMetaLine(meta, "Изображение", formatBytes(pack.imageBytes));
+        appendMetaLine(meta, formatLabel + "-пакет", formatBytes(outputFile.bytes));
+        appendMetaLine(meta, "Качество", Math.round(pack.quality * 100));
+        if (pack.warnings && pack.warnings.length) appendMetaLine(meta, "Предупреждение", pack.warnings.join(" "));
+        card.appendChild(meta);
+
+        batchPreviewGridEl.appendChild(card);
+      });
+      if (!rendered) resetBatchCurrentPreview("Выбранные варианты не были сформированы.");
+    }
+
+    // Скачивает готовый текстовый пакет с указанным MIME; общий путь не смешивает содержимое JS и CSS.
+    function downloadTextPackFile(fileName, text, mimeType) {
+      var blob = new Blob([text], { type: mimeType });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function() { URL.revokeObjectURL(url); }, 0);
+    }
+
+    // Сохраняет готовый пакет строго в переданном формате, не создавая соседний CSS или JS-файл.
+    function downloadPackOutputFile(pack, format) {
+      var outputFile = getPackOutputFile(pack, format);
+      if (!outputFile) return "";
+      downloadTextPackFile(outputFile.fileName, outputFile.text, outputFile.mimeType);
+      return outputFile.fileName;
+    }
+
+    // Скачивает один normal/mobile пакет в формате, который сейчас выбран пользователем.
+    function downloadGeneratedPack(mode) {
+      return downloadPackOutputFile(generatedPacks[mode], getSelectedPackOutputFormat());
+    }
+
+    // Скачивает оба режима только в выбранном формате; задержка снижает риск блокировки второго файла браузером.
+    function downloadBothSelectedPacks() {
+      if (!generatedPacks.normal || !generatedPacks.mobile) return;
+      var selectedFormat = getSelectedPackOutputFormat();
+      downloadPackOutputFile(generatedPacks.normal, selectedFormat);
+      setTimeout(function() {
+        downloadPackOutputFile(generatedPacks.mobile, selectedFormat);
+      }, 300);
+    }
+
+    // Формирует выбранные normal/mobile-паки по переданному набору настроек, чтобы одиночная отладка и пакетная очередь могли использовать одну логику.
+    function buildPackSetFromSource(sourceFileName, sourceImage, sourceMeta, modes, settingsSet) {
+      var names = suggestPackFileNames(sourceFileName || (sourceMeta && sourceMeta.name) || "asset");
+      var packs = { normal: null, mobile: null };
+      settingsSet = settingsSet || getSingleExportSettings();
+
+      if (!modes || modes.normal) {
+        var normal = buildImageVariantFromSource("normal", "Normal", settingsSet.normal, sourceImage, sourceMeta);
+        normal.fileName = names.normal;
+        normal.jsText = buildPackJs(normal);
+        normal.jsBytes = new Blob([normal.jsText], { type: "application/javascript;charset=utf-8" }).size;
+        normal.cssFileName = suggestCssPackFileName(normal.fileName);
+        normal.cssText = buildPackCss(normal);
+        normal.cssBytes = new Blob([normal.cssText], { type: "text/css;charset=utf-8" }).size;
+        packs.normal = normal;
+      }
+
+      if (!modes || modes.mobile) {
+        var mobile = buildImageVariantFromSource("mobile", "Mobile", settingsSet.mobile, sourceImage, sourceMeta);
+        mobile.fileName = names.mobile;
+        mobile.jsText = buildPackJs(mobile);
+        mobile.jsBytes = new Blob([mobile.jsText], { type: "application/javascript;charset=utf-8" }).size;
+        mobile.cssFileName = suggestCssPackFileName(mobile.fileName);
+        mobile.cssText = buildPackCss(mobile);
+        mobile.cssBytes = new Blob([mobile.cssText], { type: "text/css;charset=utf-8" }).size;
+        packs.mobile = mobile;
+      }
+
+      return packs;
+    }
+
+    // Формирует оба режима одиночного просмотра и сохраняет готовые JS/CSS в generatedPacks.
+    function generatePacks() {
+      var packs = buildPackSetFromSource(loadedMeta.name, loadedImage, loadedMeta, { normal: true, mobile: true }, getSingleExportSettings());
+      packs.normal.fileName = suggestedFileNames.normal;
+      packs.mobile.fileName = suggestedFileNames.mobile;
+      packs.normal.cssFileName = suggestCssPackFileName(packs.normal.fileName);
+      packs.mobile.cssFileName = suggestCssPackFileName(packs.mobile.fileName);
+
+      generatedPacks.normal = packs.normal;
+      generatedPacks.mobile = packs.mobile;
+      btnDownload.disabled = false;
+      renderResults();
+      showOutputVariant("normal");
+    }
+
+    // Проверяет выбранный файл перед пакетной обработкой: accept в браузере не всегда гарантирует тип.
+    function isBatchImageFile(file) {
+      if (!file) return false;
+      if (/^image\/(jpeg|png|webp)$/i.test(file.type || "")) return true;
+      return /\.(jpe?g|png|webp)$/i.test(file.name || "");
+    }
+
+    // Возвращает список изображений из batch input без служебных и случайно выбранных файлов.
+    function getBatchImageFiles() {
+      var files = batchFileInput && batchFileInput.files ? Array.prototype.slice.call(batchFileInput.files) : [];
+      return files.filter(isBatchImageFile);
+    }
+
+    // Читает чекбоксы режимов пакетного экспорта, чтобы можно было пересобрать только normal или только mobile.
+    function getBatchModes() {
+      return {
+        normal: !!(batchNormalChk && batchNormalChk.checked),
+        mobile: !!(batchMobileChk && batchMobileChk.checked)
+      };
+    }
+
+    // Даёт браузеру время принять очередное скачивание и освобождает главный поток между большими файлами.
+    function waitBatchDelay(ms) {
+      return new Promise(function(resolve) {
+        setTimeout(resolve, Math.max(0, ms || 0));
+      });
+    }
+
+    // Блокирует синхронизированные настройки экспорта на время очереди, чтобы запущенная партия не меняла параметры на середине.
+    function setExportSettingsDisabled(disabled) {
+      [
+        normalHeightEl,
+        normalQualityEl,
+        normalFormatEl,
+        mobileHeightEl,
+        mobileQualityEl,
+        mobileFormatEl,
+        batchNormalHeightEl,
+        batchNormalQualityEl,
+        batchNormalFormatEl,
+        batchMobileHeightEl,
+        batchMobileQualityEl,
+        batchMobileFormatEl
+      ].forEach(function(el) {
+        if (el) el.disabled = disabled;
+      });
+    }
+
+    // Переключает элементы пакетного режима между ожиданием и активной обработкой.
+    function setBatchUiRunning(running) {
+      batchState.running = running;
+      if (batchFileInput) batchFileInput.disabled = running;
+      if (batchNormalChk) batchNormalChk.disabled = running;
+      if (batchMobileChk) batchMobileChk.disabled = running;
+      if (packOutputFormatEl) packOutputFormatEl.disabled = running;
+      if (btnBatchStart) btnBatchStart.disabled = running;
+      if (btnBatchStop) btnBatchStop.disabled = !running;
+      setExportSettingsDisabled(running);
+    }
+
+    // Пишет строку в журнал пакетной обработки и удерживает прокрутку на последних событиях.
+    function appendBatchLog(text, isError) {
+      if (!batchLogEl) return;
+      if (batchLogEl.getAttribute("data-empty") !== "0") {
+        batchLogEl.innerHTML = "";
+        batchLogEl.setAttribute("data-empty", "0");
+      }
+      var line = document.createElement("div");
+      line.className = "batch-log-line " + (isError ? "warn" : "ok");
+      line.textContent = text;
+      batchLogEl.appendChild(line);
+      batchLogEl.scrollTop = batchLogEl.scrollHeight;
+    }
+
+    // Обновляет progress и текстовую сводку очереди, не используя HTML от пользователя.
+    function updateBatchProgress(currentName) {
+      var total = Math.max(1, batchState.total || 0);
+      if (batchProgressEl) {
+        batchProgressEl.max = total;
+        batchProgressEl.value = Math.min(batchState.processed, total);
+      }
+      if (!batchStatusEl) return;
+      var formatLabel = getPackOutputFormatLabel(batchState.outputFormat);
+      var text =
+        "Обработано: " + batchState.processed + " / " + batchState.total +
+        ", скачано " + formatLabel + ": " + batchState.downloads +
+        ", ошибок: " + batchState.errors.length + ".";
+      if (currentName) text += " Сейчас: " + currentName;
+      batchStatusEl.textContent = text;
+    }
+
+    // Сбрасывает журнал и прогресс перед новой партией.
+    function resetBatchUi(total) {
+      if (batchProgressEl) {
+        batchProgressEl.max = Math.max(1, total || 0);
+        batchProgressEl.value = 0;
+      }
+      if (batchLogEl) {
+        batchLogEl.textContent = "Журнал появится после запуска.";
+        batchLogEl.setAttribute("data-empty", "1");
+      }
+      if (batchStatusEl) {
+        batchStatusEl.textContent = total ? "Готово к обработке: " + total + " изображений." : "Пакетная обработка не запущена.";
+      }
+      resetBatchCurrentPreview();
+    }
+
+    // Переключает видимую вкладку без сброса данных, чтобы можно было настроить один файл и сразу перейти к партии.
+    function setActiveTab(mode) {
+      var showBatch = mode === "batch";
+      if (singlePanel) singlePanel.hidden = showBatch;
+      if (batchPanel) batchPanel.hidden = !showBatch;
+      if (tabSingle) tabSingle.setAttribute("aria-selected", showBatch ? "false" : "true");
+      if (tabBatch) tabBatch.setAttribute("aria-selected", showBatch ? "true" : "false");
+    }
+
+    // Копирует значения связанных селектов; так обе вкладки показывают одни и те же параметры экспорта.
+    function copyExportSettings(sourceControls, targetControls) {
+      sourceControls.forEach(function(sourceEl, index) {
+        var targetEl = targetControls[index];
+        if (sourceEl && targetEl && targetEl.value !== sourceEl.value) {
+          targetEl.value = sourceEl.value;
+        }
+      });
+    }
+
+    // Синхронизирует настройки между вкладками и сбрасывает устаревшие превью после изменения параметров.
+    function syncExportSettingsFrom(sourceMode) {
+      if (syncingExportSettings) return;
+      syncingExportSettings = true;
+      var singleControls = [
+        normalHeightEl, normalQualityEl, normalFormatEl,
+        mobileHeightEl, mobileQualityEl, mobileFormatEl
+      ];
+      var batchControls = [
+        batchNormalHeightEl, batchNormalQualityEl, batchNormalFormatEl,
+        batchMobileHeightEl, batchMobileQualityEl, batchMobileFormatEl
+      ];
+      if (sourceMode === "batch") {
+        copyExportSettings(batchControls, singleControls);
+      } else {
+        copyExportSettings(singleControls, batchControls);
+      }
+      syncingExportSettings = false;
+      resetGeneratedPacks();
+      if (!batchState.running) resetBatchCurrentPreview("Настройки изменены. При запуске очереди будет показан текущий обработанный файл.");
+    }
+
+    // Подключает синхронизацию к одному селекту настроек, не дублируя обработчики вручную для всех полей.
+    function bindExportSettingSync(el, sourceMode) {
+      if (!el) return;
+      el.addEventListener("change", function() {
+        syncExportSettingsFrom(sourceMode);
+      });
+    }
+
+    // Скачивает выбранные normal/mobile одного файла только в формате, зафиксированном при старте очереди.
+    async function downloadBatchPackSet(packs, modes, outputFormat) {
+      var downloaded = [];
+      var delayMs = 300;
+
+      if (modes.normal && packs.normal && !batchState.stopRequested) {
+        var normalFileName = downloadPackOutputFile(packs.normal, outputFormat);
+        batchState.downloads++;
+        downloaded.push(normalFileName);
+        await waitBatchDelay(delayMs);
+      }
+
+      if (modes.mobile && packs.mobile && !batchState.stopRequested) {
+        var mobileFileName = downloadPackOutputFile(packs.mobile, outputFormat);
+        batchState.downloads++;
+        downloaded.push(mobileFileName);
+        await waitBatchDelay(delayMs);
+      }
+
+      return downloaded;
+    }
+
+    // Последовательно обрабатывает выбранные изображения, чтобы сотни панорам не занимали память одновременно.
+    async function runBatchConversion() {
+      if (batchState.running) return;
+
+      var files = getBatchImageFiles();
+      var modes = getBatchModes();
+      var settingsSet = getBatchExportSettings();
+      var outputFormat = getSelectedPackOutputFormat();
+      if (!files.length) {
+        if (batchStatusEl) batchStatusEl.textContent = "Выберите изображения для пакетной обработки.";
+        return;
+      }
+      if (!modes.normal && !modes.mobile) {
+        if (batchStatusEl) batchStatusEl.textContent = "Выберите хотя бы один вариант: normal или mobile.";
+        return;
+      }
+
+      batchState = {
+        running: true,
+        stopRequested: false,
+        processed: 0,
+        total: files.length,
+        downloads: 0,
+        outputFormat: outputFormat,
+        errors: []
+      };
+      resetBatchUi(files.length);
+      setBatchUiRunning(true);
+      updateBatchProgress("");
+
+      for (var i = 0; i < files.length; i++) {
+        if (batchState.stopRequested) break;
+
+        var file = files[i];
+        updateBatchProgress(file.name);
+        try {
+          var source = await readImageFile(file);
+          var packs = buildPackSetFromSource(file.name, source.image, source.meta, modes, settingsSet);
+          renderBatchCurrentPreview(file.name, packs, outputFormat);
+          var downloaded = await downloadBatchPackSet(packs, modes, outputFormat);
+          appendBatchLog("OK: " + file.name + " -> " + (downloaded.length ? downloaded.join(", ") : "остановлено до скачивания"), false);
+        } catch (err) {
+          var message = err && err.message ? err.message : String(err);
+          batchState.errors.push({ name: file.name, message: message });
+          appendBatchLog("Ошибка: " + file.name + " -> " + message, true);
+        } finally {
+          batchState.processed++;
+          updateBatchProgress("");
+          await waitBatchDelay(80);
+        }
+      }
+
+      var stopped = batchState.stopRequested;
+      setBatchUiRunning(false);
+      batchState.running = false;
+      if (batchStatusEl) {
+        var formatLabel = getPackOutputFormatLabel(batchState.outputFormat);
+        batchStatusEl.textContent =
+          (stopped ? "Остановлено. " : "Готово. ") +
+          "Обработано: " + batchState.processed + " / " + batchState.total +
+          ", скачано " + formatLabel + ": " + batchState.downloads +
+          ", ошибок: " + batchState.errors.length + ".";
+      }
+    }
+
+    tabSingle.addEventListener("click", function() {
+      setActiveTab("single");
+    });
+
+    tabBatch.addEventListener("click", function() {
+      setActiveTab("batch");
+    });
+
+    fileInput.addEventListener("change", function() {
+      var file = fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+      loadedFile = file;
+      resetGeneratedPacks();
+      if (!file) {
+        loadedDataUrl = "";
+        loadedMeta = null;
+        loadedImage = null;
+        updateImageInfo(null);
+        statusEl.textContent = "Файл не выбран.";
+        return;
+      }
+      packJsInput.value = "";
+      suggestedFileNames = suggestPackFileNames(file.name);
+      statusEl.textContent = "Чтение изображения...";
+      readImageFile(file).then(function(result) {
+        loadedDataUrl = result.dataUrl;
+        loadedMeta = result.meta;
+        loadedImage = result.image;
+        updateImageInfo(loadedMeta);
+        statusEl.innerHTML = "<span class='ok'>Файл прочитан. Можно генерировать JS и CSS.</span>";
+      }).catch(function(err) {
+        loadedDataUrl = "";
+        loadedMeta = null;
+        loadedImage = null;
+        updateImageInfo(null);
+        statusEl.innerHTML = "<span class='warn'>" + err.message + "</span>";
+      });
+    });
+
+    packJsInput.addEventListener("change", function() {
+      var file = packJsInput.files && packJsInput.files[0] ? packJsInput.files[0] : null;
+      resetGeneratedPacks();
+      loadedFile = null;
+      if (!file) {
+        loadedDataUrl = "";
+        loadedMeta = null;
+        loadedImage = null;
+        updateImageInfo(null);
+        statusEl.textContent = "JS-пакет не выбран.";
+        return;
+      }
+      fileInput.value = "";
+      suggestedFileNames = suggestPackFileNames(file.name);
+      statusEl.textContent = "Разбор JS-пакета...";
+      var reader = new FileReader();
+      reader.onerror = function() {
+        statusEl.innerHTML = "<span class='warn'>Ошибка чтения JS-файла.</span>";
+      };
+      reader.onload = function() {
+        Promise.resolve().then(function() {
+          var jsText = String(reader.result || "");
+          var dataUrl = extractDataUrlFromPackJs(jsText);
+          var packMeta = extractPackMetaFromPackJs(jsText);
+          return decodeImageFromDataUrl(dataUrl, file.name + " (из JS)", packMeta);
+        }).then(function(result) {
+          loadedDataUrl = result.dataUrl;
+          loadedMeta = result.meta;
+          loadedImage = result.image;
+          updateImageInfo(loadedMeta);
+          var packSummary = formatPackMetaSummary(loadedMeta.packMeta);
+          statusEl.innerHTML = "<span class='ok'>Изображение извлечено из пакета. Можно генерировать JS и CSS.</span>" +
+            (packSummary
+              ? " " + escapeHtml(packSummary)
+              : " Метаданные сохранения отсутствуют, пакет старого формата принят.");
+        }).catch(function(err) {
+          loadedDataUrl = "";
+          loadedMeta = null;
+          loadedImage = null;
+          updateImageInfo(null);
+          statusEl.innerHTML = "<span class='warn'>" + escapeHtml(err.message) + "</span>";
+        });
+      };
+      reader.readAsText(file);
+    });
+
+    batchFileInput.addEventListener("change", function() {
+      var files = getBatchImageFiles();
+      resetBatchUi(files.length);
+      if (batchStatusEl) {
+        var skipped = (batchFileInput.files ? batchFileInput.files.length : 0) - files.length;
+        batchStatusEl.textContent =
+          "Выбрано изображений: " + files.length +
+          (skipped > 0 ? ", пропущено не-изображений: " + skipped + "." : ".");
+      }
+    });
+
+    btnBatchStart.addEventListener("click", function() {
+      runBatchConversion();
+    });
+
+    btnBatchStop.addEventListener("click", function() {
+      if (!batchState.running) return;
+      batchState.stopRequested = true;
+      if (batchStatusEl) {
+        batchStatusEl.textContent = "Остановка запрошена. Текущий файл будет завершён, затем очередь остановится.";
+      }
+    });
+
+    bindExportSettingSync(normalHeightEl, "single");
+    bindExportSettingSync(normalQualityEl, "single");
+    bindExportSettingSync(normalFormatEl, "single");
+    bindExportSettingSync(mobileHeightEl, "single");
+    bindExportSettingSync(mobileQualityEl, "single");
+    bindExportSettingSync(mobileFormatEl, "single");
+    bindExportSettingSync(batchNormalHeightEl, "batch");
+    bindExportSettingSync(batchNormalQualityEl, "batch");
+    bindExportSettingSync(batchNormalFormatEl, "batch");
+    bindExportSettingSync(batchMobileHeightEl, "batch");
+    bindExportSettingSync(batchMobileQualityEl, "batch");
+    bindExportSettingSync(batchMobileFormatEl, "batch");
+
+    packOutputFormatEl.addEventListener("change", function() {
+      updatePackOutputFormatUi();
+    });
+
+    btnDownloadImageNormal.addEventListener("click", function() {
+      downloadSettingsRaster("normal");
+    });
+    btnDownloadImageMobile.addEventListener("click", function() {
+      downloadSettingsRaster("mobile");
+    });
+
+    btnGenerate.addEventListener("click", function() {
+      if (!loadedDataUrl || !loadedMeta || !loadedImage) {
+        statusEl.innerHTML = "<span class='warn'>Сначала выберите изображение или JS-пакет.</span>";
+        return;
+      }
+      btnGenerate.disabled = true;
+      statusEl.textContent = "Генерация normal и mobile...";
+      setTimeout(function() {
+        try {
+          generatePacks();
+          statusEl.innerHTML = "<span class='ok'>Готово. Пакеты normal/mobile сформированы; для сохранения выбран " +
+            getPackOutputFormatLabel(getSelectedPackOutputFormat()) + ".</span>";
+        } catch (err) {
+          resetGeneratedPacks();
+          statusEl.innerHTML = "<span class='warn'>" + escapeHtml(err.message) + "</span>";
+        } finally {
+          btnGenerate.disabled = false;
+        }
+      }, 0);
+    });
+
+    btnDownload.addEventListener("click", function() {
+      downloadBothSelectedPacks();
+    });
+
+    updatePackOutputFormatUi();
+  </script>
+</body>
+</html>

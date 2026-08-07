@@ -1,0 +1,3135 @@
+/* Базовый сброс */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; }
+html { font-size: var(--baseFontSize); }
+body { background: #000; color: #fff; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+body {
+  overflow: hidden; /* чтобы не появлялся “лишний низ” из-за прокрутки */
+}
+
+:root{
+  /* =========================================================
+     ГЛОБАЛЬНАЯ БАЗА ИНТЕРФЕЙСА
+     Править здесь, если весь UI кажется слишком мелким/крупным.
+     --uiScale и --baseFontSize рассчитываются в JS.
+     ========================================================= */
+  --uiScale: 2;
+  /* До загрузки JS: 1. После applyUiScale: 1 (не телефон) или то же число, что UI_PHONE_EXTRA_FONT_SCALE (телефон). Не дублируйте коэффициент здесь — правьте только в engine.js. */
+  --uiPhoneExtraScale: 1;
+  --baseFontPx: 16px;
+  --baseFontSize: calc(var(--baseFontPx) * var(--uiScale));
+
+  /* Масштаб визуальных эффектов относительно эталонного разрешения.
+     Пересчитывается JS (см. applyUiScale) и не зависит от UI_FONT_SCALE. */
+  --viewportScale: 1;
+  --visualScale: 1;
+
+  /*
+     БЫСТРАЯ РУЧНАЯ НАСТРОЙКА ПОД ЭКРАН:
+     1) Общий масштаб — UI_FONT_SCALE; доп. укрупнение на смартфонах — UI_PHONE_EXTRA_FONT_SCALE (engine.js).
+     2) Если тесная верхняя панель — правьте --topbar-* и --control-*.
+     3) Если узкое окно диалога — правьте --dialog-* и --name-*.
+     4) Если мелкие варианты выбора — правьте --choices-* и --choice-*.
+  */
+
+  /* Настройки из story.js */
+
+  --topSpacing: 500px;
+  --bottomSpacing: 800px;
+
+  --blurStrength: 30px;
+  --blurBrightness: 0.9;
+  --blurOpacity: 0.95;
+  /* Базовые значения blur для UI задаются в эталонных px и масштабируются через --viewportScale. */
+  --dialogBackdropBlur: 5px;
+  --menuBackdropBlur: 2px;
+
+
+  /* Технические переменные сцены: задаются JS и/или сценарием */
+  --uiBottomOffset: calc(0.875rem + env(safe-area-inset-bottom, 0px));
+  --topSpacing: 0px;
+  --rightSpacing: 0px;
+  --bottomSpacing: 0px;
+  --leftSpacing: 0px;
+  --uiFrameWidth: 100%;
+
+  /* Базовые токены интерфейса */
+  --ui-font-base: 1rem;
+  --ui-space: 1rem;
+  --ui-radius: 1rem;
+  --ui-border-width-base: 1px;
+  --ui-border-width: calc(var(--ui-border-width-base) * var(--visualScale));
+  --ui-control-min-height: 2.5rem;
+  --ui-touch-min-height: 3rem;
+
+  /* =========================================================
+     ВЕРХНЯЯ ПАНЕЛЬ
+     Править здесь, если topbar тесная, кнопки панели мелкие,
+     а слайдер слишком короткий.
+     ========================================================= */
+  --topbar-font-size: 1.16rem;
+  --topbar-padding-y: 0.78rem;
+  --topbar-padding-x: 0.78rem;
+  --topbar-gap: 0.80rem;
+  --topbar-title-size: 0.85em;
+  --topbar-control-gap: 0.75rem;
+  --topbar-slider-width: 4.00rem;
+  --topbar-slider-height: 1.55rem;
+  --topbar-slider-track-height: 0.32rem;
+  --topbar-slider-thumb-size: 1.05rem;
+
+  /* =========================================================
+     ОБЫЧНЫЕ КНОПКИ / КОНТРОЛЫ
+     Править здесь, если кнопки в панели или модалках кажутся
+     слишком узкими, низкими или слабо читаемыми.
+     ========================================================= */
+  --control-font-size: 0.85em; /* считает через коэффициент 1.16 от .topbar поэтому финальный размер будет больше */
+  --control-padding-y: 0.72em;
+  --control-padding-x: 1.12em;
+  --control-radius: 0.78em;
+  --control-border-width-base: 1px;
+  --control-border-width: calc(var(--control-border-width-base) * var(--visualScale));
+  --control-min-height: 2.85em;
+
+  /* =========================================================
+     ДИАЛОГОВОЕ ОКНО
+     Править здесь, если текст нормальный, а само окно кажется
+     слишком тесным, низким или близким к краям.
+     ========================================================= */
+  --dialog-font-size: 1rem;
+  --dialog-side-offset: 1.00rem;
+  --dialog-padding: 0.92em;
+  --dialog-radius: 1.05em;
+  --dialog-text-line-height: 1.4;
+  --dialog-text-min-height: 1.8em;
+  --dialog-hint-gap: 0.50em;
+  --dialog-padding-bottom-no-hint: 0.80em;
+  --dialog-padding-bottom-with-hint: 0.65em;
+  --dialog-name-padding-top: 0.60em;
+  --dialog-no-name-padding-top: 1.10em;
+  --dialog-bottom-gap: 0.6rem;
+
+  /* =========================================================
+     ИМЯ ПЕРСОНАЖА
+     Править здесь, если поле имени слишком маленькое,
+     узкое или с недостаточным "воздухом".
+     ========================================================= */
+  --name-font-size: 0.98em;
+  --name-padding-y: 0.46em;
+  --name-padding-x: 0.96em;
+  --name-radius: 0.68em;
+  --name-margin-bottom: 0.55em;
+  --name-min-height: 1.9em;
+  --name-border-width-base: 1px;
+  --name-border-width: calc(var(--name-border-width-base) * var(--visualScale));
+
+  /* =========================================================
+     ВАРИАНТЫ ВЫБОРА
+     Править здесь, если кнопки выбора выглядят низкими,
+     тесными или прилипшими друг к другу.
+     ========================================================= */
+  --choices-side-offset: 1.00rem;
+  --choices-top-offset: 1.00rem;
+  --choices-gap: 0.85rem;
+  --choice-font-size: 1.02em;
+  --choice-padding-y: 1.00em;
+  --choice-padding-x: 1.15em;
+  --choice-radius: 0.95em;
+  --choice-min-height: 3.6em;
+  --choice-border-width-base: 1px;
+  --choice-border-width: calc(var(--choice-border-width-base) * var(--visualScale));
+  --choice-panel-border-width-base: 1px;
+  --choice-panel-border-width: calc(var(--choice-panel-border-width-base) * var(--visualScale));
+  --choice-panel-shadow-y-base: 10px;
+  --choice-panel-shadow-blur-base: 30px;
+  --choice-panel-shadow-y: calc(var(--choice-panel-shadow-y-base) * var(--visualScale));
+  --choice-panel-shadow-blur: calc(var(--choice-panel-shadow-blur-base) * var(--visualScale));
+
+  /* =========================================================
+     360-МЕТКИ, ЛИНИИ И ЗАГЛУШКА ШТАТИВА
+     Править здесь базовые размеры меток, пунктира и круга. Значения в px
+     масштабируются через --visualScale, а не через размер текста UI.
+     ========================================================= */
+  --bg360-mark-size-base: 28px;
+  --bg360-mark-dot-inset-base: 3.5px;
+  --bg360-mark-shadow-y-base: 6px;
+  --bg360-mark-shadow-blur-base: 18px;
+  --bg360-mark-line-width-base: 4px;
+  --bg360-mark-line-dash-base: 12px;
+  --bg360-mark-line-gap-base: 9px;
+  --bg360-mark-line-shadow-y-base: 3px;
+  --bg360-mark-line-shadow-blur-base: 7px;
+  --bg360-origin-cover-size-base: 600px;
+  --bg360-origin-cover-stroke-width-base: 2px;
+  --bg360-scene-mark-size-base: 40px;
+  --bg360-scene-mark-dot-inset-base: 7px;
+  --bg360-scene-mark-border-width-base: 2.5px;
+  --bg360-scene-mark-label-offset-x-base: 19px;
+  --bg360-scene-mark-label-max-width-base: 260px;
+  --bg360-scene-mark-label-padding-y-base: 6px;
+  --bg360-scene-mark-label-padding-x-base: 9px;
+  --bg360-scene-mark-label-radius-base: 6px;
+  --bg360-scene-mark-label-font-size-base: 18px;
+  --bg360-photo-mark-size-base: 52px;
+  /* Кнопка закрытия viewer: диаметр круга — --bg360-photo-close-size-base; с --visualScale — --bg360-photo-close-size. */
+  --bg360-photo-close-size-base: 44px;
+  /* Размер символа × относительно диаметра круга (0.52 ≈ половина). */
+  --bg360-photo-close-glyph-scale: 0.52;
+  /* Толщина обводки круга кнопки закрытия. */
+  --bg360-photo-close-border-width-base: 1px;
+  --bg360-scene-mark-fill: rgba(50, 50, 50, 0.5); /* rgba(24, 96, 48, 0.75); */
+  --bg360-scene-mark-border: rgba(210, 214, 220, 0.95);
+  --bg360-scene-mark-dot-fill: rgba(255, 255, 255, 0.88);
+  --bg360-scene-mark-shadow: 0 2px 10px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(210, 214, 220, 0.45);
+  --bg360-scene-mark-label-background: rgba(12, 16, 28, 0.82);
+  --bg360-scene-mark-label-border: rgba(255, 255, 255, 0.35);
+  --bg360-scene-mark-label-color: #fff;
+  --bg360-scene-mark-label-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  /* Заливка WebGL-диска «под ногами»: цвет и прозрачность в rgba / rgb(a). Читает syncBg360OriginCoverMesh() через parseBg360CssColor("--bg360-origin-cover-fill", …). */
+  --bg360-origin-cover-fill: rgba(150,150,150,1);
+  /* Ободок вокруг диска: цвет и непрозрачность кольца (при opacity 0 кольцо не создаётся). */
+  --bg360-origin-cover-stroke: rgba(150,150,150,0.20);
+  /* Опорный FOV для масштаба углового радиуса капы на экране (не цвет). */
+  --bg360-origin-cover-reference-fov: 70;
+  --bg360-under-camera-depth: 3;
+  --bg360-mark-size: calc(var(--bg360-mark-size-base) * var(--visualScale));
+  --bg360-mark-dot-inset: calc(var(--bg360-mark-dot-inset-base) * var(--visualScale));
+  --bg360-mark-shadow-y: calc(var(--bg360-mark-shadow-y-base) * var(--visualScale));
+  --bg360-mark-shadow-blur: calc(var(--bg360-mark-shadow-blur-base) * var(--visualScale));
+  --bg360-mark-line-width: calc(var(--bg360-mark-line-width-base) * var(--visualScale));
+  --bg360-mark-line-dash: calc(var(--bg360-mark-line-dash-base) * var(--visualScale));
+  --bg360-mark-line-gap: calc(var(--bg360-mark-line-gap-base) * var(--visualScale));
+  --bg360-mark-line-shadow-y: calc(var(--bg360-mark-line-shadow-y-base) * var(--visualScale));
+  --bg360-mark-line-shadow-blur: calc(var(--bg360-mark-line-shadow-blur-base) * var(--visualScale));
+  --bg360-origin-cover-size: calc(var(--bg360-origin-cover-size-base) * var(--visualScale));
+  --bg360-origin-cover-stroke-width: calc(var(--bg360-origin-cover-stroke-width-base) * var(--visualScale));
+  --bg360-scene-mark-size: calc(var(--bg360-scene-mark-size-base) * var(--visualScale));
+  --bg360-photo-mark-size: calc(var(--bg360-photo-mark-size-base) * var(--visualScale));
+  --bg360-photo-close-size: calc(var(--bg360-photo-close-size-base) * var(--visualScale));
+  --bg360-photo-close-border-width: calc(var(--bg360-photo-close-border-width-base) * var(--visualScale));
+  /* Отступы кнопок viewer от краёв области фото. */
+  --bg360-photo-control-inset-base: 14px;
+  --bg360-photo-nav-inset-x-base: 18px;
+  --bg360-photo-control-inset: calc(var(--bg360-photo-control-inset-base) * var(--visualScale));
+  --bg360-photo-nav-inset-x: calc(var(--bg360-photo-nav-inset-x-base) * var(--visualScale));
+  --bg360-scene-mark-dot-inset: calc(var(--bg360-scene-mark-dot-inset-base) * var(--visualScale));
+  --bg360-scene-mark-border-width: calc(var(--bg360-scene-mark-border-width-base) * var(--visualScale));
+  --bg360-scene-mark-label-offset-x: calc(var(--bg360-scene-mark-label-offset-x-base) * var(--visualScale));
+  --bg360-scene-mark-label-max-width: calc(var(--bg360-scene-mark-label-max-width-base) * var(--visualScale));
+  --bg360-scene-mark-label-padding-y: calc(var(--bg360-scene-mark-label-padding-y-base) * var(--visualScale));
+  --bg360-scene-mark-label-padding-x: calc(var(--bg360-scene-mark-label-padding-x-base) * var(--visualScale));
+  --bg360-scene-mark-label-radius: calc(var(--bg360-scene-mark-label-radius-base) * var(--visualScale));
+  --bg360-scene-mark-label-font-size: calc(var(--bg360-scene-mark-label-font-size-base) * var(--visualScale));
+
+  /* WebGL-стрелки навигации 360 (как в bg360-marks-editor): клик по полосе вокруг проекции хорды. Читает движок в readBg360NavConfig(). */
+  /* Якорь начала стрелок на панораме, доли UV 0..1 (как focusX/focusY). */
+  --bg360-nav-anchor-u: 0;
+  --bg360-nav-anchor-v: 0;
+  /* Отступы вдоль хорды от якоря и от точки метки (мир. ед.): короче/длиннее видимая лента. */
+  --bg360-nav-chord-margin-start: 12;
+  --bg360-nav-chord-margin-end: 18;
+  /* Шаги бинарного поиска точки старта хорды на экране (если якорь за спиной). */
+  --bg360-nav-arrow-steps: 22;
+  /* Сдвиг начала линии hit-теста от экранной проекции якоря, px. */
+  --bg360-nav-start-inset-px: 0;
+  /* Не дотягивать hit-отрезок до центра метки, px (не доходить до номера/круга). */
+  --bg360-nav-mark-gap-px: 80;
+  /* Минимальная длина хорды на экране для отрисовки hit-полосы, px. */
+  --bg360-nav-min-chord-px: 28;
+  /* Базовая половина ширины полосы клика вокруг хорды, px; итог × hit-band-width-mul. */
+  --bg360-nav-hit-band-px: 38;
+  --bg360-nav-hit-band-width-mul: 2;
+  /* Удлинение конца hit-отрезка вдоль хорды (только для клика, не для 3D). */
+  --bg360-nav-hit-chord-length-mul: 2;
+  /* Половина ширины ленты стрелки к метке (мир. ед. сцены). */
+  --bg360-nav-ribbon-half-w: 24;
+  /* Глубина (длина) наконечника у метки, мир. ед. */
+  --bg360-nav-head-depth: 64;
+  /* Половина ширины основания наконечника у метки, мир. ед. */
+  --bg360-nav-head-half-w: 60;
+  /* Прозрачность серой ленты/наконечника к меткам, 0..1. */
+  --bg360-nav-line-opacity: 0.25;
+  /* Сдвиг капы надира по Y, мир. ед. */
+  --bg360-nav-cap-y-lift: 5;
+  /* Добавка к радиусу меша капы относительно 499, мир. ед. */
+  --bg360-nav-cap-radius-bias: 1.35;
+  /* 1 — стрелка азимута на круге под ногами, 0 — выкл. */
+  --bg360-nav-nadir-arrow-enabled: 1;
+  /* Цвет стрелки на круге: rgb(), rgba() или #hex (parseBg360CssColor в readBg360NavConfig). Альфа из rgba умножается на --bg360-nav-nadir-arrow-opacity. */
+  --bg360-nav-nadir-arrow-color: rgb(100, 100, 100);
+  /* Общий множитель непрозрачности стрелки на круге, 0..1. */
+  --bg360-nav-nadir-arrow-opacity: 0.72;
+  /* Длина хвоста стрелки на круге назад от центра, мир. ед. */
+  --bg360-nav-nadir-tail-half: 100;
+  /* Длина «тела» стрелки на круге вперёд до наконечника, мир. ед. */
+  --bg360-nav-nadir-fwd-half: 64;
+  /* Глубина наконечника стрелки на круге, мир. ед. */
+  --bg360-nav-nadir-head-depth: 62;
+  /* Половина ширины наконечника на круге, мир. ед. */
+  --bg360-nav-nadir-head-half-w: 42;
+  /* Половина толщины ленты стрелки на круге, мир. ед. */
+  --bg360-nav-nadir-ribbon-half-w: 18;
+  /* Подъём центра стрелки на круге относительно (-R + cap-lift), мир. ед. */
+  --bg360-nav-nadir-center-lift: 3;
+
+  /* SVG-маркеры «стрелка за кадром»: треугольник у ближайшего края, вершиной к метке (readBg360NavEdgeHintConfig). */
+  --bg360-nav-edge-hint-enabled: 0;
+  /* Поля «мягкого» кадра в px: если проекция метки внутри — маркер скрыт. */
+  --bg360-nav-edge-hint-inset-px: 18;
+  /* Доля хорды якорь→метка (как WebGL-стрелка): 0 = у якоря, 1 = у метки. Меньше — маркер ближе к направлению выхода стрелки у «ног», а не к метке на горизонте. */
+  --bg360-nav-edge-hint-chord-t: 0.22;
+  /* Длина треугольника от края внутрь экрана и половина ширины основания, px. */
+  --bg360-nav-edge-hint-depth-px: 26;
+  --bg360-nav-edge-hint-half-base-px: 8;
+  /* Максимум одновременных маркеров (остальные по приоритету «дальше от кадра»). */
+  --bg360-nav-edge-hint-max: 8;
+  --bg360-nav-edge-hint-fill: rgba(255, 255, 255, 0.30);
+  --bg360-nav-edge-hint-stroke: rgba(255, 255, 255, 0.30);
+  --bg360-nav-edge-hint-stroke-width: 1.25;
+
+  /* SVG-компас 360: прозрачность общая для всей группы, чтобы круг и стрелки не темнели на пересечениях. */
+  --bg360-compass-enabled: 1;
+  --bg360-compass-size-base: 200px; /* 118px; */
+  --bg360-compass-offset-left-base: 10px;
+  --bg360-compass-offset-bottom-base: 10px;
+  --bg360-compass-size: calc(var(--bg360-compass-size-base) * var(--visualScale));
+  --bg360-compass-offset-left: calc(var(--bg360-compass-offset-left-base) * var(--visualScale));
+  --bg360-compass-offset-bottom: calc(var(--bg360-compass-offset-bottom-base) * var(--visualScale));
+  --bg360-compass-opacity: 0.62;
+  --bg360-compass-circle-radius: 8;
+  --bg360-compass-circle-stroke-width: 2;
+  --bg360-compass-circle-fill: rgb(220, 220, 220);
+  --bg360-compass-circle-stroke: rgb(220, 220, 220);
+  --bg360-compass-arrow-color: rgb(220, 220, 220);
+  --bg360-compass-arrow-min-length: 25;
+  --bg360-compass-arrow-max-length: 47;
+  --bg360-compass-arrow-ribbon-half-w: 3.2;
+  --bg360-compass-arrow-head-depth: 10;
+  --bg360-compass-arrow-head-half-w: 7.5;
+  --bg360-compass-scene-color: rgb(220, 220, 220);
+  --bg360-compass-scene-line-width: 1.35;
+  --bg360-compass-scene-circle-radius: 3.8;
+  --bg360-compass-scene-circle-stroke-width: 1.35;
+  --bg360-compass-scene-circle-fill: rgb(220, 220, 220);
+  --bg360-compass-scene-circle-stroke: rgb(220, 220, 220);
+  --bg360-compass-view-line-width: 2.15;
+  --bg360-compass-view-line-dash: 4.6;
+  --bg360-compass-view-line-gap: 4.3;
+  /* Подписи направлений компаса: размеры заданы в координатах SVG viewBox, как и геометрия компаса. */
+  --bg360-compass-label-enabled: 1;
+  --bg360-compass-label-font-size: 10;
+  --bg360-compass-label-gap: 3.6;
+  --bg360-compass-label-anchor-offset: 2;
+  --bg360-compass-label-side-bias: 0.28;
+  --bg360-compass-label-wrap-chars: 6;
+  --bg360-compass-label-line-height: 1.08;
+  --bg360-compass-label-opacity: var(--bg360-compass-opacity);
+  --bg360-compass-label-color: var(--bg360-compass-arrow-color);
+  --bg360-compass-label-stroke: transparent;
+  --bg360-compass-label-stroke-width: 0;
+  --bg360-compass-padding: 4;
+
+  /* =========================================================
+     МОДАЛКИ / МИНИ-ИГРЫ / СТАТИСТИКА
+     Править здесь, если полноэкранные панели выглядят слишком
+     тесными или наоборот слишком раздутыми.
+     ========================================================= */
+  --modal-padding: 0.90rem;
+  --modal-gap: 0.80rem;
+  --modal-radius: 1.00rem;
+  --modal-frame-max-width: 900px;
+  --modal-frame-max-height: 1600px;
+  --stats-header-gap: 0.65rem;
+  --stats-title-size: 1.05rem;
+  --stats-body-font-size: 1rem;
+  --stats-key-size: 0.75rem;
+  --stats-value-size: 0.95rem;
+
+  /* =========================================================
+     КОРРЕКЦИЯ ДЛЯ УЗКИХ/НЕБОЛЬШИХ ЭКРАНОВ
+     Править здесь, если на маленьких экранах UI всё ещё выглядит
+     слишком тесным или крупным.
+     ========================================================= */
+  --compact-topbar-padding-y: 0.35rem;
+  --compact-topbar-padding-x: 0.45rem;
+  --compact-topbar-slider-width: 4.25rem;
+  --compact-topbar-slider-height: 1.05rem;
+  --compact-control-padding-y: 0.40em;
+  --compact-control-padding-x: 0.55em;
+  --compact-control-radius: 0.50em;
+  --compact-control-font-size: 0.78em;
+  --compact-dialog-side-offset: 0.40rem;
+  --compact-dialog-padding: 0.55em;
+  --compact-choices-side-offset: 0.40rem;
+  --compact-choices-gap: 0.40rem;
+  --compact-choice-padding-y: 0.55em;
+  --compact-choice-padding-x: 0.65em;
+  --compact-choice-font-size: 0.88em;
+
+  /* =========================================================
+     НАСТРОЙКИ ГРАФА MERMAID
+     ========================================================= */
+  --graph-bg: #ffffff;
+  --graph-padding: 1rem;
+  --graph-label-color: #000000;
+  --graph-label-font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  
+  /* 
+  МАСШТАБ ПАНЕЛИ УПРАВЛЕНИЯ ГРАФОМ
+  graph-zoom-ui-scale
+  1    = базовый размер
+  0.85 = чуть меньше
+  1.15 = чуть больше
+   */
+  --graph-zoom-ui-scale: 0.85;
+
+  --graph-zoom-panel-offset: calc(1.25rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-panel-gap: calc(0.5rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-panel-padding: calc(0.5rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-panel-radius: calc(2.5rem * var(--graph-zoom-ui-scale));
+
+  --graph-zoom-btn-size: calc(2.5rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-btn-font-size: calc(1.25rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-btn-radius: 50%;
+
+  --graph-zoom-reset-padding-x: calc(0.95rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-pill-font-size: calc(0.95rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-pill-padding-x: calc(0.65rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-pill-radius: calc(2.5rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-pill-margin-right: calc(0.3rem * var(--graph-zoom-ui-scale));
+
+  --graph-zoom-backdrop-blur: calc(0.25rem * var(--graph-zoom-ui-scale));
+  --graph-zoom-hover-scale: 1.1;
+  --graph-zoom-active-scale: 0.95;
+
+
+
+  /* Настройки для текста над линиями */
+  --graph-edgeLabel-bg: #ffffff;
+  --graph-edgeLabel-border: 1px solid #999;
+  --graph-edgeLabel-radius: 8px;  /* Увеличено для скругления */
+  --graph-edgeLabel-padding: 4px 10px;  /* Увеличено для лучшего вида */
+  --graph-edgeLabel-font-size: 11px;
+  --graph-edgeLabel-color: #000000;
+  
+  /* Настройки для узлов (общие) */
+  --graph-node-fill: #fff3e0;
+  --graph-node-stroke: #666;
+  --graph-node-stroke-width: 1px;
+  --graph-node-radius: 12px;  /* ДОБАВЛЕНО: скругление углов узлов */
+  /* Цвет отдельного типа узла для 360-панорам, чтобы они читались отдельно от обычных сцен. */
+  --graph-node-360-fill: #e7f6f2;
+  --graph-node-360-stroke: #4f9a8b;
+  --graph-node-360-stroke-width: 1px;
+  
+  /* Настройки для стартовых узлов */
+  --graph-node-start-fill: #e1f5e1;
+  --graph-node-start-stroke: #00ff00;
+  --graph-node-start-stroke-width: 2px;
+  --graph-node-start-radius: 15px;  /* ДОБАВЛЕНО: скругление для стартовых */
+  
+  /* Настройки для недостижимых узлов */
+  --graph-node-unreachable-fill: #ffebee;
+  --graph-node-unreachable-stroke: #ff0000;
+  --graph-node-unreachable-stroke-dasharray: 5 5;
+  --graph-node-unreachable-stroke-width: 2px;
+  --graph-node-unreachable-radius: 12px;  /* ДОБАВЛЕНО: скругление для недостижимых */
+  
+  /* Настройки для финальных узлов */
+  --graph-node-final-fill: #f3e5f5;
+  --graph-node-final-stroke: #9c27b0;
+  --graph-node-final-stroke-width: 2px;
+  --graph-node-final-radius: 14px;  /* ДОБАВЛЕНО: скругление для финальных */
+  
+  /* Фон контейнера графа */
+  --graph-container-bg: #1a1a1a;
+
+  --char-shadow-y: 0.75rem;
+  --char-shadow-blur: 1.5rem;
+  --char-shadow-color: rgba(0,0,0,0.55);
+
+}
+
+/* Контейнер приложения */
+.app {
+  position: relative;
+  width: 100%;
+  
+  height: 100vh;   /* fallback */
+  height: 100svh;  /* стабильная высота на мобильных (Safari/Chrome) */
+  height: 100dvh;  /* динамическая высота: учитывает панели браузера */
+
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Фон: растягиваем на всё окно новеллы */
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 2;
+  transition: opacity var(--visualTransitionMs, 110ms) ease;
+}
+
+/* Временный верхний слой для crossfade обычных фоновых изображений. */
+.visual-bg-crossfade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--visualTransitionMs, 110ms) ease;
+}
+
+.visual-bg-crossfade.is-visible {
+  opacity: 1;
+}
+
+/* Отдельный слой для 360-фона: рендерится в canvas и принимает жесты drag/pinch. */
+.bg-360 {
+  touch-action: none;
+  pointer-events: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bg-360.is-interactive {
+    cursor: grab;
+  }
+  .bg-360.is-interactive.is-dragging {
+    cursor: grabbing;
+  }
+  .bg-360.is-interactive.is-nav-arrow-hover:not(.is-dragging) {
+    cursor: pointer;
+  }
+}
+
+/* Слой меток поверх 360-фона (координаты 0..1 по экрану, не по сфере).
+   Класс is-webgl-nav-only: нет DOM-меток 360 — пунктир и кружки отключены, переходы только WebGL-стрелками и тапом по canvas. */
+.bg360-marks {
+  position: absolute;
+  inset: 0;
+  z-index: 6; /* над фоном, но ниже диалога/меню */
+  /* Контейнер всегда пропускает жесты к canvas, чтобы камера 360 крутилась. */
+  pointer-events: none;
+}
+
+.bg360-mark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: var(--bg360-mark-size);
+  height: var(--bg360-mark-size);
+  border-radius: 999px;
+  border: var(--ui-border-width) solid rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.35);
+  box-shadow: 0 var(--bg360-mark-shadow-y) var(--bg360-mark-shadow-blur) rgba(0,0,0,0.45);
+  cursor: pointer;
+  /* Кликаться должна только сама метка, а не весь слой. */
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.bg360-mark-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bg360-mark-line {
+  stroke: rgba(255,255,255,0.58);
+  stroke-width: var(--bg360-mark-line-width);
+  stroke-linecap: round;
+  stroke-dasharray: var(--bg360-mark-line-dash) var(--bg360-mark-line-gap);
+  fill: none;
+  filter: drop-shadow(0 var(--bg360-mark-line-shadow-y) var(--bg360-mark-line-shadow-blur) rgba(0,0,0,0.45));
+  pointer-events: none;
+}
+
+/* Подсказки поворота: треугольники у края, когда цель WebGL-стрелки вне мягкого кадра. */
+.bg360-nav-edge-hints {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.bg360-nav-edge-hint-triangle {
+  vector-effect: non-scaling-stroke;
+}
+
+.bg360-compass {
+  position: absolute;
+  left: var(--bg360-compass-offset-left);
+  bottom: calc(var(--bg360-compass-offset-bottom) + env(safe-area-inset-bottom, 0px));
+  width: var(--bg360-compass-size);
+  height: var(--bg360-compass-size);
+  overflow: visible;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.bg360-compass-shape {
+  vector-effect: non-scaling-stroke;
+}
+
+.bg360-compass-click-target {
+  pointer-events: none;
+  cursor: default;
+}
+
+.bg360-marks.is-interactive .bg360-compass-click-target {
+  pointer-events: visiblePainted;
+  cursor: pointer;
+}
+
+.bg360-marks.is-interactive .bg360-compass-label.bg360-compass-click-target {
+  pointer-events: bounding-box;
+}
+
+.bg360-compass-label {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 700;
+  paint-order: stroke fill;
+  text-rendering: geometricPrecision;
+  vector-effect: non-scaling-stroke;
+}
+
+.bg360-mark::after {
+  content: "";
+  position: absolute;
+  inset: var(--bg360-mark-dot-inset);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.85);
+  opacity: 0.75;
+}
+
+.bg360-mark.kind-text {
+  border-style: dashed;
+}
+
+.bg360-mark.kind-scene-target {
+  width: var(--bg360-scene-mark-size);
+  height: var(--bg360-scene-mark-size);
+  border-width: var(--bg360-scene-mark-border-width);
+  border-color: var(--bg360-scene-mark-border);
+  background: var(--bg360-scene-mark-fill);
+  box-shadow: var(--bg360-scene-mark-shadow);
+}
+
+.bg360-mark.kind-scene-target::after {
+  inset: var(--bg360-scene-mark-dot-inset);
+  background: var(--bg360-scene-mark-dot-fill);
+  opacity: 1;
+}
+
+.bg360-scene-mark-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(var(--bg360-scene-mark-label-offset-x), -50%);
+  width: max-content;
+  max-width: min(var(--bg360-scene-mark-label-max-width), 42vw);
+  padding: var(--bg360-scene-mark-label-padding-y) var(--bg360-scene-mark-label-padding-x);
+  border: var(--ui-border-width) solid var(--bg360-scene-mark-label-border);
+  border-radius: var(--bg360-scene-mark-label-radius);
+  background: var(--bg360-scene-mark-label-background);
+  color: var(--bg360-scene-mark-label-color);
+  font-size: var(--bg360-scene-mark-label-font-size);
+  font-weight: 650;
+  line-height: 1.25;
+  text-align: left;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  box-shadow: var(--bg360-scene-mark-label-shadow);
+  pointer-events: auto;
+}
+
+.bg360-mark.is-locked {
+  cursor: default;
+  opacity: 0.75;
+}
+
+/* В неинтерактивном режиме walk360 метки не принимают клики; photo остаётся доступной всегда. */
+.bg360-marks:not(.is-interactive) .bg360-mark:not(.kind-photo) {
+  pointer-events: none;
+}
+
+/* Photo-метки должны быть кликабельны поверх диалога и choices. */
+.bg360-marks.has-photo-marks {
+  z-index: 45;
+}
+
+.bg360-mark.kind-photo {
+  width: var(--bg360-photo-mark-size);
+  height: var(--bg360-photo-mark-size);
+  padding: 0;
+  border-radius: calc(var(--bg360-photo-mark-size) * 0.14);
+  border-color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.42);
+  overflow: visible;
+  box-shadow: 0 var(--bg360-mark-shadow-y) var(--bg360-mark-shadow-blur) rgba(0, 0, 0, 0.55);
+}
+
+.bg360-mark.kind-photo::after {
+  display: none;
+}
+
+.bg360-mark-photo-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--bg360-photo-mark-size) * 0.12);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bg360-mark-photo-count {
+  position: absolute;
+  right: calc(var(--bg360-photo-mark-size) * 0.04);
+  bottom: calc(var(--bg360-photo-mark-size) * 0.04);
+  min-width: calc(var(--bg360-photo-mark-size) * 0.34);
+  padding: calc(var(--bg360-photo-mark-size) * 0.04) calc(var(--bg360-photo-mark-size) * 0.08);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-size: calc(var(--bg360-photo-mark-size) * 0.22);
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  pointer-events: none;
+}
+
+.bg360-photo-mark-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(calc(var(--bg360-photo-mark-size) * 0.52), -50%);
+  width: max-content;
+  max-width: min(var(--bg360-scene-mark-label-max-width), 42vw);
+  padding: var(--bg360-scene-mark-label-padding-y) var(--bg360-scene-mark-label-padding-x);
+  border: var(--ui-border-width) solid var(--bg360-scene-mark-label-border);
+  border-radius: var(--bg360-scene-mark-label-radius);
+  background: var(--bg360-scene-mark-label-background);
+  color: var(--bg360-scene-mark-label-color);
+  font-size: var(--bg360-scene-mark-label-font-size);
+  font-weight: 650;
+  line-height: 1.25;
+  text-align: left;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  box-shadow: var(--bg360-scene-mark-label-shadow);
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.bg360-mark-photo-fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: calc(var(--bg360-photo-mark-size) * 0.42);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.88);
+  pointer-events: none;
+}
+
+/* Просмотр изображений с 360-меток: карточка по центру на затемнённом фоне. */
+.bg360-photo-viewer {
+  position: absolute;
+  inset: 0;
+  z-index: 55;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.bg360-photo-viewer.hidden {
+  pointer-events: none;
+}
+
+.bg360-photo-viewer-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(0, 0, 0, 0.72);
+  pointer-events: auto;
+}
+
+.bg360-photo-viewer-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:
+    max(0.5rem, env(safe-area-inset-top, 0px))
+    max(0.5rem, env(safe-area-inset-right, 0px))
+    max(0.5rem, env(safe-area-inset-bottom, 0px))
+    max(0.5rem, env(safe-area-inset-left, 0px));
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.bg360-photo-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  max-width: min(94vw, 100%);
+  pointer-events: auto;
+  border: var(--ui-border-width) solid rgba(255, 255, 255, 0.38);
+  border-radius: var(--control-radius);
+  background: rgba(0, 0, 0, 0.62);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.38);
+  overflow: hidden;
+}
+
+.bg360-photo-media {
+  position: relative;
+  flex: 0 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.bg360-photo-slide-viewport {
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+}
+
+.bg360-photo-slide-viewport.is-panning {
+  cursor: grabbing;
+}
+
+.bg360-photo-slide-inner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.bg360-photo-slide-inner img {
+  display: block;
+  max-width: none;
+  max-height: none;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+.bg360-photo-viewer-close {
+  position: absolute;
+  top: var(--bg360-photo-control-inset);
+  right: var(--bg360-photo-control-inset);
+  z-index: 6;
+  width: var(--bg360-photo-close-size);
+  height: var(--bg360-photo-close-size);
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 999px;
+  border: var(--bg360-photo-close-border-width) solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: calc(var(--bg360-photo-close-size) * var(--bg360-photo-close-glyph-scale));
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.bg360-photo-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  transform: translateY(-50%);
+  width: var(--bg360-photo-close-size);
+  height: var(--bg360-photo-close-size);
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 999px;
+  border: var(--bg360-photo-close-border-width) solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: calc(var(--bg360-photo-close-size) * 0.62);
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.bg360-photo-nav-prev {
+  left: var(--bg360-photo-nav-inset-x);
+}
+
+.bg360-photo-nav-next {
+  right: var(--bg360-photo-nav-inset-x);
+}
+
+.bg360-photo-nav.hidden,
+.bg360-photo-viewer-close.hidden {
+  display: none;
+}
+
+.bg360-marks.is-photo-viewer-open .bg360-mark {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.bg360-photo-viewer-caption {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 0.5rem 0.65rem;
+  border-top: var(--ui-border-width) solid rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.94);
+  font-size: var(--control-font-size);
+  line-height: 1.45;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  pointer-events: auto;
+}
+
+.bg360-photo-viewer-caption.hidden {
+  display: none;
+}
+
+/* Подсказка появляется только у фонов, где сценарий разрешил горизонтальный скролл. */
+.bg-scroll-hint {
+  position: absolute;
+  left: 50%;
+  top: max(4.25rem, calc(env(safe-area-inset-top, 0px) + 4.25rem));
+  transform: translateX(-50%);
+  z-index: 35;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  max-width: min(80%, 22rem);
+  padding: 0.42em 0.76em 0.42em 0.46em;
+  border: var(--ui-border-width) solid rgba(255,255,255,0.34);
+  border-radius: 999px;
+  background: rgba(0,0,0,0.58);
+  color: rgba(255,255,255,0.92);
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.2;
+  text-align: center;
+  pointer-events: none;
+  backdrop-filter: blur(calc(0.25rem * var(--visualScale)));
+  box-shadow: 0 0.45rem 1.25rem rgba(0,0,0,0.35);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.bg-scroll-hint::before {
+  content: "⇆";
+  display: grid;
+  place-items: center;
+  width: 1.7em;
+  height: 1.7em;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.20);
+  border: var(--ui-border-width) solid rgba(255,255,255,0.30);
+  color: #ffffff;
+  font-size: 1.15em;
+  line-height: 1;
+}
+
+.bg-scroll-hint.is-360::before {
+  content: "↕↔";
+}
+
+.bg-scroll-hint.is-visible {
+  opacity: 1;
+}
+
+.bg-scroll-hint.is-story-video {
+  z-index: 75;
+}
+
+.novel-window.bg-scrollable {
+  cursor: grab;
+}
+
+.novel-window.bg-scroll-dragging {
+  cursor: grabbing;
+}
+
+.novel-window.bg-scrollable #storyVideoOverlay {
+  cursor: grab;
+}
+
+.novel-window.bg-scroll-dragging #storyVideoOverlay {
+  cursor: grabbing;
+}
+
+/* Рамка персонажа: стабильная область полного изображения, внутри которой двигается сам спрайт. */
+.char-frame {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  overflow: visible;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Персонаж */
+.char {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 var(--char-shadow-y) var(--char-shadow-blur) var(--char-shadow-color));
+  pointer-events: none;
+  transition: opacity var(--visualTransitionMs, 110ms) ease;
+}
+
+/* Короткий общий fade-through для батча bg/show/hide перед следующей репликой. */
+.visual-transition-transparent {
+  opacity: 0 !important;
+}
+
+/* Завеса для переходов через чёрный/белый кадр; не связана с сюжетным overlay. */
+.visual-transition-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--visualTransitionMs, 110ms) ease;
+}
+
+.visual-transition-cover.is-visible {
+  opacity: 1;
+}
+
+/* Затемнение/оверлей */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 4;
+}
+
+/* Сюжетное видео находится поверх интерфейса сцены и использует blur-фон для полей. */
+.story-video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  overflow: hidden;
+  background: #000;
+  touch-action: none;
+}
+
+.story-video-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: #000;
+}
+
+.story-video-skip-hint {
+  position: absolute;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  padding: 0.4em 0.7em;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.48);
+  color: rgba(255,255,255,0.92);
+  font-size: clamp(0.78rem, 1.6vw, 0.95rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+
+.story-video-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  color: rgba(255,255,255,0.82);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  text-align: center;
+  background: #050505;
+}
+
+/* Верхняя панель */
+.topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: var(--topbar-padding-y) var(--topbar-padding-x);
+  gap: var(--topbar-gap);
+  font-size: var(--topbar-font-size);
+
+  background: linear-gradient(to bottom, rgba(0,0,0,0.65), rgba(0,0,0,0));
+  z-index: 20;
+}
+
+.title {
+  font-weight: 700;
+  font-size: var(--topbar-title-size);
+  opacity: 0.9;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--topbar-control-gap);
+  flex-wrap: wrap;
+  z-index: 10;
+}
+
+/* Кнопки */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-min-height);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  border: var(--control-border-width) solid rgba(255,255,255,0.18);
+  border-radius: var(--control-radius);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  font-size: var(--control-font-size);
+  line-height: 1.1;
+}
+
+.icon-btn .btn-icon {
+  display: inline-block;
+  line-height: 1;
+  transform: scale(1.8);
+  transform-origin: center;
+}
+
+
+/* Слайдер громкости */
+.slider {
+  width: var(--topbar-slider-width);
+  height: var(--topbar-slider-height);
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+/* Трек */
+.slider::-webkit-slider-runnable-track {
+  height: var(--topbar-slider-track-height);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.28);
+}
+
+.slider::-moz-range-track {
+  height: var(--topbar-slider-track-height);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.28);
+  border: none;
+}
+
+/* Бегунок */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--topbar-slider-thumb-size);
+  height: var(--topbar-slider-thumb-size);
+  border-radius: 50%;
+  background: #fff;
+  border: var(--ui-border-width) solid rgba(0,0,0,0.25);
+  margin-top: calc((var(--topbar-slider-track-height) - var(--topbar-slider-thumb-size)) / 2);
+}
+
+.slider::-moz-range-thumb {
+  width: var(--topbar-slider-thumb-size);
+  height: var(--topbar-slider-thumb-size);
+  border-radius: 50%;
+  background: #fff;
+  border: var(--ui-border-width) solid rgba(0,0,0,0.25);
+}
+
+
+
+/* Диалог */
+.dialog {
+  position: absolute;
+  left: var(--dialog-side-offset);
+  right: var(--dialog-side-offset);
+  
+  bottom: var(--dialog-bottom-gap); 
+  /* bottom: calc(var(--uiBottomOffset) + var(--dialog-bottom-gap)); */
+
+  padding: var(--dialog-padding);
+  border-radius: var(--dialog-radius);
+  background: rgba(0,0,0,0.60);
+  border: var(--ui-border-width) solid rgba(255,255,255,0.14);
+  backdrop-filter: blur(calc(var(--dialogBackdropBlur) * var(--viewportScale)));
+  -webkit-backdrop-filter: blur(calc(var(--dialogBackdropBlur) * var(--viewportScale)));
+  outline: none;
+  font-size: var(--dialog-font-size);
+  z-index: 10;
+  transition: padding-bottom 0.2s ease;
+}
+
+/* Диалог без подсказки */
+.dialog.no-hint {
+   padding-bottom: var(--dialog-padding-bottom-no-hint);
+}
+
+/* Диалог с подсказкой - добавляем место для hint */
+.dialog.has-hint {
+  padding-bottom: var(--dialog-padding-bottom-with-hint);
+}
+
+/* Когда показан выбор — диалог скрываем целиком */
+.dialog.hiddenByChoices {
+  display: none !important;
+}
+
+/* Имя персонажа - ОСТАВЛЯЕМ rem, так как должно быть фиксировано относительно базового */
+.name {
+  display: inline-block;
+  min-height: var(--name-min-height);
+  padding: var(--name-padding-y) var(--name-padding-x);
+  border-radius: var(--name-radius);
+  background: rgba(255,255,255,0.10);
+  border: var(--name-border-width) solid rgba(255,255,255,0.12);
+  margin-bottom: var(--name-margin-bottom);
+  font-weight: 700;
+  font-size: var(--name-font-size);
+  line-height: 1.2;
+}
+
+.text {
+  font-size: 1em;
+  line-height: var(--dialog-text-line-height);
+  min-height: var(--dialog-text-min-height);
+  white-space: pre-wrap;
+}
+
+.hint {
+  margin-top: var(--dialog-hint-gap);
+  font-size: 0.7em;
+  opacity: 0.65;
+  display: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Когда hint видим, добавляем отступ */
+.hint[style*="display: block"] {
+  margin-top: var(--dialog-hint-gap);
+}
+
+/* =========================================================
+   ВЫБОР: панель, заголовок и кнопки
+   ========================================================= */
+
+.choices {
+  position: absolute;
+  left: var(--choices-side-offset);
+  right: var(--choices-side-offset);
+
+  bottom: var(--dialog-bottom-gap);
+  /* bottom: calc(var(--uiBottomOffset) + var(--dialog-bottom-gap)); */
+  
+  z-index: 30;
+}
+
+.choicePanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--choices-gap);
+  padding: 0.95em;
+  border-radius: calc(var(--choice-radius) + 0.2em);
+  background: rgba(0,0,0,0.40);
+  border: var(--choice-panel-border-width) solid rgba(255,255,255,0.12);
+  box-shadow: 0 var(--choice-panel-shadow-y) var(--choice-panel-shadow-blur) rgba(0,0,0,0.28);
+  /* Сила blur задаётся в эталонных px и масштабируется как размытие фона сцены. */
+  backdrop-filter: blur(calc(var(--menuBackdropBlur) * var(--viewportScale)));
+  -webkit-backdrop-filter: blur(calc(var(--menuBackdropBlur) * var(--viewportScale)));
+}
+
+.choiceTitle {
+  text-align: center;
+  font-size: 0.92em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.92;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.walk360Title {
+  text-transform: none;
+}
+
+.choiceList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--choices-gap);
+}
+
+.choicePanel.is-compact .choiceList {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.choicePanel.is-fit .choiceList {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.choiceFitRow {
+  display: flex;
+  gap: var(--choices-gap);
+  width: 100%;
+  align-items: stretch;
+}
+
+.choiceBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  width: 100%;
+  min-height: var(--choice-min-height);
+  padding: var(--choice-padding-y) var(--choice-padding-x);
+
+  font: inherit;
+  font-size: var(--choice-font-size);
+  line-height: 1.35;
+  text-align: left;
+  color: #fff;
+
+  background: rgba(0,0,0,0.40);
+  border: var(--choice-border-width) solid rgba(255,255,255,0.18);
+  border-radius: var(--choice-radius);
+
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.choicePanel.is-compact .choiceBtn,
+.choicePanel.is-fit .choiceBtn {
+  flex: 0 1 auto;
+  width: auto;
+  max-width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.choiceBtn:hover,
+.choiceBtn:focus-visible {
+  background: rgba(0,0,0,0.40);
+  border-color: rgba(255,255,255,0.32);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.choiceNum {
+  flex: 0 0 auto;
+  min-width: 1.8em;
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+.choicePanel.is-compact .choiceNum,
+.choicePanel.is-fit .choiceNum {
+  min-width: auto;
+}
+
+.choiceLabel {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.choicePanel.is-compact .choiceLabel,
+.choicePanel.is-fit .choiceLabel {
+  flex: 0 1 auto;
+  overflow-wrap: anywhere;
+}
+
+
+/* Модалка мини-игры */
+.gameModal {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--modal-padding);
+  z-index: 60;
+  touch-action: none;
+}
+
+.gameFrame,
+.gameControls,
+#btnCloseGame,
+#btnCloseStatsGame {
+  touch-action: auto;
+}
+
+.gameFrameWrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-gap);
+}
+
+.statsGameFrameWrap {
+  position: absolute;
+}
+
+.gameFrame {
+  width: 100%;
+  flex: 1;
+  border: var(--ui-border-width) solid rgba(255,255,255,0.18);
+  border-radius: var(--modal-radius);
+  background: #111;
+}
+
+.gameControls {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Утилиты */
+.hidden { display: none !important; }
+
+/* ===== Панель статистики ===== */
+
+.statsPanel {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: var(--modal-padding); */
+  z-index: 50;
+}
+
+.statsCard {
+  width: calc(100% - 4rem);  /* Отступы 2rem с каждой стороны */
+  height: calc(100% - 4rem); /* Отступы 2rem сверху и снизу */
+  /* max-width: var(--modal-frame-max-width); */  /* Закомментируйте или удалите */
+  /* max-height: var(--modal-frame-max-height); */ /* Закомментируйте или удалите */
+  border-radius: calc(var(--modal-radius) + 0.1rem);
+  background: rgba(0,0,0,0.70);
+  border: var(--ui-border-width) solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.statsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--stats-header-gap);
+  padding: var(--modal-padding);
+  border-bottom: var(--ui-border-width) solid rgba(255,255,255,0.12);
+}
+
+.statsHeaderActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.statsViewTabs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.statsViewTabs .btn.is-active,
+.statsViewTabs .btn[aria-pressed="true"] {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.42);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset;
+}
+
+.statsTitle {
+  font-weight: 800;
+  font-size: var(--stats-title-size);
+}
+
+.statsBody {
+
+  flex: 1;
+  width: 100%;
+
+  padding: calc(var(--modal-padding) + 0.1rem);
+
+  overflow: auto;
+  resize: none;
+
+  background: rgba(0,0,0,0.6);
+  border: none;
+  outline: none;
+
+  color: #fff;
+  font-size: var(--stats-body-font-size);
+  line-height: 1.4;
+
+  font-family: Consolas, monospace;
+}
+
+/* Поле настроек в модалке делаем не редактируемым и со стандартным курсором. */
+.settingsBody {
+  cursor: default;
+}
+
+/* небольшая “табличная” разметка строк */
+.statsLine {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.statsKey {
+  opacity: 0.75;
+  font-size: var(--stats-key-size);
+}
+
+.statsVal {
+  font-weight: 700;
+  font-size: var(--stats-value-size);
+  margin-top: 2px;
+}
+
+.title {
+  display: none;
+}
+
+/* Медиа-запрос для мобильных устройств
+   Здесь не задаём новые случайные размеры, а только
+   слегка поджимаем те же токены системы. */
+@media (max-width: 600px) {
+  :root {
+    --topbar-padding-y: var(--compact-topbar-padding-y);
+    --topbar-padding-x: var(--compact-topbar-padding-x);
+    --topbar-slider-width: var(--compact-topbar-slider-width);
+    --topbar-slider-height: var(--compact-topbar-slider-height);
+
+    --control-padding-y: var(--compact-control-padding-y);
+    --control-padding-x: var(--compact-control-padding-x);
+    --control-radius: var(--compact-control-radius);
+    --control-font-size: var(--compact-control-font-size);
+
+    --dialog-side-offset: var(--compact-dialog-side-offset);
+    --dialog-padding: var(--compact-dialog-padding);
+
+    --choices-side-offset: var(--compact-choices-side-offset);
+    --choices-gap: var(--compact-choices-gap);
+
+    --choice-padding-y: var(--compact-choice-padding-y);
+    --choice-padding-x: var(--compact-choice-padding-x);
+    --choice-font-size: var(--compact-choice-font-size);
+  }
+}
+
+/* Контейнер для размытого фона */
+.blur-bg-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* ПОДНЯЛИ: между stage и bg */
+  overflow: hidden;
+  pointer-events: none;
+  background: #000; /* черный фон на всякий случай */
+}
+
+.blur-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* растягиваем на всю высоту */
+  object-position: center;
+  /* --blurStrength задаётся в "эталонных" px (для UI_REFERENCE_HEIGHT),
+     а --viewportScale адаптирует силу размытия под текущее разрешение. */
+  filter: blur(calc(var(--blurStrength) * var(--viewportScale))) brightness(var(--blurBrightness));
+  opacity: var(--blurOpacity);
+  /* scale(1.5) выводит границы тайлов композитора (где появлялись "стыки")
+     далеко за видимую область. Меньшего значения может не хватать.
+     will-change + translateZ форсируют единый GPU-слой,
+     чтобы blur рендерился целиком, а не по тайлам. */
+  transform: scale(1.5) translateZ(0);
+  transform-origin: center center;
+  will-change: transform, filter;
+  backface-visibility: hidden;
+}
+
+/* Временный верхний слой для синхронного crossfade размытого фона. */
+.blur-bg-crossfade {
+  opacity: 0 !important;
+  transition: opacity var(--visualTransitionMs, 110ms) ease;
+}
+
+.blur-bg-crossfade.is-visible {
+  opacity: var(--blurOpacity) !important;
+}
+
+/* Дубликат фонового видео под размытием: тот же источник, без воспроизведения (кадр 0). */
+.blur-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: blur(calc(var(--blurStrength) * var(--viewportScale))) brightness(var(--blurBrightness));
+  opacity: var(--blurOpacity);
+  transform: scale(1.5) translateZ(0);
+  transform-origin: center center;
+  will-change: transform, filter;
+  backface-visibility: hidden;
+}
+
+/* Сцена */
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  background: transparent;
+}
+
+/* URL-запуск мини-игры не показывает сцену новеллы: только чёрный фон и iframe игры. */
+.stage.url-game-mode,
+.stage.url-game-mode .novel-window,
+.stage.url-game-mode .ui-frame {
+  background: #000;
+}
+
+.stage.url-game-mode #blurBgLayer,
+.stage.url-game-mode .bg,
+.stage.url-game-mode .bg-360,
+.stage.url-game-mode #bg360MarksLayer,
+.stage.url-game-mode #bgScrollHint,
+.stage.url-game-mode .char-frame,
+.stage.url-game-mode .overlay,
+.stage.url-game-mode .story-video-overlay,
+.stage.url-game-mode .topbar,
+.stage.url-game-mode .dialog,
+.stage.url-game-mode .choices {
+  display: none !important;
+}
+
+.stage.url-game-mode .ui-frame > .gameModal {
+  background: #000;
+}
+
+/* Окно визуальной новеллы */
+.novel-window {
+  position: relative;  /* НОВОЕ */
+  left: var(--leftSpacing);
+  top: var(--topSpacing);
+  width: calc(100% - var(--leftSpacing) - var(--rightSpacing));
+  height: calc(100% - var(--topSpacing) - var(--bottomSpacing));
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* Центральная область интерфейса: в horizontal-режиме фон шире, а кнопки и диалоги остаются в привычной зоне 10:16. */
+.ui-frame {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(100%, var(--uiFrameWidth));
+  transform: translateX(-50%);
+  z-index: 40;
+  pointer-events: none;
+}
+
+/* Сама рамка не перехватывает сцену, но реальные элементы UI внутри остаются интерактивными. */
+.ui-frame > .topbar,
+.ui-frame > .dialog,
+.ui-frame > .choices,
+.ui-frame > .gameModal {
+  pointer-events: auto;
+}
+
+
+
+/* Состояния диалога: отдельные токены для ручной правки */
+.dialog.has-name {
+  padding-top: var(--dialog-name-padding-top);
+}
+
+.dialog.no-name {
+  padding-top: var(--dialog-no-name-padding-top);
+}
+
+
+
+
+
+
+
+/* Добавьте в engine.css */
+
+.statsViewContainer {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: rgba(0,0,0,0.6);
+}
+
+.statsBody, .graphContainer, .gamesContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  transition: opacity 0.3s ease;
+}
+
+.graphContainer {
+  background: #1a1a1a;
+  padding: 0; /* Убираем padding, так как теперь внутри будет wrapper */
+}
+
+.graphControls {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem var(--modal-padding) var(--modal-padding);
+  border-top: var(--ui-border-width) solid rgba(255,255,255,0.12);
+  justify-content: flex-end;
+}
+
+
+/* Адаптация для мобильных */
+@media (max-width: 600px) {
+  .graphControls {
+    flex-wrap: wrap;
+  }
+  
+  .graphControls .btn {
+    flex: 1 1 auto;
+  }
+
+  .statsCard {
+    width: calc(100% - 2rem);  /* Отступы 1rem с каждой стороны */
+    height: calc(100% - 2rem); /* Отступы 1rem сверху и снизу */
+  } 
+}
+
+
+
+.gamesContainer {
+  padding: var(--modal-padding);
+  background: rgba(0,0,0,0.6);
+}
+
+.gamesStatus {
+  margin-bottom: var(--modal-padding);
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.9rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.92);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.gamesStatus.ok {
+  border-color: rgba(101,213,157,0.42);
+  color: #d8ffe8;
+}
+
+.gamesStatus.warn {
+  border-color: rgba(255,201,107,0.42);
+  color: #ffe5ae;
+}
+
+.gamesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: var(--modal-padding);
+  align-content: start;
+}
+
+.gameCatalogCard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  border-radius: calc(var(--modal-radius) + 0.1rem);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  overflow: hidden;
+}
+
+.gameCatalogCoverWrap {
+  aspect-ratio: 16 / 9;
+  background: rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.gameCatalogCover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gameCatalogNoCover {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.gameCatalogBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: var(--modal-padding);
+}
+
+.gameCatalogTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.gameCatalogId {
+  font-size: 0.78rem;
+  opacity: 0.65;
+  word-break: break-word;
+}
+
+.gameCatalogDescription {
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: rgba(255,255,255,0.82);
+  min-height: 3.6em;
+}
+
+.gameCatalogActions {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.45rem;
+  margin-top: auto;
+}
+
+.gameCatalogLaunchBtn {
+  min-height: 2.6rem;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gameCatalogLaunchBtn:hover {
+  background: rgba(255,255,255,0.16);
+}
+
+.gameCatalogLaunchBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.gameCatalogLaunchBtn.is-active {
+  border-color: rgba(122,162,255,0.6);
+  background: rgba(122,162,255,0.18);
+}
+
+
+
+
+
+
+
+/* Замените существующие стили для Mermaid на эти */
+
+/* График на белом фоне */
+.graphContainer .mermaid {
+  background: var(--graph-bg) !important;
+}
+
+/* Базовые стили для всех элементов */
+.graphContainer .mermaid .label {
+  color: var(--graph-label-color) !important;
+  font-family: var(--graph-label-font) !important;
+}
+
+.graphContainer .mermaid .label text {
+  fill: var(--graph-label-color) !important;
+}
+
+/* Стили для текста над линиями */
+.graphContainer .mermaid .edgeLabel {
+  background: var(--graph-edgeLabel-bg) !important;
+  
+  border-radius: var(--graph-edgeLabel-radius) !important;
+  padding: var(--graph-edgeLabel-padding) !important;
+  font-size: var(--graph-edgeLabel-font-size) !important;
+  color: var(--graph-edgeLabel-color) !important;
+  font-weight: normal !important;
+  box-shadow: none !important;
+  line-height: 1.2 !important;
+}
+
+.graphContainer .mermaid .edgeLabel span {
+  color: var(--graph-edgeLabel-color) !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Убираем лишние фоновые элементы */
+.graphContainer .mermaid .edgeLabel rect {
+  fill: var(--graph-edgeLabel-bg) !important;
+  stroke: #999 !important;
+  stroke-width: 1px !important;
+}
+
+.graphContainer .mermaid .edgeLabel foreignObject {
+  overflow: visible !important;
+}
+
+/* Стили для узлов (общие) */
+.graphContainer .mermaid .node rect,
+.graphContainer .mermaid .node circle,
+.graphContainer .mermaid .node polygon {
+  fill: var(--graph-node-fill) !important;
+  stroke: var(--graph-node-stroke) !important;
+  stroke-width: var(--graph-node-stroke-width) !important;
+  rx: var(--graph-node-radius) !important;  /* ДОБАВЛЕНО: скругление по горизонтали */
+  ry: var(--graph-node-radius) !important;  /* ДОБАВЛЕНО: скругление по вертикали */
+}
+
+/* 360-панорамы на графе отделены от обычных сцен цветом, но используют те же миниатюры и hover. */
+.graphContainer .mermaid .node.panorama360 rect {
+  fill: var(--graph-node-360-fill) !important;
+  stroke: var(--graph-node-360-stroke) !important;
+  stroke-width: var(--graph-node-360-stroke-width) !important;
+}
+
+/* Стартовые узлы */
+.graphContainer .mermaid .node.start rect {
+  fill: var(--graph-node-start-fill) !important;
+  stroke: var(--graph-node-start-stroke) !important;
+  stroke-width: var(--graph-node-start-stroke-width) !important;
+  rx: var(--graph-node-start-radius) !important;
+  ry: var(--graph-node-start-radius) !important;
+}
+
+/* Недостижимые узлы */
+.graphContainer .mermaid .node.unreachable rect {
+  fill: var(--graph-node-unreachable-fill) !important;
+  stroke: var(--graph-node-unreachable-stroke) !important;
+  stroke-dasharray: var(--graph-node-unreachable-stroke-dasharray) !important;
+  stroke-width: var(--graph-node-unreachable-stroke-width) !important;
+  rx: var(--graph-node-unreachable-radius) !important;
+  ry: var(--graph-node-unreachable-radius) !important;
+}
+
+/* Финальные узлы */
+.graphContainer .mermaid .node.final rect {
+  fill: var(--graph-node-final-fill) !important;
+  stroke: var(--graph-node-final-stroke) !important;
+  stroke-width: var(--graph-node-final-stroke-width) !important;
+  rx: var(--graph-node-final-radius) !important;
+  ry: var(--graph-node-final-radius) !important;
+}
+
+/* Фон контейнера графа */
+.graphContainer {
+  background: var(--graph-container-bg);
+  padding: var(--graph-padding);
+}
+
+.graphContainer.panning {
+  cursor: grabbing;
+}
+
+
+
+
+/* Wrapper для panzoom */
+.panzoom-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  -ms-touch-action: none;
+  overscroll-behavior: contain;
+}
+
+/* Вложенные SVG/foreignObject-элементы графа тоже не должны отдавать pinch браузеру. */
+.panzoom-wrapper * {
+  touch-action: none;
+}
+
+/* Контент для панорамирования */
+.panzoom-content {
+  transform-origin: 0 0;
+  width: fit-content;
+  height: fit-content;
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Контейнер для mermaid графа с внутренним padding */
+.mermaid-wrapper {
+  display: inline-block;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  margin: auto;
+}
+
+/* Панель управления масштабом */
+.graph-zoom-controls {
+  position: absolute;
+  bottom: var(--graph-zoom-panel-offset);
+  right: var(--graph-zoom-panel-offset);
+  display: flex;
+  gap: var(--graph-zoom-panel-gap);
+  z-index: 100;
+  background: rgba(0,0,0,0.7);
+  padding: var(--graph-zoom-panel-padding);
+  border-radius: var(--graph-zoom-panel-radius);
+  backdrop-filter: blur(var(--graph-zoom-backdrop-blur));
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.graph-zoom-btn {
+  width: var(--graph-zoom-btn-size);
+  height: var(--graph-zoom-btn-size);
+  border-radius: var(--graph-zoom-btn-radius);
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  font-size: var(--graph-zoom-btn-font-size);
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.graph-zoom-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(var(--graph-zoom-hover-scale));
+}
+
+.graph-zoom-btn:active {
+  transform: scale(var(--graph-zoom-active-scale));
+}
+
+.graph-zoom-reset {
+  width: auto;
+  padding: 0 var(--graph-zoom-reset-padding-x);
+  border-radius: var(--graph-zoom-panel-radius);
+  font-size: var(--graph-zoom-pill-font-size);
+}
+
+/* Индикатор масштаба */
+.graph-zoom-level {
+  color: white;
+  font-size: var(--graph-zoom-pill-font-size);
+  padding: 0 var(--graph-zoom-pill-padding-x);
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: var(--graph-zoom-pill-radius);
+  margin-right: var(--graph-zoom-pill-margin-right);
+}
+
+
+
+/* Улучшенные стили для изображений в графе Mermaid */
+
+.graphContainer .mermaid .node div {
+  overflow: visible !important;
+  position: relative !important;
+}
+
+/* Сами изображения */
+/* Отключаем конфликтующие стили для изображений в узлах */
+.graphContainer .mermaid .node img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+  cursor: zoom-in !important;
+  transform-origin: center center !important;
+}
+
+/* Старое общее правило hover удалено:
+   оно конфликтовало с более точной настройкой ниже и вызывало двойной zoom
+   у изображений внутри масштабируемых контейнеров. */
+
+
+.game-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;
+  padding: 2px !important;
+  min-width: 120px !important;
+  /* Длинные id/названия переносятся; верхняя граница ширины согласована со списками на графе. */
+  width: auto !important;
+  max-width: min(100%, 340px) !important;
+  text-align: center !important;
+  background: transparent !important;
+}
+
+/* Карточки игр внутри Mermaid получают размеры сильным селектором, иначе общее правило node img перебивает миниатюру. */
+.graphContainer .mermaid .node .game-card {
+  width: min(160px, 100%) !important;
+  max-width: 160px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+.game-card-var {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+  word-break: break-all !important;
+  overflow-wrap: anywhere !important;
+}
+
+.game-card-title {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #111 !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+.game-card-image-wrap {
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 2px !important;
+  width: 64px !important;
+  aspect-ratio: 2 / 3 !important;
+  padding: 1px !important;
+  border-radius: 8px !important;
+  background-color: rgba(120,120,120,0.55) !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  line-height: 0 !important;
+  transform-origin: center center !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  cursor: zoom-in !important;
+}
+
+.game-thumbnail {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  background-color: transparent !important;
+  border-radius: 7px !important;
+  border: none !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+}
+
+.graphContainer .mermaid .node .game-thumbnail {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Обложки game-ресурсов увеличиваем рамкой целиком, чтобы не появлялись белые поля внутри превью. */
+.graphContainer .mermaid .node .game-card-image-wrap:hover {
+  transform: scale(3.5) !important;
+  z-index: 9999 !important;
+  position: relative !important;
+  background-color: rgba(90,90,90,0.7) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18) !important;
+  cursor: zoom-out !important;
+}
+
+
+
+/* Статистика узла */
+.graphContainer .mermaid .node-stats {
+  line-height: 1.4 !important;
+  margin-top: 2px !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+
+/* Контейнер узла Mermaid - должен допускать перекрытие */
+.graphContainer .mermaid .node {
+  overflow: visible !important;  /* Разрешаем выход за границы */
+  z-index: auto !important;
+}
+
+/* Все возможные обертки внутри узла */
+.graphContainer .mermaid .node * {
+  overflow: visible !important;
+}
+
+/* Контейнер для изображений в узле - переопределяем все возможные уровни */
+.graphContainer .mermaid .node td,
+.graphContainer .mermaid .node span,
+.graphContainer .mermaid .node foreignObject,
+.graphContainer .mermaid .node > * {
+  overflow: visible !important;
+  position: relative !important;
+  z-index: auto !important;
+}
+
+
+/* Специально для Mermaid foreignObject */
+.graphContainer .mermaid foreignObject {
+  overflow: visible !important;
+}
+
+.graphContainer .mermaid foreignObject * {
+  overflow: visible !important;
+}
+
+.graphContainer .mermaid foreignObject,
+.graphContainer .mermaid foreignObject * {
+  color: var(--graph-label-color) !important;
+  font-family: var(--graph-label-font) !important;
+}
+
+/* Корневой div Mermaid внутри foreignObject (htmlLabels): не растягиваем на всю ширину FO (ломало бы fit-content у сеток миниатюр),
+   но ограничиваем сверху и даём перенос длинных подписей. min-width:0 — корректная укладка flex/grid внутри узла. */
+.graphContainer .mermaid .node foreignObject > div {
+  max-width: 360px !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Фиксируем верхнюю границу HTML-лейбла, чтобы Mermaid и CSS считали одинаковую ширину узла. */
+.graphContainer .mermaid .node .nodeLabel,
+.graphContainer .mermaid .node foreignObject > div {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+.graphContainer .mermaid .node div,
+.graphContainer .mermaid .node span,
+.graphContainer .mermaid .node b,
+.graphContainer .mermaid .node i {
+  color: var(--graph-label-color) !important;
+}
+
+/* Контейнер для изображений - только один раз! */
+.bg-images-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 2px !important;
+  margin: 4px auto !important;
+  background-color: rgba(255,255,255,0.3) !important;
+  border-radius: 6px !important;
+  padding: 8px !important;
+  box-sizing: border-box !important;
+  border: none !important;            /* Убираем контур */
+}
+
+/* Миниатюры - только один раз! */
+.bg-thumbnail {
+  width: 40px !important;
+  height: 40px !important;
+  object-fit: cover !important;
+  background-color: #f0f0f0 !important;
+  border-radius: 8px !important;     /* Увеличено скругление углов */
+  border: none !important;            /* Убираем серый контур */
+  transition: transform 0.2s ease !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+  cursor: zoom-in !important;
+  flex-shrink: 0 !important;
+  padding: 2px !important;           /* Добавляем внутренний отступ */
+  box-sizing: border-box !important;  /* Чтобы padding не увеличивал размер */
+}
+
+
+
+
+/* Увеличение только при наведении.
+   Важно: исключаем специальные миниатюры, чтобы не было двойного масштабирования
+   (когда увеличиваются и контейнер, и изображение одновременно). */
+.graphContainer .mermaid .node img:hover:not(.char-emotion-thumbnail):not(.bg-thumbnail):not(.scene-bg-thumbnail):not(.bgi):not(.game-thumbnail),
+.graphContainer .mermaid .node img.zoomed {
+  transform: scale(3.5) !important;
+  z-index: 1000 !important;
+  position: relative !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important;
+}
+
+
+/* Контейнер для эмоций персонажа */
+.games-list-box {
+  display: grid !important;
+  grid-auto-rows: minmax(34px, auto) !important;
+  row-gap: 4px !important;
+  margin: 2px auto 0 !important;
+  padding: 2px 8px 6px !important;
+  min-width: 160px !important;
+  max-width: min(100%, 340px) !important;
+  background-color: rgba(220,220,220,0.3) !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+}
+
+/* Списки ресурсов имеют собственную ширину, чтобы строки не расширяли foreignObject после расчёта Mermaid. */
+.graphContainer .mermaid .node .games-list-box {
+  width: max-content !important;
+  max-width: 340px !important;
+  min-width: 160px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.game-list-row {
+  display: block !important;
+  height: auto !important;
+  min-height: 34px !important;
+  max-height: none !important;
+  padding: 5px 8px !important;
+  margin: 0 !important;
+  border-radius: 6px !important;
+  background: rgba(255,255,255,0.55) !important;
+  border: 1px solid rgba(96,96,96,0.25) !important;
+  color: #333333 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  text-align: left !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+.graphContainer .mermaid .node .game-list-row {
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+.game-list-row:last-child {
+  margin-bottom: 0 !important;
+}
+
+.game-list-row.games-list-empty-cell {
+  color: #555555 !important;
+  font-style: italic !important;
+  text-align: center !important;
+}
+
+.game-list-row.game-list-row-with-count {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  line-height: 1.35 !important;
+}
+
+.game-list-id {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+.graphContainer .mermaid .node .game-list-id {
+  overflow: hidden !important;
+}
+
+.game-list-count {
+  margin-left: auto !important;
+  min-width: 24px !important;
+  font-weight: 700 !important;
+  text-align: right !important;
+}
+
+.game-list-count-zero {
+  color: #d32f2f !important;
+}
+
+.char-emotions-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 2px !important;
+  margin-top: 4px !important;
+  background-color: transparent !important;
+  border-radius: 8px !important;
+  padding: 2px !important;
+}
+
+/* Миниатюры эмоций */
+.char-emotion-thumbnail {
+  width: 40px !important;
+  height: 40px !important;
+  object-fit: contain !important;
+  background-color: transparent !important;
+  border-radius: 8px !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+  transition: transform 0.2s ease !important;
+  cursor: zoom-in !important;
+  flex-shrink: 0 !important;
+}
+
+.char-emotion-thumbnail:hover {
+  transform: scale(3.5) !important;
+  z-index: 9999 !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important;
+  cursor: zoom-out !important;
+}
+
+
+
+/* Увеличенные миниатюры для фонов */
+.bg-thumbnail.large {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+
+
+
+
+
+
+/* =========================================================
+   УНИФИЦИРОВАННЫЕ СЕРЫЕ ТОНА ДЛЯ ГРАФА
+   Светло-серый для фона, темно-серый для контура
+   ========================================================= */
+
+/* Общий класс для группы персонажей */
+.characters-group > rect {
+  fill: #e0e0e0 !important;        /* Светло-серый фон */
+  stroke: #808080 !important;       /* Темно-серый контур */
+  stroke-width: 2px !important;
+}
+
+.characters-group .label {
+  color: #333333 !important;        /* Темно-серый текст */
+}
+
+/* Класс для узлов персонажей */
+.character-node > rect {
+  fill: #d0d0d0 !important;        /* Светло-серый фон (чуть темнее группы) */
+  stroke: #808080 !important;       /* Темно-серый контур */
+  stroke-width: 1px !important;
+}
+
+.character-node .label {
+  color: #333333 !important;        /* Темно-серый текст */
+}
+
+.game-node > rect {
+  fill: #d0d0d0 !important;
+  stroke: #808080 !important;
+  stroke-width: 1px !important;
+}
+
+.game-node .label {
+  color: #333333 !important;
+}
+
+/* Класс для группы фонов */
+.backgrounds-group > rect {
+  fill: #c0c0c0 !important;        /* Средне-серый фон */
+  stroke: #606060 !important;       /* Темно-серый контур */
+  stroke-width: 2px !important;
+}
+
+.backgrounds-group .label {
+  color: #333333 !important;        /* Темно-серый текст */
+}
+
+/* Класс для группы игр */
+.games-group > rect {
+  fill: #c0c0c0 !important;
+  stroke: #606060 !important;
+  stroke-width: 2px !important;
+}
+
+.games-group .label {
+  color: #333333 !important;
+}
+
+.games-list-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  margin: 4px auto 0 !important;
+  padding: 4px 8px 6px !important;
+  background-color: rgba(220,220,220,0.3) !important;
+  border-radius: 8px !important;
+  min-width: 160px !important;
+}
+
+.game-list-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  padding: 0 8px !important;
+  border-radius: 6px !important;
+  background: rgba(255,255,255,0.55) !important;
+  border: 1px solid rgba(96,96,96,0.25) !important;
+  color: #333333 !important;
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+.game-list-empty {
+  color: #555555 !important;
+  font-size: 12px !important;
+  font-style: italic !important;
+  text-align: center !important;
+}
+
+/* Контейнер для эмоций персонажа */
+.char-emotions-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin-top: 6px !important;
+  padding: 4px !important;
+  background-color: transparent !important;
+  border-radius: 8px !important;
+}
+
+/* Миниатюры эмоций */
+.char-emotion-thumbnail {
+  width: 40px !important;
+  height: 40px !important;
+  object-fit: contain !important;
+  background-color: transparent !important;
+  border-radius: 6px !important;
+  border: 0.25px solid #a0a0a0 !important;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.08) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  cursor: zoom-in !important;
+}
+
+.char-emotion-thumbnail:hover {
+  transform: scale(3.5) !important;
+  z-index: 9999 !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18) !important;
+  border: 0.25px solid #606060 !important;
+  cursor: zoom-out !important;
+}
+
+/* Контейнер для фонов */
+.bg-images-container {
+  display: inline-flex !important;
+  width: fit-content;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin: 6px auto !important;
+  padding: 6px !important;
+  background-color: rgba(220,220,220,0.3) !important;
+  border-radius: 8px !important;
+}
+
+/* Миниатюры фонов (обычные) */
+.bg-thumbnail {
+  width: 40px !important;
+  height: 40px !important;
+  object-fit: cover !important;
+  background-color: #e8e8e8 !important;
+  border-radius: 6px !important;
+  border: 0.25px solid #a0a0a0 !important;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.08) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  cursor: zoom-in !important;
+}
+
+/* Увеличенные миниатюры для фонов */
+.bg-thumbnail.large {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.scene-bg-images-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 4px !important;
+  margin: 6px auto !important;
+  padding: 4px !important;
+  background-color: rgba(220,220,220,0.3) !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+}
+
+.graphContainer .mermaid .node .scene-bg-frame {
+  display: block !important;
+  padding: 1px !important;
+  aspect-ratio: 10 / 16 !important;
+  border-radius: 8px !important;
+  background-color: rgba(120,120,120,0.55) !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  line-height: 0 !important;
+  transform-origin: center center !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  cursor: zoom-in !important;
+}
+
+.graphContainer .mermaid .node .scene-bg-thumbnail {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  background-color: transparent !important;
+  border-radius: 7px !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.graphContainer .mermaid .node .scene-bg-frame:hover {
+  transform: scale(3.5) !important;
+  z-index: 9999 !important;
+  position: relative !important;
+  background-color: rgba(90,90,90,0.7) !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12) !important;
+  cursor: zoom-out !important;
+}
+
+.bg-thumbnail:hover {
+  transform: scale(3.5) !important;
+  z-index: 9999 !important;
+  box-shadow: none !important;
+  border: none !important;
+  cursor: zoom-out !important;
+}
+
+/* Стили для текста в узлах */
+.characters-group .label span,
+.character-node .label span,
+.backgrounds-group .label span,
+.games-group .label span {
+  color: #333333 !important;
+  font-weight: 500 !important;
+}
+
+.characters-group .label b,
+.character-node .label b,
+.backgrounds-group .label b,
+.games-group .label b {
+  color: #222222 !important;
+  font-weight: 700 !important;
+}
+
+.games-group .label b.game-list-count-zero,
+.graphContainer .mermaid .node .game-list-count-zero {
+  color: #d32f2f !important;
+}
+
+.characters-group .label i,
+.character-node .label i,
+.backgrounds-group .label i,
+.games-group .label i {
+  color: #444444 !important;
+  font-style: italic !important;
+}
+
+
+/* .graphContainer .mermaid .node img {
+  width: 40px !important;
+}
+*/
+
+/* Ширина элементов изображений в элементе сцены и других */
+
+/* одно изображение */
+.graphContainer .mermaid .node .cew.imgcount1,
+.graphContainer .mermaid .node .bgw.imgcount1,
+.graphContainer .mermaid .node .scene-bg-frame.imgcount1,
+.graphContainer .mermaid .node img.imgcount1 {
+  width: 120px !important;
+}
+
+/* 2-4 изображения, 2 в ряд */
+.graphContainer .mermaid .node .cew.imgcount2,
+.graphContainer .mermaid .node .bgw.imgcount2,
+.graphContainer .mermaid .node .scene-bg-frame.imgcount2,
+.graphContainer .mermaid .node img.imgcount2 {
+  width: 75px !important;
+}
+
+/* 5-9 изображений, 3 в ряд */
+.graphContainer .mermaid .node .cew.imgcount3,
+.graphContainer .mermaid .node .bgw.imgcount3,
+.graphContainer .mermaid .node .scene-bg-frame.imgcount3,
+.graphContainer .mermaid .node img.imgcount3 {
+  width: 60px !important;
+}
+
+/* 10-... изображений, 4 в ряд */
+.graphContainer .mermaid .node .cew.imgcount4,
+.graphContainer .mermaid .node .bgw.imgcount4,
+.graphContainer .mermaid .node .scene-bg-frame.imgcount4,
+.graphContainer .mermaid .node img.imgcount4 {
+  width: 40px !important;
+}
+
+.char-emotion-thumbnail,
+.bg-thumbnail,
+.game-thumbnail {
+  object-fit: contain !important;
+}
+
+/* Обложки отдельных game-ресурсов не наследуют imgcount-размеры сеток:
+   рамка задаёт форму, а картинка плотно заполняет её и клипуется внутри. */
+.graphContainer .mermaid .node .game-card .game-card-image-wrap {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 64px !important;
+  aspect-ratio: 2 / 3 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.graphContainer .mermaid .node .game-card .game-card-image-wrap > .game-thumbnail {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+}
+
+.graphContainer .mermaid .node .cew,
+.graphContainer .mermaid .node .bgw {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 0 !important;
+  vertical-align: top !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+/* Поднимаем именно обёртку миниатюры над соседями.
+   Если поднят только img, соседние контейнеры могут всё равно перекрывать увеличенный превью. */
+.graphContainer .mermaid .node .cew:hover,
+.graphContainer .mermaid .node .bgw:hover {
+  z-index: 10000 !important;
+}
+
+.graphContainer .mermaid .node .cew {
+  aspect-ratio: 2 / 3 !important;
+  background: transparent !important;
+  --char-frame-left: 0px;
+  --char-frame-top: 0px;
+  --char-frame-width: 100%;
+  --char-frame-height: 100%;
+  transform-origin: center center !important;
+  transition: transform 0.2s ease !important;
+  cursor: zoom-in !important;
+}
+
+.graphContainer .mermaid .node .cew::before {
+  content: none !important;
+}
+
+.graphContainer .mermaid .node .cew.char-frame-ready::before {
+  content: none !important;
+}
+
+.graphContainer .mermaid .node .cew:hover {
+  transform: scale(3.5) !important;
+  cursor: zoom-out !important;
+}
+
+.graphContainer .mermaid .node .cew:hover::before {
+  content: none !important;
+}
+
+.graphContainer .mermaid .node .bgl {
+  display: inline-flex !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 4px !important;
+  margin: 6px auto !important;
+  padding: 6px !important;
+  background-color: rgba(220,220,220,0.3) !important;
+  border-radius: 8px !important;
+}
+
+/* Потолок ширины по imgcount1–4: числа согласованы с ширинами ячеек .cew/.bgw/img (120 / 75 / 60 / 40) и зазорами,
+   чтобы flex-wrap стабильно давал 1–4 колонки, а не одну длинную строку при широком foreignObject. */
+.graphContainer .mermaid .node .bgl.imgcount1,
+.graphContainer .mermaid .node .scene-bg-images-container.imgcount1,
+.graphContainer .mermaid .node .char-emotions-container.imgcount1 {
+  max-width: calc(120px + 20px) !important;
+}
+
+.graphContainer .mermaid .node .bgl.imgcount2,
+.graphContainer .mermaid .node .scene-bg-images-container.imgcount2,
+.graphContainer .mermaid .node .char-emotions-container.imgcount2 {
+  max-width: calc(2 * 75px + 4px + 20px) !important;
+}
+
+.graphContainer .mermaid .node .bgl.imgcount3,
+.graphContainer .mermaid .node .scene-bg-images-container.imgcount3,
+.graphContainer .mermaid .node .char-emotions-container.imgcount3 {
+  max-width: calc(3 * 60px + 2 * 4px + 20px) !important;
+}
+
+.graphContainer .mermaid .node .bgl.imgcount4,
+.graphContainer .mermaid .node .scene-bg-images-container.imgcount4,
+.graphContainer .mermaid .node .char-emotions-container.imgcount4 {
+  max-width: calc(4 * 40px + 3 * 4px + 20px) !important;
+}
+
+.graphContainer .mermaid .node .cew .char-emotion-thumbnail {
+  display: block !important;
+  width: auto !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Резервируем высоту портретов до загрузки img: иначе Mermaid считает узел только по тексту,
+   а изображения появляются поверх соседних персонажей уже после расчёта раскладки. */
+.graphContainer .mermaid .node .cew.imgcount1 {
+  height: 180px !important;
+}
+
+.graphContainer .mermaid .node .cew.imgcount2 {
+  height: 112.5px !important;
+}
+
+.graphContainer .mermaid .node .cew.imgcount3 {
+  height: 90px !important;
+}
+
+.graphContainer .mermaid .node .cew.imgcount4 {
+  height: 60px !important;
+}
+
+.graphContainer .mermaid .node .cew .char-emotion-thumbnail {
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  transform: none !important;
+}
+
+.graphContainer .mermaid .node .bgw .bgi {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  background-color: #e8e8e8 !important;
+  border-radius: 6px !important;
+  border: 0.25px solid #a0a0a0 !important;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.08) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  transform-origin: center center !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  cursor: zoom-in !important;
+}
+
+/* Для bg-360 резервируем размер до загрузки src:
+   иначе у <img> с height:auto и пустым src высота = 0, и после гидрации картинка вылезает за узел Mermaid. */
+.graphContainer .mermaid .node .bgw .bg360-graph-thumbnail {
+  aspect-ratio: 2 / 1 !important;
+}
+
+/* Рамка ресурсного фона повторяет форму ассета, поэтому внутри нет белых полей. */
+.graphContainer .mermaid .node .bgw.graph-frame-portrait {
+  aspect-ratio: 2 / 3 !important;
+}
+
+.graphContainer .mermaid .node .bgw.graph-frame-wide {
+  aspect-ratio: 16 / 9 !important;
+}
+
+.graphContainer .mermaid .node .bgw.bg360w,
+.graphContainer .mermaid .node .scene-bg-frame.scene-bg360-frame,
+.graphContainer .mermaid .node .bgw:has(.bg360-graph-thumbnail),
+.graphContainer .mermaid .node .scene-bg-frame:has(.scene-bg360-thumbnail) {
+  aspect-ratio: 2 / 1 !important;
+}
+
+/* Ресурсные фоны не обрезаются в ячейке, а на hover поднимаются поверх соседей. */
+.graphContainer .mermaid .node .bgl .bgw:hover {
+  z-index: 10000 !important;
+}
+
+.graphContainer .mermaid .node .bgl .bgw:hover .bgi {
+  transform: scale(3.5) !important;
+  cursor: zoom-out !important;
+}
+
+.graphContainer .mermaid .node .bgw:hover .bgi {
+  transform: scale(3.5) !important;
+  z-index: 9999 !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18) !important;
+  cursor: zoom-out !important;
+}
+
+/* Normalize thumbnail rendering across browsers (Chrome/Firefox):
+   avoid subpixel borders/padding/background halos around transparent images. */
+.graphContainer .mermaid .node .char-emotion-thumbnail,
+.graphContainer .mermaid .node .bg-thumbnail,
+.graphContainer .mermaid .node .scene-bg-thumbnail,
+.graphContainer .mermaid .node .bgi {
+  border: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+}
+
+/* Рамка персонажа находится прямо на img, поэтому она всегда совпадает с границей прозрачного файла. */
+.graphContainer .mermaid .node .char-emotion-thumbnail {
+  border: 1px solid rgba(120,120,120,0.55) !important;
+  border-radius: 7px !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12) !important;
+  background-color: transparent !important;
+  box-sizing: border-box !important;
+}
+
+.graphContainer .mermaid .node .char-emotion-thumbnail:hover {
+  border: 1px solid rgba(90,90,90,0.7) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18) !important;
+  transform: none !important;
+}
+
+/* Scene image itself is clipped inside .scene-bg-frame; frame draws the contour. */
+.graphContainer .mermaid .node .scene-bg-thumbnail {
+  border: none !important;
+  border-radius: 7px !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.graphContainer .mermaid .node .scene-bg-thumbnail:hover {
+  border: none !important;
+  border-radius: 7px !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 360-миниатюры сцены резервируют высоту до подстановки src, чтобы не ломать размер узла. */
+.graphContainer .mermaid .node .scene-bg360-thumbnail {
+  aspect-ratio: 2 / 1 !important;
+}
+
+/* Background images: restore subtle thin frame. */
+.graphContainer .mermaid .node .bg-thumbnail,
+.graphContainer .mermaid .node .bgi {
+  border: 1px solid rgba(120,120,120,0.55) !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12) !important;
+}
+
+.graphContainer .mermaid .node .bg-thumbnail:hover,
+.graphContainer .mermaid .node .bgw:hover .bgi {
+  border: 1px solid rgba(90,90,90,0.7) !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12) !important;
+}
+
+.graphContainer .mermaid .node .cec,
+.graphContainer .mermaid .node .bgc {
+  position: absolute !important;
+  right: 7px !important;
+  bottom: 4px !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  display: block !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  pointer-events: none !important;
+  font-style: normal !important;
+  text-shadow: 0 1px 3px #000000, 0 0 4px #000000 !important;
+}
+
+.graphContainer .mermaid .node .cew .cec {
+  right: calc(100% - var(--char-frame-left, 0px) - var(--char-frame-width, 100%) + 4px) !important;
+  bottom: calc(100% - var(--char-frame-top, 0px) - var(--char-frame-height, 100%) + 3px) !important;
+  z-index: 3 !important;
+}
+
+
+
+
+
+/* Защита от системных меню, выделения и перетаскивания */
+* {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Общую страницу не двигаем браузерными жестами на слое сцены */
+.stage,
+.novel-window,
+.bg,
+#bgVideoLayer,
+.story-video-overlay,
+.story-video-media,
+.char-frame,
+.char,
+.blur-bg-layer,
+.blur-bg-image,
+.blur-bg-video,
+.overlay {
+  touch-action: none;
+}
+
+/* Запрещаем нативное перетаскивание картинок */
+img,
+.bg,
+.char,
+.blur-bg-image,
+.story-video-media {
+  -webkit-user-drag: none !important;
+  user-drag: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+video {
+  -webkit-user-drag: none !important;
+  user-drag: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+.gameFrame {
+  touch-action: none !important;
+}
+
