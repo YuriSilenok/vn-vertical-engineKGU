@@ -13,19 +13,19 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "2": {
-                "focusX": 0.0127,
+                "focusX": 0.0198,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.0127,
-                "focusY": 0.5
+                "focusX": 0.0199,
+                "focusY": 0.5012
               }
             },
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.0205,
-                "y": 0.4384,
+                "x": 0.0211,
+                "y": 0.4136,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -42,15 +42,15 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "1": {
-                "focusX": 0.084,
+                "focusX": 0.2033,
                 "focusY": 0.5
               },
               "7": {
-                "focusX": 0.0845,
+                "focusX": 0.9891,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.0845,
+                "focusX": 0.9885,
                 "focusY": 0.5
               }
             },
@@ -115,7 +115,7 @@
                 "x": 0.4926,
                 "y": 0.4013,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "8"
@@ -229,8 +229,8 @@
               },
               {
                 "id": "mark3",
-                "x": 0.7137,
-                "y": 0.4177,
+                "x": 0.704,
+                "y": 0.3928,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -280,7 +280,7 @@
                 "x": 0.2503,
                 "y": 0.4013,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 401",
                 "target": {
                   "type": "360",
                   "panorama": "2"
@@ -343,7 +343,7 @@
                 "x": 0.7529,
                 "y": 0.4065,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 403",
                 "target": {
                   "type": "360",
                   "panorama": "3"
@@ -421,8 +421,8 @@
               },
               {
                 "id": "mark3",
-                "x": 0.2657,
-                "y": 0.4007,
+                "x": 0.2648,
+                "y": 0.3509,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -443,7 +443,7 @@
                 "focusY": 0.5
               },
               "14": {
-                "focusX": 0.7549,
+                "focusX": 0.7204,
                 "focusY": 0.5
               },
               "18": {
@@ -487,7 +487,7 @@
                 "x": 0.4942,
                 "y": 0.394,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 407",
                 "target": {
                   "type": "360",
                   "panorama": "18"
@@ -495,10 +495,10 @@
               },
               {
                 "id": "mark4",
-                "x": 0.7448,
-                "y": 0.3833,
+                "x": 0.7193,
+                "y": 0.36,
                 "type": "walk",
-                "text": "",
+                "text": "Спуск на 3 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "40"
@@ -543,8 +543,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.5135,
-                "y": 0.4264,
+                "x": 0.51,
+                "y": 0.411,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -554,8 +554,8 @@
               },
               {
                 "id": "mark3",
-                "x": 0.9976,
-                "y": 0.3678,
+                "x": 0.0055,
+                "y": 0.3648,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -591,8 +591,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.993,
-                "y": 0.4192,
+                "x": 0.0017,
+                "y": 0.4154,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -613,8 +613,8 @@
               },
               {
                 "id": "mark3",
-                "x": 0.512,
-                "y": 0.4344,
+                "x": 0.4966,
+                "y": 0.3887,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -631,11 +631,11 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "6": {
-                "focusX": 0.1796,
+                "focusX": 0.1319,
                 "focusY": 0.5
               },
               "12": {
-                "focusX": 0.1796,
+                "focusX": 0.1326,
                 "focusY": 0.5
               },
               "default": {
@@ -646,8 +646,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.0134,
-                "y": 0.4328,
+                "x": 0.0111,
+                "y": 0.4005,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -716,8 +716,8 @@
               },
               {
                 "id": "mark3",
-                "x": 0.0192,
-                "y": 0.4345,
+                "x": 0.0663,
+                "y": 0.4095,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -749,8 +749,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.4952,
-                "y": 0.4345,
+                "x": 0.4356,
+                "y": 0.4146,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -760,8 +760,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.9936,
-                "y": 0.4025,
+                "x": 0.0275,
+                "y": 0.4099,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -793,8 +793,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.5071,
-                "y": 0.4146,
+                "x": 0.4595,
+                "y": 0.4006,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -804,8 +804,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.0012,
-                "y": 0.4368,
+                "x": 0.0467,
+                "y": 0.4214,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -822,8 +822,8 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "16": {
-                "focusX": 0.0466,
-                "focusY": 0.5
+                "focusX": 0.0233,
+                "focusY": 0.4983
               },
               "27": {
                 "focusX": 0.5,
@@ -837,8 +837,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.5164,
-                "y": 0.4248,
+                "x": 0.458,
+                "y": 0.387,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -870,7 +870,7 @@
                 "focusY": 0.5
               },
               "19": {
-                "focusX": 0.4774,
+                "focusX": 0.8386,
                 "focusY": 0.5
               },
               "23": {
@@ -888,7 +888,7 @@
                 "x": 0.8408,
                 "y": 0.3785,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "10"
@@ -973,11 +973,11 @@
                 "focusY": 0.5712
               },
               "21": {
-                "focusX": 0.5038,
+                "focusX": 0.6998,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.6997,
                 "focusY": 0.5
               }
             },
@@ -1013,11 +1013,11 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "20": {
-                "focusX": 0.5087,
-                "focusY": 0.5766
+                "focusX": 0.5029,
+                "focusY": 0.5783
               },
               "22": {
-                "focusX": 0.7742,
+                "focusX": 0.263,
                 "focusY": 0.5
               },
               "26": {
@@ -1025,8 +1025,8 @@
                 "focusY": 0.4577
               },
               "default": {
-                "focusX": 0.5,
-                "focusY": 0.5
+                "focusX": 0.5029,
+                "focusY": 0.5789
               }
             },
             "marks": [
@@ -1120,7 +1120,7 @@
                 "focusY": 0.6014
               },
               "22": {
-                "focusX": 0.2345,
+                "focusX": 0.7619,
                 "focusY": 0.5
               },
               "24": {
@@ -1175,7 +1175,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "23": {
-                "focusX": 0.5059,
+                "focusX": 0.7292,
                 "focusY": 0.5
               },
               "25": {
@@ -1183,7 +1183,7 @@
                 "focusY": 0.4348
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.7312,
                 "focusY": 0.5
               }
             },
@@ -1307,11 +1307,11 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "17": {
-                "focusX": 0.2239,
+                "focusX": 0.2092,
                 "focusY": 0.5
               },
               "28": {
-                "focusX": 0.5,
+                "focusX": 0.4855,
                 "focusY": 0.5
               },
               "39": {
@@ -1319,7 +1319,7 @@
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.4868,
                 "focusY": 0.5
               }
             },
@@ -1348,10 +1348,10 @@
               },
               {
                 "id": "mark3",
-                "x": 0.2332,
-                "y": 0.3712,
+                "x": 0.2101,
+                "y": 0.3608,
                 "type": "walk",
-                "text": "",
+                "text": "Спуск на 3 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "39"
@@ -1370,12 +1370,8 @@
                 "focusY": 0.5
               },
               "29": {
-                "focusX": 0.2517,
-                "focusY": 0.5
-              },
-              "32": {
-                "focusX": 0.5,
-                "focusY": 0.5
+                "focusX": 0.7619,
+                "focusY": 0.4909
               },
               "33": {
                 "focusX": 0.5,
@@ -1403,7 +1399,7 @@
                 "x": 0.7519,
                 "y": 0.4008,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 406",
                 "target": {
                   "type": "360",
                   "panorama": "29"
@@ -1447,7 +1443,7 @@
                 "x": 0.2488,
                 "y": 0.3968,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "28"
@@ -1455,8 +1451,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.954,
-                "y": 0.4338,
+                "x": 0.9336,
+                "y": 0.4191,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -1480,6 +1476,10 @@
                 "focusX": 0.454,
                 "focusY": 0.5
               },
+              "32": {
+                "focusX": 0.0786,
+                "focusY": 0.5
+              },
               "default": {
                 "focusX": 0.5,
                 "focusY": 0.5
@@ -1488,8 +1488,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.4568,
-                "y": 0.4345,
+                "x": 0.4722,
+                "y": 0.4327,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -1506,6 +1506,17 @@
                 "target": {
                   "type": "360",
                   "panorama": "31"
+                }
+              },
+              {
+                "id": "mark3",
+                "x": 0.2588,
+                "y": 0.4257,
+                "type": "walk",
+                "text": "Выйти из аудитории",
+                "target": {
+                  "type": "360",
+                  "panorama": "32"
                 }
               }
             ]
@@ -1545,6 +1556,10 @@
             "lines": true,
             "entryFocusAsPanoramaUv": true,
             "entries": {
+              "30": {
+                "focusX": 0.7651,
+                "focusY": 0.5006
+              },
               "33": {
                 "focusX": 0.9999,
                 "focusY": 0.5
@@ -1580,6 +1595,17 @@
                   "type": "360",
                   "panorama": "37"
                 }
+              },
+              {
+                "id": "mark3",
+                "x": 0.7527,
+                "y": 0.4282,
+                "type": "walk",
+                "text": "Аудитория 406",
+                "target": {
+                  "type": "360",
+                  "panorama": "30"
+                }
               }
             ]
           },
@@ -1598,7 +1624,7 @@
                 "focusY": 0.5
               },
               "34": {
-                "focusX": 0.2473,
+                "focusX": 0.7493,
                 "focusY": 0.5
               },
               "default": {
@@ -1634,7 +1660,7 @@
                 "x": 0.76,
                 "y": 0.3969,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 409",
                 "target": {
                   "type": "360",
                   "panorama": "34"
@@ -1649,15 +1675,15 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "33": {
-                "focusX": 0.7539,
+                "focusX": 0.491,
                 "focusY": 0.5
               },
               "35": {
-                "focusX": 0.994,
+                "focusX": 0.4913,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.4902,
                 "focusY": 0.5
               }
             },
@@ -1667,7 +1693,7 @@
                 "x": 0.282,
                 "y": 0.4,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "33"
@@ -1675,8 +1701,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.4915,
-                "y": 0.4043,
+                "x": 0.503,
+                "y": 0.4021,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -1719,8 +1745,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.0524,
-                "y": 0.4136,
+                "x": 0.056,
+                "y": 0.4235,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -1737,7 +1763,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "35": {
-                "focusX": 0.9965,
+                "focusX": 0.5015,
                 "focusY": 0.5
               },
               "37": {
@@ -1752,8 +1778,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.5561,
-                "y": 0.3905,
+                "x": 0.5121,
+                "y": 0.3855,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -1763,10 +1789,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.7589,
-                "y": 0.4153,
+                "x": 0.7622,
+                "y": 0.411,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "37"
@@ -1814,7 +1840,7 @@
                 "x": 0.2435,
                 "y": 0.3508,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 408",
                 "target": {
                   "type": "360",
                   "panorama": "38"
@@ -1822,10 +1848,10 @@
               },
               {
                 "id": "mark3",
-                "x": 0.7449,
-                "y": 0.4131,
+                "x": 0.752,
+                "y": 0.417,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 409",
                 "target": {
                   "type": "360",
                   "panorama": "36"
@@ -1840,12 +1866,12 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "37": {
-                "focusX": 0.2421,
+                "focusX": 0.3499,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.2573,
-                "focusY": 0.4281
+                "focusX": 0.3488,
+                "focusY": 0.5
               }
             },
             "marks": [
@@ -1854,7 +1880,7 @@
                 "x": 0.7384,
                 "y": 0.3415,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "37"
@@ -1869,12 +1895,12 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "27": {
-                "focusX": 0.505,
-                "focusY": 0.4429
+                "focusX": 0.4733,
+                "focusY": 0.4011
               },
               "66": {
-                "focusX": 0.5115,
-                "focusY": 0.6009
+                "focusX": 0.5461,
+                "focusY": 0.5977
               },
               "default": {
                 "focusX": 0.5009,
@@ -1884,10 +1910,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.5116,
-                "y": 0.5176,
+                "x": 0.5451,
+                "y": 0.5199,
                 "type": "walk",
-                "text": "",
+                "text": "4 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "27"
@@ -1895,10 +1921,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.5048,
-                "y": 0.3705,
+                "x": 0.4763,
+                "y": 0.3054,
                 "type": "walk",
-                "text": "",
+                "text": "3 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "66"
@@ -1913,25 +1939,25 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "10": {
-                "focusX": 0.499,
-                "focusY": 0.4131
+                "focusX": 0.4688,
+                "focusY": 0.4095
               },
               "54": {
-                "focusX": 0.5044,
-                "focusY": 0.5946
+                "focusX": 0.5327,
+                "focusY": 0.5919
               },
               "default": {
-                "focusX": 0.5,
-                "focusY": 0.5
+                "focusX": 0.4998,
+                "focusY": 0.4721
               }
             },
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.504,
-                "y": 0.52,
+                "x": 0.5332,
+                "y": 0.5183,
                 "type": "walk",
-                "text": "",
+                "text": "4 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "10"
@@ -1939,10 +1965,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.498,
-                "y": 0.3769,
+                "x": 0.4699,
+                "y": 0.3047,
                 "type": "walk",
-                "text": "",
+                "text": "3 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "54"
@@ -1971,7 +1997,7 @@
                 "x": 0.2744,
                 "y": 0.4041,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "56"
@@ -1986,7 +2012,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "43": {
-                "focusX": 0.2272,
+                "focusX": 0.4758,
                 "focusY": 0.5
               },
               "55": {
@@ -2012,10 +2038,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.2268,
-                "y": 0.4033,
+                "x": 0.2306,
+                "y": 0.3998,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "55"
@@ -2045,8 +2071,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.754,
-                "y": 0.4273,
+                "x": 0.8165,
+                "y": 0.3858,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -2056,8 +2082,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.2511,
-                "y": 0.4082,
+                "x": 0.2479,
+                "y": 0.3676,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -2089,10 +2115,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.2033,
-                "y": 0.4054,
+                "x": 0.1997,
+                "y": 0.3881,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "54"
@@ -2100,8 +2126,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.0026,
-                "y": 0.4072,
+                "x": 0.9514,
+                "y": 0.4038,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -2158,10 +2184,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.8436,
-                "y": 0.428,
+                "x": 0.8313,
+                "y": 0.3867,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "66"
@@ -2234,7 +2260,7 @@
                 "x": 0.1759,
                 "y": 0.4073,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "53"
@@ -2260,10 +2286,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.496,
-                "y": 0.4369,
+                "x": 0.498,
+                "y": 0.4643,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из совещальни",
                 "target": {
                   "type": "360",
                   "panorama": "52"
@@ -2278,7 +2304,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "51": {
-                "focusX": 0.0304,
+                "focusX": 0.2472,
                 "focusY": 0.5
               },
               "52": {
@@ -2296,7 +2322,7 @@
                 "x": 0.2484,
                 "y": 0.3992,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "52"
@@ -2322,11 +2348,11 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "50": {
-                "focusX": 0.4872,
+                "focusX": 0.9974,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.9969,
                 "focusY": 0.5
               }
             },
@@ -2351,19 +2377,19 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "49": {
-                "focusX": 0.989,
-                "focusY": 0.4937
+                "focusX": 0.9872,
+                "focusY": 0.5
               },
               "50": {
-                "focusX": 0.2345,
+                "focusX": 0.9883,
                 "focusY": 0.5
               },
               "53": {
-                "focusX": 0.5024,
+                "focusX": 0.4803,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.4793,
                 "focusY": 0.5
               }
             },
@@ -2381,10 +2407,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.4864,
-                "y": 0.4368,
+                "x": 0.4489,
+                "y": 0.3496,
                 "type": "walk",
-                "text": "",
+                "text": "Совещальня",
                 "target": {
                   "type": "360",
                   "panorama": "49"
@@ -2395,7 +2421,7 @@
                 "x": 0.7368,
                 "y": 0.4009,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 302",
                 "target": {
                   "type": "360",
                   "panorama": "50"
@@ -2410,7 +2436,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "48": {
-                "focusX": 0.2502,
+                "focusX": 0.7637,
                 "focusY": 0.5
               },
               "52": {
@@ -2451,10 +2477,10 @@
               },
               {
                 "id": "mark3",
-                "x": 0.7221,
-                "y": 0.4022,
+                "x": 0.7603,
+                "y": 0.397,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 304",
                 "target": {
                   "type": "360",
                   "panorama": "48"
@@ -2482,7 +2508,7 @@
               },
               "56": {
                 "focusX": 0.515,
-                "focusY": 0.463
+                "focusY": 0.5
               },
               "69": {
                 "focusX": 0.7548,
@@ -2496,10 +2522,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.2669,
-                "y": 0.5064,
+                "x": 0.2875,
+                "y": 0.5079,
                 "type": "walk",
-                "text": "",
+                "text": "Подъём на 4 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "40"
@@ -2529,10 +2555,10 @@
               },
               {
                 "id": "mark4",
-                "x": 0.7187,
-                "y": 0.4097,
+                "x": 0.7286,
+                "y": 0.3361,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 306",
                 "target": {
                   "type": "360",
                   "panorama": "44"
@@ -2540,10 +2566,10 @@
               },
               {
                 "id": "mark5",
-                "x": 0.2678,
-                "y": 0.3751,
+                "x": 0.2372,
+                "y": 0.3519,
                 "type": "walk",
-                "text": "",
+                "text": "Спуск на 2 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "69"
@@ -2606,7 +2632,7 @@
                 "x": 0.7302,
                 "y": 0.4094,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 306",
                 "target": {
                   "type": "360",
                   "panorama": "42"
@@ -2632,7 +2658,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "41": {
-                "focusX": 0.6138,
+                "focusX": 0.1208,
                 "focusY": 0.5
               },
               "54": {
@@ -2676,7 +2702,7 @@
                 "x": 0.1254,
                 "y": 0.4121,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 307",
                 "target": {
                   "type": "360",
                   "panorama": "41"
@@ -2691,11 +2717,11 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "58": {
-                "focusX": 0.5068,
+                "focusX": 0.2843,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.507,
+                "focusX": 0.2846,
                 "focusY": 0.5
               }
             },
@@ -2705,7 +2731,7 @@
                 "x": 0.0069,
                 "y": 0.3649,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "58"
@@ -2746,10 +2772,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.7777,
-                "y": 0.4073,
+                "x": 0.7756,
+                "y": 0.3929,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 312",
                 "target": {
                   "type": "360",
                   "panorama": "57"
@@ -2801,7 +2827,7 @@
                 "x": 0.7668,
                 "y": 0.4088,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 310",
                 "target": {
                   "type": "360",
                   "panorama": "60"
@@ -2820,10 +2846,10 @@
               },
               {
                 "id": "mark4",
-                "x": 0.2581,
-                "y": 0.4161,
+                "x": 0.2841,
+                "y": 0.3901,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 313",
                 "target": {
                   "type": "360",
                   "panorama": "65"
@@ -2838,15 +2864,15 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "59": {
-                "focusX": 0.2321,
+                "focusX": 0.9816,
                 "focusY": 0.5
               },
               "61": {
-                "focusX": 0.5,
+                "focusX": 0.9805,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.9801,
                 "focusY": 0.5
               }
             },
@@ -2856,7 +2882,7 @@
                 "x": 0.7056,
                 "y": 0.4025,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "59"
@@ -2864,8 +2890,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.9784,
-                "y": 0.4505,
+                "x": 0.0093,
+                "y": 0.4233,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -2897,8 +2923,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.9472,
-                "y": 0.4481,
+                "x": 0.9202,
+                "y": 0.4109,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -2911,7 +2937,7 @@
                 "x": 0.1872,
                 "y": 0.4,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "62"
@@ -2926,7 +2952,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "61": {
-                "focusX": 0.2416,
+                "focusX": 0.732,
                 "focusY": 0.5
               },
               "63": {
@@ -2948,7 +2974,7 @@
                 "x": 0.7308,
                 "y": 0.4145,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 310",
                 "target": {
                   "type": "360",
                   "panorama": "61"
@@ -2993,7 +3019,7 @@
                 "focusY": 0.5
               },
               "64": {
-                "focusX": 0.7717,
+                "focusX": 0.2682,
                 "focusY": 0.5
               },
               "default": {
@@ -3018,7 +3044,7 @@
                 "x": 0.2544,
                 "y": 0.4081,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 313",
                 "target": {
                   "type": "360",
                   "panorama": "64"
@@ -3048,7 +3074,7 @@
                 "focusY": 0.5
               },
               "65": {
-                "focusX": 0.2232,
+                "focusX": 0.5005,
                 "focusY": 0.5
               },
               "default": {
@@ -3062,7 +3088,7 @@
                 "x": 0.224,
                 "y": 0.3969,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "63"
@@ -3103,8 +3129,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.022,
-                "y": 0.4281,
+                "x": 0.0301,
+                "y": 0.4298,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -3114,10 +3140,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.2454,
-                "y": 0.4217,
+                "x": 0.2418,
+                "y": 0.4199,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "59"
@@ -3163,10 +3189,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.2428,
-                "y": 0.5136,
+                "x": 0.2625,
+                "y": 0.5101,
                 "type": "walk",
-                "text": "",
+                "text": "Подъём на 4 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "39"
@@ -3174,10 +3200,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.6882,
-                "y": 0.4044,
+                "x": 0.7071,
+                "y": 0.3936,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 308",
                 "target": {
                   "type": "360",
                   "panorama": "67"
@@ -3207,10 +3233,10 @@
               },
               {
                 "id": "mark5",
-                "x": 0.405,
-                "y": 0.4093,
+                "x": 0.4156,
+                "y": 0.3792,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 309",
                 "target": {
                   "type": "360",
                   "panorama": "46"
@@ -3218,10 +3244,10 @@
               },
               {
                 "id": "mark6",
-                "x": 0.2428,
-                "y": 0.3729,
+                "x": 0.2096,
+                "y": 0.3617,
                 "type": "walk",
-                "text": "",
+                "text": "Спуск на 2 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "68"
@@ -3233,14 +3259,14 @@
             "bgId": "bg360_main360_67",
             "file": "assets/360/Photo/67-360.css",
             "lines": true,
-            "entryFocusAsPanoramaUv": false,
+            "entryFocusAsPanoramaUv": true,
             "entries": {
               "66": {
-                "focusX": 0.5,
+                "focusX": 0.0067,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.0065,
                 "focusY": 0.5
               }
             },
@@ -3265,12 +3291,12 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "66": {
-                "focusX": 0.4967,
-                "focusY": 0.4139
+                "focusX": 0.4699,
+                "focusY": 0.3995
               },
               "91": {
-                "focusX": 0.5043,
-                "focusY": 0.5868
+                "focusX": 0.5404,
+                "focusY": 0.5962
               },
               "default": {
                 "focusX": 0.5,
@@ -3280,10 +3306,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.5124,
-                "y": 0.5168,
+                "x": 0.5388,
+                "y": 0.5114,
                 "type": "walk",
-                "text": "",
+                "text": "3 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "66"
@@ -3291,10 +3317,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.5004,
-                "y": 0.3608,
+                "x": 0.4701,
+                "y": 0.2998,
                 "type": "walk",
-                "text": "",
+                "text": "2 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "91"
@@ -3309,12 +3335,12 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "54": {
-                "focusX": 0.4996,
-                "focusY": 0.4183
+                "focusX": 0.47,
+                "focusY": 0.3991
               },
               "80": {
-                "focusX": 0.5022,
-                "focusY": 0.5855
+                "focusX": 0.527,
+                "focusY": 0.5887
               },
               "default": {
                 "focusX": 0.4994,
@@ -3324,10 +3350,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.502,
-                "y": 0.5208,
+                "x": 0.5297,
+                "y": 0.5185,
                 "type": "walk",
-                "text": "",
+                "text": "3 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "54"
@@ -3335,10 +3361,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.4968,
-                "y": 0.3665,
+                "x": 0.4686,
+                "y": 0.2973,
                 "type": "walk",
-                "text": "",
+                "text": "2 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "80"
@@ -3353,15 +3379,15 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "71": {
-                "focusX": 0.5,
+                "focusX": 0.5062,
                 "focusY": 0.5
               },
               "72": {
-                "focusX": 0.2745,
+                "focusX": 0.2736,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.5069,
                 "focusY": 0.5
               }
             },
@@ -3371,7 +3397,7 @@
                 "x": 0.2737,
                 "y": 0.4169,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 202",
                 "target": {
                   "type": "360",
                   "panorama": "71"
@@ -3397,11 +3423,11 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "70": {
-                "focusX": 0.7344,
+                "focusX": 0.2589,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.2588,
                 "focusY": 0.5
               }
             },
@@ -3411,7 +3437,7 @@
                 "x": 0.2592,
                 "y": 0.4233,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "70"
@@ -3449,10 +3475,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.382,
-                "y": 0.4217,
+                "x": 0.3841,
+                "y": 0.4085,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 201",
                 "target": {
                   "type": "360",
                   "panorama": "73"
@@ -3463,7 +3489,7 @@
                 "x": 0.8361,
                 "y": 0.4145,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 204",
                 "target": {
                   "type": "360",
                   "panorama": "75"
@@ -3518,7 +3544,7 @@
                 "x": 0.766,
                 "y": 0.3944,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "72"
@@ -3544,12 +3570,12 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "73": {
-                "focusX": 0.401,
+                "focusX": 0.9119,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.2513,
-                "focusY": 0.5379
+                "focusX": 0.9123,
+                "focusY": 0.5
               }
             },
             "marks": [
@@ -3591,7 +3617,7 @@
                 "x": 0.7052,
                 "y": 0.4041,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "72"
@@ -3599,8 +3625,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.4856,
-                "y": 0.4624,
+                "x": 0.454,
+                "y": 0.4333,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -3617,7 +3643,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "75": {
-                "focusX": 0.7526,
+                "focusX": 0.0048,
                 "focusY": 0.5
               },
               "77": {
@@ -3632,8 +3658,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.0016,
-                "y": 0.4552,
+                "x": 0.0289,
+                "y": 0.4379,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -3646,7 +3672,7 @@
                 "x": 0.7476,
                 "y": 0.4009,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "77"
@@ -3661,7 +3687,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "76": {
-                "focusX": 0.9845,
+                "focusX": 0.5004,
                 "focusY": 0.5
               },
               "78": {
@@ -3694,7 +3720,7 @@
                 "x": 0.5016,
                 "y": 0.3952,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 204",
                 "target": {
                   "type": "360",
                   "panorama": "76"
@@ -3764,7 +3790,7 @@
                 "x": 0.0248,
                 "y": 0.4015,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 203",
                 "target": {
                   "type": "360",
                   "panorama": "79"
@@ -3808,7 +3834,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "69": {
-                "focusX": 0.744,
+                "focusX": 0.7285,
                 "focusY": 0.5
               },
               "77": {
@@ -3820,7 +3846,7 @@
                 "focusY": 0.5
               },
               "100": {
-                "focusX": 0.7438,
+                "focusX": 0.7303,
                 "focusY": 0.5
               },
               "default": {
@@ -3831,10 +3857,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.236,
-                "y": 0.5144,
+                "x": 0.2559,
+                "y": 0.5123,
                 "type": "walk",
-                "text": "",
+                "text": "Подъём на 3 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "69"
@@ -3864,10 +3890,10 @@
               },
               {
                 "id": "mark4",
-                "x": 0.2298,
-                "y": 0.3704,
+                "x": 0.1986,
+                "y": 0.3586,
                 "type": "walk",
-                "text": "",
+                "text": "Спуск на 1 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "100"
@@ -3916,10 +3942,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.2332,
-                "y": 0.4304,
+                "x": 0.2351,
+                "y": 0.4062,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 207",
                 "target": {
                   "type": "360",
                   "panorama": "82"
@@ -3927,10 +3953,10 @@
               },
               {
                 "id": "mark3",
-                "x": 0.7156,
-                "y": 0.4033,
+                "x": 0.7175,
+                "y": 0.4054,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 206",
                 "target": {
                   "type": "360",
                   "panorama": "83"
@@ -3953,24 +3979,24 @@
             "bgId": "bg360_main360_82",
             "file": "assets/360/Photo/82-360.css",
             "lines": true,
-            "entryFocusAsPanoramaUv": false,
+            "entryFocusAsPanoramaUv": true,
             "entries": {
               "81": {
-                "focusX": 0.5,
+                "focusX": 0.9036,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.9036,
                 "focusY": 0.5
               }
             },
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.672,
-                "y": 0.4232,
+                "x": 0.6713,
+                "y": 0.4122,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "81"
@@ -4000,8 +4026,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.512,
-                "y": 0.4568,
+                "x": 0.485,
+                "y": 0.435,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4011,10 +4037,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.7252,
-                "y": 0.4081,
+                "x": 0.721,
+                "y": 0.4006,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "81"
@@ -4029,7 +4055,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "83": {
-                "focusX": 0.2815,
+                "focusX": 0.5518,
                 "focusY": 0.5
               },
               "85": {
@@ -4037,15 +4063,15 @@
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.5516,
                 "focusY": 0.5
               }
             },
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.5504,
-                "y": 0.448,
+                "x": 0.5999,
+                "y": 0.4103,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4058,7 +4084,7 @@
                 "x": 0.2857,
                 "y": 0.4137,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "85"
@@ -4096,10 +4122,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.2672,
-                "y": 0.4312,
+                "x": 0.2775,
+                "y": 0.4209,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 206",
                 "target": {
                   "type": "360",
                   "panorama": "84"
@@ -4221,10 +4247,10 @@
               },
               {
                 "id": "mark3",
-                "x": 0.0188,
-                "y": 0.3737,
+                "x": 0.0171,
+                "y": 0.3056,
                 "type": "walk",
-                "text": "",
+                "text": "Дирекция",
                 "target": {
                   "type": "360",
                   "panorama": "88"
@@ -4232,10 +4258,10 @@
               },
               {
                 "id": "mark4",
-                "x": 0.4917,
-                "y": 0.4099,
+                "x": 0.511,
+                "y": 0.3453,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 208",
                 "target": {
                   "type": "360",
                   "panorama": "90"
@@ -4261,10 +4287,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.3484,
-                "y": 0.4073,
+                "x": 0.3608,
+                "y": 0.3501,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из дирекции",
                 "target": {
                   "type": "360",
                   "panorama": "87"
@@ -4290,8 +4316,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.4948,
-                "y": 0.4281,
+                "x": 0.5,
+                "y": 0.3855,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4323,8 +4349,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.998,
-                "y": 0.4064,
+                "x": 0.9965,
+                "y": 0.4006,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4334,10 +4360,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.2021,
-                "y": 0.4056,
+                "x": 0.1985,
+                "y": 0.3914,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "87"
@@ -4386,8 +4412,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.4851,
-                "y": 0.3661,
+                "x": 0.4562,
+                "y": 0.2988,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4397,10 +4423,10 @@
               },
               {
                 "id": "mark3",
-                "x": 0.7432,
-                "y": 0.3793,
+                "x": 0.711,
+                "y": 0.3559,
                 "type": "walk",
-                "text": "",
+                "text": "Спуск на 1 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "99"
@@ -4408,10 +4434,10 @@
               },
               {
                 "id": "mark4",
-                "x": 0.748,
-                "y": 0.516,
+                "x": 0.7675,
+                "y": 0.5136,
                 "type": "walk",
-                "text": "",
+                "text": "Подъём на 3 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "68"
@@ -4470,8 +4496,8 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "94": {
-                "focusX": 0.9273,
-                "focusY": 0.5
+                "focusX": 0.9662,
+                "focusY": 0.4783
               },
               "default": {
                 "focusX": 0.5,
@@ -4507,7 +4533,7 @@
                 "focusY": 0.5
               },
               "93": {
-                "focusX": 0.9973,
+                "focusX": 0.5,
                 "focusY": 0.5
               },
               "default": {
@@ -4518,8 +4544,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.2292,
-                "y": 0.3953,
+                "x": 0.2417,
+                "y": 0.3376,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4584,8 +4610,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.7725,
-                "y": 0.3649,
+                "x": 0.7554,
+                "y": 0.361,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4599,14 +4625,14 @@
             "bgId": "bg360_main360_96",
             "file": "assets/360/Photo/96-360.css",
             "lines": true,
-            "entryFocusAsPanoramaUv": false,
+            "entryFocusAsPanoramaUv": true,
             "entries": {
               "95": {
-                "focusX": 0.5,
+                "focusX": 0.974,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.974,
                 "focusY": 0.5
               }
             },
@@ -4631,7 +4657,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "92": {
-                "focusX": 0.7452,
+                "focusX": 0.5744,
                 "focusY": 0.5
               },
               "95": {
@@ -4639,7 +4665,7 @@
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.5,
+                "focusX": 0.5744,
                 "focusY": 0.5
               }
             },
@@ -4657,8 +4683,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.535,
-                "y": 0.3794,
+                "x": 0.5543,
+                "y": 0.3655,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4675,12 +4701,12 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "91": {
-                "focusX": 0.4723,
-                "focusY": 0.4322
+                "focusX": 0.4411,
+                "focusY": 0.4083
               },
               "126": {
-                "focusX": 0.476,
-                "focusY": 0.5597
+                "focusX": 0.5043,
+                "focusY": 0.5826
               },
               "default": {
                 "focusX": 0.4728,
@@ -4690,10 +4716,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.476,
-                "y": 0.5066,
+                "x": 0.5042,
+                "y": 0.5079,
                 "type": "walk",
-                "text": "",
+                "text": "2 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "91"
@@ -4701,10 +4727,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.4704,
-                "y": 0.3763,
+                "x": 0.4414,
+                "y": 0.3068,
                 "type": "walk",
-                "text": "",
+                "text": "1 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "126"
@@ -4719,12 +4745,12 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "80": {
-                "focusX": 0.5214,
-                "focusY": 0.409
+                "focusX": 0.4918,
+                "focusY": 0.3984
               },
               "112": {
-                "focusX": 0.5237,
-                "focusY": 0.588
+                "focusX": 0.5541,
+                "focusY": 0.587
               },
               "default": {
                 "focusX": 0.5208,
@@ -4734,10 +4760,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.5228,
-                "y": 0.516,
+                "x": 0.5536,
+                "y": 0.51,
                 "type": "walk",
-                "text": "",
+                "text": "2 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "80"
@@ -4745,10 +4771,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.5172,
-                "y": 0.3642,
+                "x": 0.4905,
+                "y": 0.2978,
                 "type": "walk",
-                "text": "",
+                "text": "1 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "112"
@@ -4763,7 +4789,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "103": {
-                "focusX": 0.5055,
+                "focusX": 0.7482,
                 "focusY": 0.5
               },
               "106": {
@@ -4782,10 +4808,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.3031,
-                "y": 0.4145,
+                "x": 0.2626,
+                "y": 0.3697,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 102",
                 "target": {
                   "type": "360",
                   "panorama": "103"
@@ -4793,10 +4819,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.7082,
-                "y": 0.4271,
+                "x": 0.7462,
+                "y": 0.3603,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 101",
                 "target": {
                   "type": "360",
                   "panorama": "106"
@@ -4837,10 +4863,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.8649,
-                "y": 0.4129,
+                "x": 0.8699,
+                "y": 0.4049,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "102"
@@ -4848,8 +4874,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.02,
-                "y": 0.4233,
+                "x": 0.0693,
+                "y": 0.4039,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4877,8 +4903,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.796,
-                "y": 0.428,
+                "x": 0.7486,
+                "y": 0.4214,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4906,8 +4932,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.7646,
-                "y": 0.4424,
+                "x": 0.7983,
+                "y": 0.4244,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4947,8 +4973,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.754,
-                "y": 0.4409,
+                "x": 0.712,
+                "y": 0.4292,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4958,8 +4984,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.2604,
-                "y": 0.4441,
+                "x": 0.2194,
+                "y": 0.417,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -4969,10 +4995,10 @@
               },
               {
                 "id": "mark3",
-                "x": 0.8874,
-                "y": 0.4169,
+                "x": 0.8685,
+                "y": 0.3843,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "102"
@@ -4980,10 +5006,10 @@
               },
               {
                 "id": "mark4",
-                "x": 0.1369,
-                "y": 0.4281,
+                "x": 0.155,
+                "y": 0.3918,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "108"
@@ -5009,8 +5035,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.0404,
-                "y": 0.4417,
+                "x": 0.9917,
+                "y": 0.4205,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -5050,10 +5076,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.5276,
-                "y": 0.4377,
+                "x": 0.5076,
+                "y": 0.3714,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 101",
                 "target": {
                   "type": "360",
                   "panorama": "106"
@@ -5075,7 +5101,7 @@
                 "x": 0.004,
                 "y": 0.4033,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 104",
                 "target": {
                   "type": "360",
                   "panorama": "109"
@@ -5119,7 +5145,7 @@
                 "x": 0.2633,
                 "y": 0.3937,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "108"
@@ -5127,8 +5153,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.0049,
-                "y": 0.4321,
+                "x": 0.9352,
+                "y": 0.4005,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -5145,7 +5171,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "109": {
-                "focusX": 0.1182,
+                "focusX": 0.3842,
                 "focusY": 0.5
               },
               "111": {
@@ -5160,8 +5186,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.3821,
-                "y": 0.4385,
+                "x": 0.4281,
+                "y": 0.4207,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -5174,7 +5200,7 @@
                 "x": 0.1185,
                 "y": 0.3849,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "111"
@@ -5211,7 +5237,7 @@
                 "x": 0.1704,
                 "y": 0.4008,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 104",
                 "target": {
                   "type": "360",
                   "panorama": "110"
@@ -5285,7 +5311,7 @@
                 "x": 0.0236,
                 "y": 0.4984,
                 "type": "walk",
-                "text": "",
+                "text": "Подъём на 2 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "100"
@@ -5293,8 +5319,8 @@
               },
               {
                 "id": "mark3",
-                "x": 0.4889,
-                "y": 0.4073,
+                "x": 0.4863,
+                "y": 0.3985,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -5322,7 +5348,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "112": {
-                "focusX": 0.5387,
+                "focusX": 0.7881,
                 "focusY": 0.5
               },
               "114": {
@@ -5373,12 +5399,12 @@
                 "focusX": 0.2735,
                 "focusY": 0.5
               },
-              "118": {
-                "focusX": 0.5209,
+              "117": {
+                "focusX": 0.5214,
                 "focusY": 0.5
               },
-              "138": {
-                "focusX": 0.0166,
+              "118": {
+                "focusX": 0.5209,
                 "focusY": 0.5
               },
               "default": {
@@ -5414,7 +5440,7 @@
                 "x": 0.5177,
                 "y": 0.3652,
                 "type": "walk",
-                "text": "",
+                "text": "Выход из корпуса",
                 "target": {
                   "type": "360",
                   "panorama": "138"
@@ -5422,13 +5448,24 @@
               },
               {
                 "id": "mark4",
-                "x": 0.0139,
-                "y": 0.3785,
+                "x": 0.0614,
+                "y": 0.3939,
                 "type": "walk",
                 "text": "",
                 "target": {
                   "type": "360",
-                  "panorama": "118"
+                  "panorama": "117"
+                }
+              },
+              {
+                "id": "mark5",
+                "x": 0.9526,
+                "y": 0.3951,
+                "type": "walk",
+                "text": "",
+                "target": {
+                  "type": "360",
+                  "panorama": "119"
                 }
               }
             ]
@@ -5440,19 +5477,15 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "114": {
-                "focusX": 0.7417,
-                "focusY": 0.5
-              },
-              "116": {
-                "focusX": 0.4735,
+                "focusX": 0.9894,
                 "focusY": 0.5
               },
               "119": {
-                "focusX": 0.4743,
+                "focusX": 0.2634,
                 "focusY": 0.5
               },
               "default": {
-                "focusX": 0.4743,
+                "focusX": 0.1237,
                 "focusY": 0.5
               }
             },
@@ -5491,12 +5524,20 @@
                 "focusX": 0.2668,
                 "focusY": 0.5
               },
+              "114": {
+                "focusX": 0.7672,
+                "focusY": 0.5
+              },
               "118": {
                 "focusX": 0.7678,
                 "focusY": 0.5
               },
+              "119": {
+                "focusX": 0.7686,
+                "focusY": 0.5
+              },
               "123": {
-                "focusX": 0.0229,
+                "focusX": 0.7678,
                 "focusY": 0.5
               },
               "default": {
@@ -5529,13 +5570,24 @@
               },
               {
                 "id": "mark3",
-                "x": 0.2653,
-                "y": 0.3568,
+                "x": 0.2677,
+                "y": 0.4238,
                 "type": "walk",
                 "text": "",
                 "target": {
                   "type": "360",
-                  "panorama": "118"
+                  "panorama": "119"
+                }
+              },
+              {
+                "id": "mark4",
+                "x": 0.1915,
+                "y": 0.3736,
+                "type": "walk",
+                "text": "Выход из корпуса",
+                "target": {
+                  "type": "360",
+                  "panorama": "114"
                 }
               }
             ]
@@ -5547,7 +5599,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "114": {
-                "focusX": 0.1455,
+                "focusX": 0.3967,
                 "focusY": 0.5
               },
               "117": {
@@ -5605,8 +5657,16 @@
             "lines": true,
             "entryFocusAsPanoramaUv": true,
             "entries": {
+              "114": {
+                "focusX": 0.6178,
+                "focusY": 0.5
+              },
               "115": {
                 "focusX": 0.6174,
+                "focusY": 0.5
+              },
+              "117": {
+                "focusX": 0.3609,
                 "focusY": 0.5
               },
               "118": {
@@ -5662,13 +5722,13 @@
               },
               {
                 "id": "mark4",
-                "x": 0.8718,
-                "y": 0.3505,
+                "x": 0.8684,
+                "y": 0.4199,
                 "type": "walk",
                 "text": "",
                 "target": {
                   "type": "360",
-                  "panorama": "118"
+                  "panorama": "117"
                 }
               }
             ]
@@ -5680,7 +5740,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "122": {
-                "focusX": 0.1696,
+                "focusX": 0.4321,
                 "focusY": 0.5
               },
               "125": {
@@ -5890,11 +5950,11 @@
                 "focusY": 0.5
               },
               "121": {
-                "focusX": 0.9646,
+                "focusX": 0.9647,
                 "focusY": 0.5
               },
               "137": {
-                "focusX": 0.7307,
+                "focusX": 0.9656,
                 "focusY": 0.5
               },
               "default": {
@@ -5905,8 +5965,8 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.9565,
-                "y": 0.3665,
+                "x": 0.9639,
+                "y": 0.3667,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -5924,17 +5984,6 @@
                   "type": "360",
                   "panorama": "121"
                 }
-              },
-              {
-                "id": "mark3",
-                "x": 0.2161,
-                "y": 0.4261,
-                "type": "walk",
-                "text": "",
-                "target": {
-                  "type": "360",
-                  "panorama": "137"
-                }
               }
             ]
           },
@@ -5945,7 +5994,7 @@
             "entryFocusAsPanoramaUv": true,
             "entries": {
               "99": {
-                "focusX": 0.0614,
+                "focusX": 0.0795,
                 "focusY": 0.5
               },
               "121": {
@@ -5989,7 +6038,7 @@
                 "x": 0.5786,
                 "y": 0.5152,
                 "type": "walk",
-                "text": "",
+                "text": "Подъём на 2 этаж",
                 "target": {
                   "type": "360",
                   "panorama": "99"
@@ -6030,7 +6079,7 @@
                 "x": 0.4759,
                 "y": 0.3904,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 103",
                 "target": {
                   "type": "360",
                   "panorama": "128"
@@ -6038,8 +6087,8 @@
               },
               {
                 "id": "mark2",
-                "x": 0.2288,
-                "y": 0.3625,
+                "x": 0.2208,
+                "y": 0.3581,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -6052,7 +6101,7 @@
                 "x": 0.0463,
                 "y": 0.4037,
                 "type": "walk",
-                "text": "",
+                "text": "Игровая 8 бит",
                 "target": {
                   "type": "360",
                   "panorama": "136"
@@ -6107,7 +6156,7 @@
                 "x": 0.735,
                 "y": 0.3907,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "127"
@@ -6166,7 +6215,7 @@
                 "x": 0.7922,
                 "y": 0.4065,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из аудитории",
                 "target": {
                   "type": "360",
                   "panorama": "132"
@@ -6229,10 +6278,10 @@
             "marks": [
               {
                 "id": "mark1",
-                "x": 0.0315,
-                "y": 0.4211,
+                "x": 0.0303,
+                "y": 0.4081,
                 "type": "walk",
-                "text": "",
+                "text": "Игровая 8 бит",
                 "target": {
                   "type": "360",
                   "panorama": "133"
@@ -6243,7 +6292,7 @@
                 "x": 0.4947,
                 "y": 0.3945,
                 "type": "walk",
-                "text": "",
+                "text": "Аудитория 103",
                 "target": {
                   "type": "360",
                   "panorama": "129"
@@ -6251,8 +6300,8 @@
               },
               {
                 "id": "mark3",
-                "x": 0.7538,
-                "y": 0.5328,
+                "x": 0.7655,
+                "y": 0.535,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -6273,8 +6322,8 @@
                 "focusY": 0.5
               },
               "134": {
-                "focusX": 0.3285,
-                "focusY": 0.5
+                "focusX": 0.5207,
+                "focusY": 0.5361
               },
               "135": {
                 "focusX": 0.0212,
@@ -6299,10 +6348,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.3268,
-                "y": 0.4104,
+                "x": 0.3296,
+                "y": 0.4077,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из игровой",
                 "target": {
                   "type": "360",
                   "panorama": "132"
@@ -6310,8 +6359,8 @@
               },
               {
                 "id": "mark3",
-                "x": 0.5276,
-                "y": 0.4245,
+                "x": 0.5192,
+                "y": 0.4348,
                 "type": "walk",
                 "text": "",
                 "target": {
@@ -6329,10 +6378,6 @@
             "entries": {
               "133": {
                 "focusX": 0.9524,
-                "focusY": 0.5
-              },
-              "135": {
-                "focusX": 0.9528,
                 "focusY": 0.5
               },
               "default": {
@@ -6364,17 +6409,13 @@
                 "focusX": 0.3262,
                 "focusY": 0.5
               },
-              "134": {
-                "focusX": 0.3259,
-                "focusY": 0.5
-              },
               "136": {
-                "focusX": 0.5,
-                "focusY": 0.5
+                "focusX": 0.4989,
+                "focusY": 0.4421
               },
               "default": {
-                "focusX": 0.5,
-                "focusY": 0.5
+                "focusX": 0.4983,
+                "focusY": 0.4422
               }
             },
             "marks": [
@@ -6438,7 +6479,7 @@
                 "x": 0.4929,
                 "y": 0.406,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из игровой",
                 "target": {
                   "type": "360",
                   "panorama": "127"
@@ -6452,10 +6493,6 @@
             "lines": true,
             "entryFocusAsPanoramaUv": true,
             "entries": {
-              "125": {
-                "focusX": 0.8795,
-                "focusY": 0.5
-              },
               "140": {
                 "focusX": 0.373,
                 "focusY": 0.5
@@ -6471,7 +6508,7 @@
                 "x": 0.8771,
                 "y": 0.3534,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из корпуса",
                 "target": {
                   "type": "360",
                   "panorama": "140"
@@ -6479,10 +6516,10 @@
               },
               {
                 "id": "mark2",
-                "x": 0.3738,
-                "y": 0.4275,
+                "x": 0.3698,
+                "y": 0.3914,
                 "type": "walk",
-                "text": "",
+                "text": "Пройти турникет",
                 "target": {
                   "type": "360",
                   "panorama": "125"
@@ -6500,10 +6537,6 @@
                 "focusX": 0.5429,
                 "focusY": 0.5
               },
-              "139": {
-                "focusX": 0.0447,
-                "focusY": 0.5
-              },
               "default": {
                 "focusX": 0.0449,
                 "focusY": 0.5
@@ -6515,21 +6548,10 @@
                 "x": 0.5421,
                 "y": 0.3305,
                 "type": "walk",
-                "text": "",
+                "text": "Выйти из корпуса",
                 "target": {
                   "type": "360",
                   "panorama": "139"
-                }
-              },
-              {
-                "id": "mark2",
-                "x": 0.049,
-                "y": 0.3755,
-                "type": "walk",
-                "text": "",
-                "target": {
-                  "type": "360",
-                  "panorama": "114"
                 }
               }
             ]
@@ -6544,14 +6566,6 @@
                 "focusX": 0.0833,
                 "focusY": 0.5
               },
-              "140": {
-                "focusX": 0.4298,
-                "focusY": 0.5
-              },
-              "141": {
-                "focusX": 0.4293,
-                "focusY": 0.5
-              },
               "default": {
                 "focusX": 0.4308,
                 "focusY": 0.5
@@ -6563,7 +6577,7 @@
                 "x": 0.198,
                 "y": 0.4271,
                 "type": "walk",
-                "text": "",
+                "text": "Вход  в корпус",
                 "target": {
                   "type": "360",
                   "panorama": "140"
@@ -6578,17 +6592,6 @@
                 "target": {
                   "type": "360",
                   "panorama": "141"
-                }
-              },
-              {
-                "id": "mark3",
-                "x": 0.446,
-                "y": 0.3676,
-                "type": "walk",
-                "text": "",
-                "target": {
-                  "type": "360",
-                  "panorama": "138"
                 }
               }
             ]
@@ -6629,22 +6632,11 @@
                 }
               },
               {
-                "id": "mark2",
-                "x": 0.4079,
-                "y": 0.4269,
-                "type": "walk",
-                "text": "",
-                "target": {
-                  "type": "360",
-                  "panorama": "139"
-                }
-              },
-              {
                 "id": "mark3",
                 "x": 0.156,
                 "y": 0.3864,
                 "type": "walk",
-                "text": "",
+                "text": "Войти в корпус",
                 "target": {
                   "type": "360",
                   "panorama": "137"
@@ -6667,8 +6659,8 @@
                 "focusY": 0.5811
               },
               "default": {
-                "focusX": 0.1962,
-                "focusY": 0.5796
+                "focusX": 0.1968,
+                "focusY": 0.581
               }
             },
             "marks": [
@@ -6677,21 +6669,10 @@
                 "x": 0.1472,
                 "y": 0.5016,
                 "type": "walk",
-                "text": "",
+                "text": "Вход в корпус",
                 "target": {
                   "type": "360",
                   "panorama": "140"
-                }
-              },
-              {
-                "id": "mark2",
-                "x": 0.2461,
-                "y": 0.5019,
-                "type": "walk",
-                "text": "",
-                "target": {
-                  "type": "360",
-                  "panorama": "139"
                 }
               }
             ]
