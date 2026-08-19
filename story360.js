@@ -6659,8 +6659,8 @@
                 "focusY": 0.5811
               },
               "default": {
-                "focusX": 0.1968,
-                "focusY": 0.581
+                "focusX": 0.2279,
+                "focusY": 0.575
               }
             },
             "marks": [
