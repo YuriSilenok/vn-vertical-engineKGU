@@ -20,7 +20,7 @@ introBg file=assets/backgrounds/bg-campus-hall.jpg
 scene intro
 bg introBg
 "Тестовый текст начала экскурсии"
-goto360 main360.139 entry=default
+goto360 main360.141 entry=default
 goto after360
 
 scene after360
